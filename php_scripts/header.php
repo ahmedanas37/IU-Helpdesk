@@ -12,25 +12,19 @@
         .dx-navbar-expand || .dx-navbar-expand-lg || .dx-navbar-expand-xl
 -->
 
-<!-- PHP Custom Scripts -->
 <?php 
-include ('php_scripts\customScripts.php');
-include ('php_scripts\database.php');
-include ('javascripts\customScripts.js');
+include('php_scripts\customScripts.php');
+include('php_scripts\database.php');
 
-?> 
-
+?>
 
 
 
-<?php
-        session_start();
-        ?>
 
 <nav class="dx-navbar dx-navbar-top dx-navbar-collapse dx-navbar-sticky dx-navbar-expand-lg dx-navbar-dropdown-triangle dx-navbar-autohide">
     <div class="container">
         
-        <a href="index.html" class="dx-nav-logo">
+        <a href="index.php" class="dx-nav-logo">
             <img src="https://iulms.edu.pk/theme/Iqra_Ver2/pix/logo2.png" alt="" width="200px">
         </a>
         
@@ -192,66 +186,63 @@ include ('javascripts\customScripts.js');
            
              
                 
-                <!-- <li>
+               <!-- <li>
                     <a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;">Log In</a>
-                </li> -->
+                </li>  -->
                 <!-- <li>
                     <span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>
                 </li> -->
+
+             
+             
                 <?php
-                if($_SESSION["loggedin"] = 'admin')
+                
+                if(isset($_SESSION['loggedin']) == true)
                 {
-
-
-                   echo(' <li>
+                    echo('<li>
                     <div class="dropdown dx-dropdown dx-dropdown-signin">
-                        <a class="dx-nav-signin" href="account.php" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="dx-nav-signin-img"><img src="assets/images/avatar-1.png" alt=""></span>
-                            <span class="dx-nav-signin-name">John Leonard</span>
+                            <span class="dx-nav-signin-name">' . $_SESSION['username'] . '</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
                             <li>
-                                <a href="account.php"><span class="icon pe-7s-user"></span> Account</a>
+                                <a href="account.html"><span class="icon pe-7s-user"></span> Account</a>
                             </li>
                             <li>
-                                <a href="account-licenses.php"><span class="icon pe-7s-download"></span> Items &amp; Licenses</a>
+                                <a href="account-licenses.html"><span class="icon pe-7s-download"></span> Items &amp; Licenses</a>
                             </li>
                             <li>
                                 <a href="account-settings.php"><span class="icon pe-7s-config"></span> Settings</a>
                             </li>
                             <li>
-                            <a href="#" onclick="logout()"><span class="icon pe-7s-back"></span> Logout</a>
-                        </li>
-                        
+                            <a href="php_scripts\logout.php"><span class="icon pe-7s-back"></span> Logout</a>
+
+
+                            </li>
                         </ul>
                     </div>
                 </li>');
-              
-                  
-
-
-
-              
-                //    echo('<li><span><p class="dx-btn dx-btn-md ">Logged in as Admin</p></span></li>') ;
-                   
-                
-                //    echo('<form method="post"><button type="submit" name="btnLogout"  class="dx-btn dx-btn-md dx-btn-transparent">Logout</button></form>');
-
-                //    echo($_SESSION['loggedin']);
-
 
 
                 }
-                
-                 
 
-                else
+                else 
                 {
-                   echo('<span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>') ;
-                   
+                    echo('<li>
+                    <span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>
+                </li>');
 
                 }
+
+
                 ?>
+
+
+
+
+
+               
 
 
                 
