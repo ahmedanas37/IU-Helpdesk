@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2023 at 11:21 PM
+-- Generation Time: Apr 29, 2023 at 12:47 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -123,6 +123,7 @@ INSERT INTO `ticket` (`id`, `title`, `description`, `date_added`, `date_updated`
 
 CREATE TABLE `user` (
   `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
   `created_at` varchar(30) DEFAULT NULL,
@@ -135,8 +136,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `password`, `created_at`, `profile_picture`, `phone_number`, `department_id`) VALUES
-(1, 'anas@abc.com', 'anas@123', '2023-04-06', NULL, '123456789', 1);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `profile_picture`, `phone_number`, `department_id`) VALUES
+(1, 'Anas', 'anas@abc.com', 'anas@123', '2023-04-06', NULL, '123456789', 1);
 
 -- --------------------------------------------------------
 
