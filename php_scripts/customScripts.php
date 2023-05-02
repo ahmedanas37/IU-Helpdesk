@@ -38,4 +38,55 @@ if(isset($_POST['btnLogin'])){
     $conn->close();
 }
 
+
+
+
+// Check if the form is submitted
+if (isset($_POST['ticketSubmitted2'])) {
+  // Get form data
+  $title = $_POST['title'];
+  $description = $_POST['description'];
+  $date_added = date('Y-m-d H:i:s'); // Current date and time
+  $date_updated = '';
+  $attachment_name = '';
+  $user_id = $_SESSION['userid'];
+  $department_id = $_POST['category'];
+  $comments = 0;
+  $status = 'Open';
+
+  // Prepare SQL statement
+  $sql = "INSERT INTO tickets (title, description, date_added, date_updated, attachment_name, user_id, department_id, comments, status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+  // Create prepared statement
+  $stmt = mysqli_stmt_init($conn);
+
+  // Check if prepared statement is valid
+  if (mysqli_stmt_prepare($stmt, $sql)) {
+    // Bind parameters to the prepared statement
+    mysqli_stmt_bind_param($stmt, "sssssiiss", $title, $description, $date_added, $date_updated, $attachment_name, $user_id, $department_id, $comments, $status);
+
+    // Execute prepared statement and check if successful
+    if (mysqli_stmt_execute($stmt)) {
+      // Redirect to success page or display success message
+      header("Location: success.php");
+      exit();
+    } else {
+      // Redirect to error page or display error message
+      header("Location: error.php");
+      exit();
+    }
+  }
+
+  // Close prepared statement and database connection
+  mysqli_stmt_close($stmt);
+  mysqli_close($conn);
+}
+
+
+
+
+
+
+
 ?>

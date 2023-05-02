@@ -187,7 +187,7 @@ include('php_scripts\database.php');
                     <div class="dropdown dx-dropdown dx-dropdown-signin">
                         <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="dx-nav-signin-img"><img src="assets/images/avatar-1.png" alt=""></span>
-                            <span class="dx-nav-signin-name">' . $_SESSION['username'] . '</span>
+                            <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
                             <li>
