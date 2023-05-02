@@ -38,23 +38,7 @@ include('php_scripts\database.php');
             <ul class="dx-nav dx-nav-align-left">
                 
         
-        <li class="dx-drop-item">
-            <a href="blog.html">
-                Blog
-            </a><ul class="dx-navbar-dropdown">
-                    
-        <li>
-            <a href="blog.html">
-                Blog
-            </a>
-        </li>
-        <li>
-            <a href="single-post.html">
-                Single Post
-            </a>
-        </li>
-                </ul>
-        </li>
+        
         <li class="dx-drop-item active">
             <a href="help-center.html">
                 Help Center

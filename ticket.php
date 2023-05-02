@@ -148,7 +148,11 @@ include ('php_scripts\header.php');
 
 
 // Query to fetch ticket data from the database
-$sql = "SELECT * FROM ticket";
+$sql = "SELECT ticket.*, user.name, departments.name AS department_name 
+        FROM ticket
+        INNER JOIN user ON ticket.user_id = user.id
+        INNER JOIN departments ON ticket.department_id = departments.id";
+
 
 // Execute the query and fetch the result
 $result = mysqli_query($conn, $sql);
@@ -160,16 +164,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo '<img src="assets/images/avatar-1.png" alt="">';
     echo '</span>';
     echo '<span class="dx-ticket-cont">';
-    echo '<span class="dx-ticket-name">' . $row['user_id'] . '</span>';
+    echo '<span class="dx-ticket-name">' . $row['name'] . '</span>';
     echo '<span class="dx-ticket-title h5">' . $row['title'] . '</span>';
     echo '<ul class="dx-ticket-info">';
     echo '<li>Update: ' . $row['date_updated'] . '</li>';
-    echo '<li>Department: ' . $row['department_id'] . '</li>';
+    echo '<li>Department: ' . $row['department_name'] . '</li>';
     echo '<li>Comments: ' . $row['comments'] . '</li>';
     echo '<li class="dx-ticket-new">New</li>';
     echo '</ul>';
     echo '</span>';
-    echo '<span class="dx-ticket-status">'  ."open".  '</span>';
+    echo '<span class="dx-ticket-status">'  .$row['status'].  '</span>';
     echo '</a>';
 }
 
@@ -177,7 +181,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 mysqli_close($conn);
 ?>
         
-<a href="single-ticket.html" class="dx-ticket-item dx-ticket-closed dx-block-decorated">
+<!-- <a href="single-ticket.html" class="dx-ticket-item dx-ticket-closed dx-block-decorated">
     <span class="dx-ticket-img">
         
         <img src="assets/images/avatar-default.svg" alt="">
@@ -204,7 +208,7 @@ mysqli_close($conn);
     <span class="dx-ticket-status">
         Closed
     </span>
-</a>
+</a> -->
 
     </div>
 </div>
