@@ -173,7 +173,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo '<li class="dx-ticket-new">New</li>';
     echo '</ul>';
     echo '</span>';
-    echo '<span class="dx-ticket-status">'  .$row['status'].  '</span>';
+    echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
     echo '</a>';
 }
 

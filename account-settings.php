@@ -111,8 +111,7 @@ include ('php_scripts\header.php');
                    
                    <?php
 
-
-// Replace with the appropriate SQL query to retrieve user data by ID
+// Retrieve user data by ID
 $user_id = $_SESSION['userid'];
 $sql = "SELECT * FROM user WHERE id = $user_id";
 $result = mysqli_query($conn, $sql);
@@ -121,7 +120,7 @@ if (mysqli_num_rows($result) > 0) {
   // Output the HTML form with the retrieved user data
   $row = mysqli_fetch_assoc($result);
   ?>
-  <form action="#" class="dx-form">
+  <form action="#" class="dx-form" method="POST">
     <div class="dx-box-content">
       <div class="dx-form-group">
         <label for="first-name" class="mnt-7">Name</label>
@@ -134,26 +133,47 @@ if (mysqli_num_rows($result) > 0) {
       </div>
 
       <div class="dx-form-group">
-        <label for="line-one" class="mnt-7">Created At</label>
-        <input type="text" class="form-control form-control-style-2" id="line-one" name="created_at" value="<?php echo $row['created_at']; ?>">
+        <label for="line-one" class="mnt-7" disabled>Created At</label>
+        <input type="text" class="form-control form-control-style-2" id="line-one" name="created_at" value="<?php echo $row['created_at']; ?>" disabled>
       </div>
 
       <div class="dx-form-group">
         <label for="line-two" class="mnt-7">Phone Number</label>
         <input type="text" class="form-control form-control-style-2" id="line-two" name="phone" value="<?php echo $row['phone_number']; ?>">
       </div>
+      <div class="dx-form-group">
+      <label for="select-product" class="mnt-7">Department</label>
+<select class="form-control dx-select-ticket" name="department" id="select-product" >
+  <?php
+  // Retrieve the selected category ID from the form data
+  $category_id = $_POST['category_id'];
+
+  // Query the database to get all valid department options
+  $sql = "SELECT id, name FROM departments ORDER BY name ASC";
+  $result = mysqli_query($conn, $sql);
+
+  // Output each department as an option element
+  while ($row = mysqli_fetch_assoc($result)) {
+    $option_id = $row['id'];
+    $option_name = $row['name'];
+    $selected = ($option_id == $category_id) ? 'selected' : '';
+    echo '<option value="' . $option_id . '" ' . $selected . '>' . $option_name . '</option>';
+  }
+  ?>
+</select>
+
+</div>
 
       <div class="dx-form-group">
-        <label for="city" class="mnt-7">Department</label>
-        <input type="text" class="form-control form-control-style-2" id="city" name="department" value="<?php echo $row['department_id']; ?>">
+        <button class="dx-btn dx-btn-xl dx-btn-block" name="updateUser">Save Changes</button>
       </div>
 
-      <div class="dx-form-group">
-        <button class="dx-btn dx-btn-xl dx-btn-block">Save Changes</button>
-      </div>
+
     </div>
   </form>
   <?php
+
+
 } else {
   echo "User not found";
 }

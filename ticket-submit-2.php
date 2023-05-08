@@ -138,27 +138,25 @@ include ('php_scripts\header.php');
                     <div class="dx-separator"></div>
                    
                  
-                    <form action="#" class="dx-form">
+                    <form method="post" class="dx-form">
     <div class="dx-box-content">
         <div class="dx-form-group">
             <label for="select-product" class="mnt-7">Selected Category</label>
             <select class="form-control dx-select-ticket" name="category" id="select-product" disabled>
-    <?php
-    // Retrieve the selected category ID from the form data
-    $category_id = $_POST['category_id'];
+                <?php
+                // Retrieve the selected category ID from the form data
+                $category_id = $_POST['category_id'];
 
-    // Query the database to get the name of the selected category
-    $sql = "SELECT name FROM departments WHERE id = $category_id";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $category_name = $row['name'];
+                // Query the database to get the name of the selected category
+                $sql = "SELECT name FROM departments WHERE id = $category_id";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $category_name = $row['name'];
 
-    // Create an option element with the selected category ID as the value and the name as the label
-    echo '<option value="' . $category_id . '">' . $category_name . '</option>';
-    ?>
-</select>
-
-
+                // Create an option element with the selected category ID as the value and the name as the label
+                echo '<option value="' . $category_id . '">' . $category_name . '</option>';
+                ?>
+            </select>
         </div>
         <div class="dx-form-group">
             <div class="alert dx-alert dx-alert-primary" role="alert">* Your License. Purchase Date: 5 Nov 2018</div>
@@ -171,17 +169,33 @@ include ('php_scripts\header.php');
             <label for="subject" class="mnt-7">Subject</label>
             <input type="text" name="title" class="form-control form-control-style-2" id="subject" placeholder="Enter Subject">
         </div>
+        
+        <div class="dx-form-group">
+        <input type="hidden" name="category_id" value="<?php echo $category_id; ?>">
+        </div>
         <div class="dx-form-group">
             <label class="mnt-7">Description</label>
             <div class="dx-editor-quill">
-                <div class="dx-editor" name="description"  data-editor-height="150" data-editor-maxHeight="250"></div>
+                <div class="dx-editor" id="description-editor" data-editor-height="150" data-editor-maxHeight="250"></div>
             </div>
+            <!-- Add a hidden input field to submit the content of the Quill editor -->
+            <input type="hidden" name="description" id="description-input">
         </div>
     </div>
+
     <button type="submit" name="ticketSubmitted2" class="dx-btn dx-btn-lg" type="button">Submit ticket</button>
 
-    
 </form>
+
+<!-- Add a script to update the hidden input field with the content of the Quill editor -->
+<script>
+    var quill = new Quill('#description-editor');
+    var descriptionInput = document.getElementById('description-input');
+    quill.on('text-change', function() {
+        descriptionInput.value = quill.root.innerHTML;
+    });
+</script>
+
 
                     <div class="dx-box-content pt-0">
                         <!-- STRART: Dropzone
@@ -207,7 +221,7 @@ include ('php_scripts\header.php');
                                 <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
                             </div>
                             <div class="col-auto dx-dropzone-attachment-btn">
-                                <button type="submit" name="ticketSubmitted2" class="dx-btn dx-btn-lg" type="button">Submit ticket</button>
+                                <button type="submit"  class="dx-btn dx-btn-lg" type="button">Submit ticket</button>
                             </div>
                         </div>
                         <!-- END: Dropzone -->

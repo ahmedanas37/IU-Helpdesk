@@ -207,6 +207,7 @@
     
 <!-- START: Scripts -->
 
+
 <!-- Object Fit Images -->
 <script src="assets/vendor/object-fit-images/dist/ofi.min.js"></script>
 
@@ -256,5 +257,8 @@
 <!-- The Amdesk -->
 <script src="assets/js/amdesk.min.js"></script>
 <script src="assets/js/amdesk-init.js"></script>
+
+
+
 <!-- END: Scripts -->
 

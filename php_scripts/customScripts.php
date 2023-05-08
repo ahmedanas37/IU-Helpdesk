@@ -39,53 +39,65 @@ if(isset($_POST['btnLogin'])){
 }
 
 
-
-
-// Check if the form is submitted
 if (isset($_POST['ticketSubmitted2'])) {
   // Get form data
   $title = $_POST['title'];
   $description = $_POST['description'];
   $date_added = date('Y-m-d H:i:s'); // Current date and time
-  $date_updated = '';
-  $attachment_name = '';
+  $date_updated = date('Y-m-d H:i:s'); // Current date and time
   $user_id = $_SESSION['userid'];
-  $department_id = $_POST['category'];
-  $comments = 0;
-  $status = 'Open';
+  $department_id = $_POST['category_id'];
+  $comments=0;
+  $status='Open';
 
   // Prepare SQL statement
-  $sql = "INSERT INTO tickets (title, description, date_added, date_updated, attachment_name, user_id, department_id, comments, status)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO ticket (title, ticket_description, date_added, date_updated, user_id, department_id, comments, ticket_status)
+          VALUES ('$title', '$description', '$date_added', '$date_updated', '$user_id', '$department_id', '$comments', '$status')";
 
-  // Create prepared statement
-  $stmt = mysqli_stmt_init($conn);
-
-  // Check if prepared statement is valid
-  if (mysqli_stmt_prepare($stmt, $sql)) {
-    // Bind parameters to the prepared statement
-    mysqli_stmt_bind_param($stmt, "sssssiiss", $title, $description, $date_added, $date_updated, $attachment_name, $user_id, $department_id, $comments, $status);
-
-    // Execute prepared statement and check if successful
-    if (mysqli_stmt_execute($stmt)) {
-      // Redirect to success page or display success message
-      header("Location: success.php");
-      exit();
-    } else {
-      // Redirect to error page or display error message
-      header("Location: error.php");
-      exit();
-    }
+  // Execute query and check if successful
+  if (mysqli_query($conn, $sql)) {
+    // Redirect to success page or display success message
+    header("Location: success.php");
+    exit();
+  } else {
+    // Redirect to error page or display error message
+    header("Location: error.php");
+    exit();
   }
 
-  // Close prepared statement and database connection
-  mysqli_stmt_close($stmt);
+  // Close database connection
   mysqli_close($conn);
 }
 
+if (isset($_POST['updateUser'])) {
+  // Get form data
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $department_id = $_POST['department'];
+  $user_id=$_SESSION['userid'];
 
+  // Prepare SQL statement
+  $sql = "UPDATE user SET name = '$name', email = '$email', phone_number = '$phone', department_id = $department_id WHERE id = $user_id";
 
+  // Execute query and check if successful
+  if (mysqli_query($conn, $sql)) {
+    // Display success alert
+    // Redirect to success page or display success message
+    // header("Location: success.php");
+    echo '<div class="alert alert-success" role="alert">Your operation was successful!</div>';
 
+    // header("Refresh:0");
+    // exit();
+  } else {
+    // Display error alert
+    echo "<script>alert('Failed to update user information. Please try again.');</script>";
+    // Redirect to error page or display error message
+    header("Location: error.php");
+    exit();
+  }
+  mysqli_close($conn);
+}
 
 
 
