@@ -3,6 +3,7 @@ session_start();
 include('php_scripts\database.php');
 
 
+
 if(isset($_POST['btnLogin'])){
     // Perform validation of username and password here
     $username = $_POST['username'];
@@ -69,6 +70,10 @@ if (isset($_POST['ticketSubmitted2'])) {
   mysqli_close($conn);
 }
 
+
+
+
+// Update User
 if (isset($_POST['updateUser'])) {
   // Get form data
   $name = $_POST['name'];
@@ -76,6 +81,9 @@ if (isset($_POST['updateUser'])) {
   $phone = $_POST['phone'];
   $department_id = $_POST['department'];
   $user_id=$_SESSION['userid'];
+
+
+  
 
   // Prepare SQL statement
   $sql = "UPDATE user SET name = '$name', email = '$email', phone_number = '$phone', department_id = $department_id WHERE id = $user_id";
@@ -85,7 +93,8 @@ if (isset($_POST['updateUser'])) {
     // Display success alert
     // Redirect to success page or display success message
     // header("Location: success.php");
-    echo '<div class="alert alert-success" role="alert">Your operation was successful!</div>';
+    // showSuccessAlert('Your action was successful!', 'bg-green text-white');
+
 
     // header("Refresh:0");
     // exit();
@@ -99,6 +108,70 @@ if (isset($_POST['updateUser'])) {
   mysqli_close($conn);
 }
 
+
+
+
+
+
+
+
+
+
+// Function to convert date to time elapsed
+function time_elapsed_string($datetime, $full = false) {
+  $now = new DateTime;
+  $ago = new DateTime($datetime);
+  $diff = $now->diff($ago);
+
+  $diff->w = floor($diff->d / 7);
+  $diff->d -= $diff->w * 7;
+
+  $string = array(
+      'y' => 'year',
+      'm' => 'month',
+      'w' => 'week',
+      'd' => 'day',
+      'h' => 'hour',
+      'i' => 'minute',
+      's' => 'second',
+  );
+
+  foreach ($string as $k => &$v) {
+      if ($diff->$k) {
+          $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+      } else {
+          unset($string[$k]);
+      }
+  }
+
+  if (!$full) $string = array_slice($string, 0, 1);
+  return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
+
+
+
+
+// Check if the form has been submitted
+if (isset($_POST['submitComment'])) {
+
+  echo $_POST['comment'];
+
+  // // Get the comment text from the form
+  //   $comment_text = $_POST['comment_text'];
+  //   $current_user_id=$_POST['current_user_id'];
+  //   $ticket_id=$_POST['ticket_id'];
+  //   $date_added=date('Y-m-d H:i:s');
+
+  //   // Insert the new comment into the database
+  //   $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
+
+  //   mysqli_query($conn, $sql);
+
+  //   // Redirect the user back to the ticket page
+  //   header("Location: ticket.php?ticket_id=$ticket_id");
+  //   exit();
+}
 
 
 ?>

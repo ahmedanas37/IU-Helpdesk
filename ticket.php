@@ -159,7 +159,7 @@ $result = mysqli_query($conn, $sql);
 
 // Generate the HTML elements dynamically based on the data
 while ($row = mysqli_fetch_assoc($result)) {
-    echo '<a href="single-ticket.html" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
+    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
     echo '<span class="dx-ticket-img">';
     echo '<img src="assets/images/avatar-1.png" alt="">';
     echo '</span>';
@@ -176,6 +176,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
     echo '</a>';
 }
+
 
 // Close the database connection
 mysqli_close($conn);
