@@ -155,22 +155,26 @@ function time_elapsed_string($datetime, $full = false) {
 // Check if the form has been submitted
 if (isset($_POST['submitComment'])) {
 
-  echo $_POST['comment'];
 
-  // // Get the comment text from the form
-  //   $comment_text = $_POST['comment_text'];
-  //   $current_user_id=$_POST['current_user_id'];
-  //   $ticket_id=$_POST['ticket_id'];
-  //   $date_added=date('Y-m-d H:i:s');
+  // Get the comment text from the form
+    $comment_text = $_POST['comment_text'];
+    // echo $comment_text;
 
-  //   // Insert the new comment into the database
-  //   $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
 
-  //   mysqli_query($conn, $sql);
 
-  //   // Redirect the user back to the ticket page
-  //   header("Location: ticket.php?ticket_id=$ticket_id");
-  //   exit();
+
+    $current_user_id=$_POST['current_user_id'];
+    $ticket_id=$_POST['ticket_id'];
+    $date_added=date('Y-m-d H:i:s');
+
+    // Insert the new comment into the database
+    $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
+
+    mysqli_query($conn, $sql);
+
+    // Redirect the user back to the ticket page
+    header("Location: ticket-details.php?ticket_id=$ticket_id");
+    exit();
 }
 
 

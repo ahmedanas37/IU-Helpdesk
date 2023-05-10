@@ -231,10 +231,19 @@ if ($ticket_details['comment_count'] > 0) {
 
    <?php }
 } else {
-    echo '<p>No comments found.</p>';
-}
-                            
-         ?>
+
+echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-new">
+<div>
+    
+    <div class="dx-comment-cont">
+        <div class="dx-comment-text">
+            <p class="mb-0">No comments yet</p>
+        </div>
+    </div>
+</div>
+</div>');
+
+}?>
 
 
 
@@ -266,41 +275,55 @@ if ($ticket_details['comment_count'] > 0) {
 
 
 
+
                         <div class="dx-blog-post-box">
-  <h3 class="h6 mb-25">Write a Reply</h3>
-  <form class="dx-form" method="post">
-    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
-    <input type="hidden" name="current_user_id" value="<?php echo $_SESSION['userid']; ?>">
-    <input type="hidden" name="comment" id="comment">
+                            <h3 class="h6 mb-25">Write a Reply</h3>
 
-    <div class="dx-form-group">
-      <div class="dx-editor-quill">
-        <div class="dx-editor" id="quill_editor" data-editor-height="150" data-editor-maxHeight="250"></div>
-      </div>
-    </div>
-
-    <div class="dx-form-group">
-      <!-- ... -->
-      <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit Comment</button>
-    </div>
-  </form>
-</div>
-
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-<script>
-  var quill = new Quill('#quill_editor', {
-    theme: 'snow'
-  });
-
-  document.querySelector('button[name="submitComment"]').addEventListener('click', function() {
-    document.querySelector('#comment').value = quill.root.innerHTML;
-  });
-</script>
+                            <form class="dx-form" method="post">
+                                <div class="dx-form-group">
+                                    <div class="dx-editor-quill">
+                                        <div class="dx-editor" id="comment-editor" data-editor-height="150" data-editor-maxHeight="250"></div>
+                                    </div>
+                                </div>
+                                <div class="dx-form-group">
+                                <input type="hidden" name="current_user_id" value="<?php echo $_SESSION['userid']; ?>">
+                                <input type="hidden" name="ticket_id" value="<?php echo $_GET['ticket_id']; ?>">
+                                <input type="hidden" name="comment_text" id="comment-input">
 
 
 
+                                </div>
+                                <div class="dx-form-group">
+                                    <!-- STRART: Dropzone
+
+                                        Additional Attributes:
+                                        data-dropzone-action
+                                        data-dropzone-maxMB
+                                        data-dropzone-maxFiles
+                                    -->
+                                    <div class="dx-dropzone" data-dropzone-action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
+                                        <div class="dz-message">
+                                            <div class="dx-dropzone-icon">
+                                                <span class="icon pe-7s-cloud-upload"></span>
+                                            </div>
+                                            <div class="h6 dx-dropzone-title">Drop files here or click to upload</div>
+                                            <div class="dx-dropzone-text">
+                                                <p class="mnb-5 mnt-1">You can upload up to 5 files (maximum 5 MB each) of the following types: .jpg, .jpeg, .png, .zip.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
+                                        <div class="col-auto dx-dropzone-attachment-add">
+                                            <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
+                                        </div>
+                                        <div class="col-auto dx-dropzone-attachment-btn">
+                                            <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
+                                        </div>
+                                    </div>
+                                    <!-- END: Dropzone -->
+                                </div>
+                            </form>
+                        </div>
 
 
 
@@ -437,7 +460,17 @@ if ($ticket_details['comment_count'] > 0) {
 include ('php_scripts\footer.php');
 
  ?>
+<script>
 
+window.onload = function() {
+    var quill = new Quill('#comment-editor');
+    var commentInput = document.getElementById('comment-input');
+    quill.on('text-change', function() {
+        commentInput.value = quill.root.innerHTML;
+    });
+};
+
+</script>
 
 
 

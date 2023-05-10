@@ -183,18 +183,7 @@ include ('php_scripts\header.php');
         </div>
     </div>
 
-    <button type="submit" name="ticketSubmitted2" class="dx-btn dx-btn-lg" type="button">Submit ticket</button>
 
-</form>
-
-<!-- Add a script to update the hidden input field with the content of the Quill editor -->
-<script>
-    var quill = new Quill('#description-editor');
-    var descriptionInput = document.getElementById('description-input');
-    quill.on('text-change', function() {
-        descriptionInput.value = quill.root.innerHTML;
-    });
-</script>
 
 
                     <div class="dx-box-content pt-0">
@@ -205,7 +194,10 @@ include ('php_scripts\header.php');
                             data-dropzone-maxMB
                             data-dropzone-maxFiles
                         -->
-                        <form class="dx-dropzone" action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
+
+
+                        
+                        <!-- <form class="dx-dropzone" method="post" action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
                             <div class="dz-message">
                                 <div class="dx-dropzone-icon">
                                     <span class="icon pe-7s-cloud-upload"></span>
@@ -215,13 +207,13 @@ include ('php_scripts\header.php');
                                     <p class="mnb-5 mnt-1">You can upload up to 5 files (maximum 5 MB each) of the following types: .jpg, .jpeg, .png, .zip.</p>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
                         <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
                             <div class="col-auto dx-dropzone-attachment-add">
                                 <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
                             </div>
                             <div class="col-auto dx-dropzone-attachment-btn">
-                                <button type="submit"  class="dx-btn dx-btn-lg" type="button">Submit ticket</button>
+                                <button type="submit" class="dx-btn dx-btn-lg" name="ticketSubmitted2">Submit Ticket</button>
                             </div>
                         </div>
                         <!-- END: Dropzone -->
@@ -372,7 +364,14 @@ include ('php_scripts\footer.php');
 
 
         
-
+<!-- Add a script to update the hidden input field with the content of the Quill editor -->
+<script>
+    var quill = new Quill('#description-editor');
+    var descriptionInput = document.getElementById('description-input');
+    quill.on('text-change', function() {
+        descriptionInput.value = quill.root.innerHTML;
+    });
+</script>
 
 
 
