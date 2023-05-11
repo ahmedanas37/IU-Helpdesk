@@ -184,21 +184,23 @@ include('php_scripts\database.php');
                 if(isset($_SESSION['loggedin']) == true)
                 {
                     echo('<li>
+                    <li>
+                    <span><a href="ticket-submit-1.php" class="dx-btn dx-btn-md dx-btn-transparent">Raise an Issue</a></span>
+                </li>
                     <div class="dropdown dx-dropdown dx-dropdown-signin">
-                        <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  
+
+                       
+                    <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="dx-nav-signin-img"><img src="assets/images/avatar-1.png" alt=""></span>
                             <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
                             <li>
-                                <a href="account.html"><span class="icon pe-7s-user"></span> Account</a>
+                                <a href="account-settings.php"><span class="icon pe-7s-user"></span> Account</a>
                             </li>
-                            <li>
-                                <a href="account-licenses.html"><span class="icon pe-7s-download"></span> Items &amp; Licenses</a>
-                            </li>
-                            <li>
-                                <a href="account-settings.php"><span class="icon pe-7s-config"></span> Settings</a>
-                            </li>
+                           
+                           
                             <li>
                             <a href="php_scripts\logout.php"><span class="icon pe-7s-back"></span> Logout</a>
 

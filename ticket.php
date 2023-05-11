@@ -139,44 +139,51 @@ include ('php_scripts\header.php');
                 <div class="dx-separator ml-10 mr-10"></div>
             </div>
             <div class="col-auto">
-                <a href="ticket-submit.html" class="dx-btn dx-btn-md">Submit a ticket</a>
+                <a href="ticket-submit-1.php" class="dx-btn dx-btn-md">Submit a ticket</a>
             </div>
         </div>
 
         
         <?php
-
-
-// Query to fetch ticket data from the database
 $sql = "SELECT ticket.*, user.name, departments.name AS department_name 
-        FROM ticket
-        INNER JOIN user ON ticket.user_id = user.id
-        INNER JOIN departments ON ticket.department_id = departments.id";
-
+FROM ticket
+INNER JOIN user ON ticket.user_id = user.id
+INNER JOIN departments ON ticket.department_id = departments.id
+ORDER BY ticket.date_added DESC";
 
 // Execute the query and fetch the result
 $result = mysqli_query($conn, $sql);
 
 // Generate the HTML elements dynamically based on the data
 while ($row = mysqli_fetch_assoc($result)) {
-    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
-    echo '<span class="dx-ticket-img">';
-    echo '<img src="assets/images/avatar-1.png" alt="">';
-    echo '</span>';
-    echo '<span class="dx-ticket-cont">';
-    echo '<span class="dx-ticket-name">' . $row['name'] . '</span>';
-    echo '<span class="dx-ticket-title h5">' . $row['title'] . '</span>';
-    echo '<ul class="dx-ticket-info">';
-    echo '<li>Update: ' . $row['date_updated'] . '</li>';
-    echo '<li>Department: ' . $row['department_name'] . '</li>';
-    echo '<li>Comments: ' . $row['comments'] . '</li>';
-    echo '<li class="dx-ticket-new">New</li>';
-    echo '</ul>';
-    echo '</span>';
-    echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
-    echo '</a>';
+// Calculate the time difference between current time and date_created
+$dateCreated = strtotime($row['date_added']);
+$currentTime = time();
+$timeDifference = $currentTime - $dateCreated;
+$hoursDifference = round($timeDifference / (60 * 60));
+
+echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
+echo '<span class="dx-ticket-img">';
+echo '<img src="assets/images/avatar-1.png" alt="">';
+echo '</span>';
+echo '<span class="dx-ticket-cont">';
+echo '<span class="dx-ticket-name">' . $row['name'] . '</span>';
+echo '<span class="dx-ticket-title h5">' . $row['title'] . '</span>';
+echo '<ul class="dx-ticket-info">';
+echo '<li>Update: ' . $row['date_updated'] . '</li>';
+echo '<li>Department: ' . $row['department_name'] . '</li>';
+echo '<li>Comments: ' . $row['comments'] . '</li>';
+
+// Display the "New" element if less than 24 hours
+if ($hoursDifference < 24) {
+echo '<li class="dx-ticket-new">New</li>';
 }
 
+echo '</ul>';
+echo '</span>';
+echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
+echo '</a>';
+}
 
 // Close the database connection
 mysqli_close($conn);

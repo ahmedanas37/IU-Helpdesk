@@ -58,7 +58,7 @@ if (isset($_POST['ticketSubmitted2'])) {
   // Execute query and check if successful
   if (mysqli_query($conn, $sql)) {
     // Redirect to success page or display success message
-    header("Location: success.php");
+    header("Location: ticket.php");
     exit();
   } else {
     // Redirect to error page or display error message
@@ -150,31 +150,56 @@ function time_elapsed_string($datetime, $full = false) {
 
 
 
-
-
 // Check if the form has been submitted
 if (isset($_POST['submitComment'])) {
-
-
   // Get the comment text from the form
-    $comment_text = $_POST['comment_text'];
-    // echo $comment_text;
+  $comment_text = $_POST['comment_text'];
+  $current_user_id = $_POST['current_user_id'];
+  $ticket_id = $_POST['ticket_id'];
+  $date_added = date('Y-m-d H:i:s');
+
+  // Insert the new comment into the database
+  $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
+  mysqli_query($conn, $sql);
+
+  // Get the ID of the inserted comment
+  $comment_id = mysqli_insert_id($conn);
 
 
+ 
+
+  // Handle file uploads
+  if (isset($_FILES['attachment'])) {
+      $fileCount = count($_FILES['attachment']['name']);
+
+      for ($i = 0; $i < $fileCount; $i++) {
+          $fileName = $_FILES['attachment']['name'][$i];
+          $fileTmpPath = $_FILES['attachment']['tmp_name'][$i];
+          $fileType = $_FILES['attachment']['type'][$i];
+
+          // Generate a unique file name or use the original file name
+          $uniqueFileName = uniqid() . '_' . $fileName;
+
+          // Set the file path where you want to store the uploaded file
+          $destination = 'C:\xampp\htdocs\project\uploads' . $uniqueFileName;
+
+          // Move the uploaded file to the desired directory
+          if (move_uploaded_file($fileTmpPath, $destination)) {
+              // Insert attachment into the database
+              $attachmentSql = "INSERT INTO attachments (comment_id, file_name, file_path, created_at) VALUES ('$comment_id', '$fileName', '$destination', '$date_added')";
+              mysqli_query($conn, $attachmentSql);
+          }
+      }
+  }
 
 
-    $current_user_id=$_POST['current_user_id'];
-    $ticket_id=$_POST['ticket_id'];
-    $date_added=date('Y-m-d H:i:s');
+  if ($_FILES['attachment']['error'][$i] !== UPLOAD_ERR_OK) {
+    echo 'File upload error: ' . $_FILES['attachment']['error'][$i];
+}
 
-    // Insert the new comment into the database
-    $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
-
-    mysqli_query($conn, $sql);
-
-    // Redirect the user back to the ticket page
-    header("Location: ticket-details.php?ticket_id=$ticket_id");
-    exit();
+  // Redirect the user back to the ticket page
+  header("Location: ticket-details.php?ticket_id=$ticket_id");
+  exit();
 }
 
 

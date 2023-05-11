@@ -705,7 +705,7 @@ include ('php_scripts\header.php');
                             <div class="dx-box-1">
                                 <h2 class="text-white">Visit IU Service Desk</h2>
                                 <p class="text-white op-8">Get the support you need - visit the IU Service Desk.</p>
-                                <a href="help-center.html" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
+                                <a href="ticket-submit-1.php" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
                             </div>
                         </div>
                     </div>

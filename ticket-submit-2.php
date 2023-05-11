@@ -210,7 +210,7 @@ include ('php_scripts\header.php');
                         </form> -->
                         <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
                             <div class="col-auto dx-dropzone-attachment-add">
-                                <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
+                                <!-- <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label> -->
                             </div>
                             <div class="col-auto dx-dropzone-attachment-btn">
                                 <button type="submit" class="dx-btn dx-btn-lg" name="ticketSubmitted2">Submit Ticket</button>
