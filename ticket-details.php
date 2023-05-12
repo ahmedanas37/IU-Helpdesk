@@ -269,10 +269,51 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
                         </div>
  -->
 
+
+
+
+
+ <div class="dx-blog-post-box">
+    <h3 class="h6 mb-25">Write a Reply</h3>
+
+    <form class="dx-form" action="your_php_script.php" method="POST" enctype="multipart/form-data">
+        <div class="dx-form-group">
+            <div class="dx-editor-quill">
+                <div class="dx-editor" name="comment-edit" data-editor-height="150" data-editor-maxHeight="250"></div>
+            </div>
+        </div>
+        <div class="dx-form-group">
+            <div class="dx-dropzone" data-dropzone-action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
+                <div class="dz-message">
+                    <div class="dx-dropzone-icon">
+                        <span class="icon pe-7s-cloud-upload"></span>
+                    </div>
+                    <div class="h6 dx-dropzone-title">Drop files here or click to upload</div>
+                    <div class="dx-dropzone-text">
+                        <p class="mnb-5 mnt-1">You can upload up to 5 files (maximum 5 MB each) of the following types: .jpg, .jpeg, .png, .zip.</p>
+                    </div>
+                </div>
+                <input type="file" name="attachment[]" multiple>
+            </div>
+            <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
+                <div class="col-auto dx-dropzone-attachment-add">
+                    <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
+                </div>
+                <div class="col-auto dx-dropzone-attachment-btn">
+                    <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="comment-input">
+        <input type="hidden" name="current_user_id" value=<?php echo $_SESSION['userid'];?>>
+        <input type="hidden" name="ticket_id" value=<?php echo $_GET['ticket_id'];?>>
+    </form>
+</div>
+
+
+
                         
-                        <div class="dx-separator mnt-1"></div>
-
-
+                        <!-- <div class="dx-separator mnt-1"></div>
 
                         <div class="dx-blog-post-box">
   <h3 class="h6 mb-25">Write a Reply</h3>
@@ -283,43 +324,21 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
       </div>
     </div>
     <div class="dx-form-group">
-      <input type="hidden" name="current_user_id" value="<?php echo $_SESSION['userid']; ?>">
-      <input type="hidden" name="ticket_id" value="<?php echo $_GET['ticket_id']; ?>">
+      <input type="hidden" name="current_user_id" value="">
+      <input type="hidden" name="ticket_id" value="">
       <input type="hidden" name="comment_text" id="comment-input">
     </div>
     <div class="dx-form-group">
-      <div class="dx-dropzone" data-dropzone-action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
-        <div class="dz-message">
-          <div class="dx-dropzone-icon">
-            <span class="icon pe-7s-cloud-upload"></span>
-          </div>
-          <div class="h6 dx-dropzone-title">Drop files here or click to upload</div>
-          <div class="dx-dropzone-text">
-            <p class="mnb-5 mnt-1">You can upload up to 5 files (maximum 5 MB each) of the following types: .jpg, .jpeg, .png, .zip.</p>
-          </div>
-        </div>
-        
-        <input class="dx-dropzone-input" type="file" name="attachment[]" multiple>
-
-        <div>
-    <input type="file" name="attachment[]" multiple>
-
-  </div>
-      </div>
-      <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
-        <div class="col-auto dx-dropzone-attachment-add">
-          <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
-        </div>
-        <div class="col-auto dx-dropzone-attachment-btn">
-          <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Add Reply</button>
-        </div>
+      <div class="dx-dropzone-attachment">
+        <label class="mb-0 mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
+        <input type="file" name="attachment[]" multiple>
       </div>
     </div>
+    <div class="dx-form-group">
+      <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Add Reply</button>
+    </div>
   </form>
-</div>
-
-
-
+</div> -->
 
 
 

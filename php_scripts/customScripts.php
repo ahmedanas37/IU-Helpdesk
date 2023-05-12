@@ -167,39 +167,37 @@ if (isset($_POST['submitComment'])) {
 
 
  
+// Handle file uploads
+if (isset($_FILES['attachment'])) {
+  $fileCount = count($_FILES['attachment']['name']);
 
-  // Handle file uploads
-  if (isset($_FILES['attachment'])) {
-      $fileCount = count($_FILES['attachment']['name']);
+  for ($i = 0; $i < $fileCount; $i++) {
+      $fileName = $_FILES['attachment']['name'][$i];
+      $fileTmpPath = $_FILES['attachment']['tmp_name'][$i];
+      $fileType = $_FILES['attachment']['type'][$i];
+      $fileError = $_FILES['attachment']['error'][$i];
 
-      for ($i = 0; $i < $fileCount; $i++) {
-          $fileName = $_FILES['attachment']['name'][$i];
-          $fileTmpPath = $_FILES['attachment']['tmp_name'][$i];
-          $fileType = $_FILES['attachment']['type'][$i];
+      // Check if a file was selected for upload
+      if ($fileError === UPLOAD_ERR_NO_FILE) {
+        echo 'Failed to upload file';
+      }
 
-          // Generate a unique file name or use the original file name
-          $uniqueFileName = uniqid() . '_' . $fileName;
+      // Generate a unique file name or use the original file name
+      $uniqueFileName = uniqid() . '_' . $fileName;
 
-          // Set the file path where you want to store the uploaded file
-          $destination = 'C:\xampp\htdocs\project\uploads' . $uniqueFileName;
+      // Set the file path where you want to store the uploaded file
+      $destination = 'uploads/' . $uniqueFileName;
 
-          // Move the uploaded file to the desired directory
-          if (move_uploaded_file($fileTmpPath, $destination)) {
-              // Insert attachment into the database
-              $attachmentSql = "INSERT INTO attachments (comment_id, file_name, file_path, created_at) VALUES ('$comment_id', '$fileName', '$destination', '$date_added')";
-              mysqli_query($conn, $attachmentSql);
-          }
+      // Move the uploaded file to the desired directory
+      if (move_uploaded_file($fileTmpPath, $destination)) {
+          // Insert attachment into the database
+          $attachmentSql = "INSERT INTO attachments (comment_id, file_name, file_path, created_at) VALUES ('$comment_id', '$fileName', '$destination', '$date_added')";
+          mysqli_query($conn, $attachmentSql);
+      } else {
+          echo 'Failed to move the uploaded file.';
       }
   }
-
-
-  if ($_FILES['attachment']['error'][$i] !== UPLOAD_ERR_OK) {
-    echo 'File upload error: ' . $_FILES['attachment']['error'][$i];
 }
-
-  // Redirect the user back to the ticket page
-  header("Location: ticket-details.php?ticket_id=$ticket_id");
-  exit();
 }
 
 
