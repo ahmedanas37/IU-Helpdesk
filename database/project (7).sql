@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2023 at 11:34 PM
+-- Generation Time: May 20, 2023 at 01:03 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -35,6 +35,15 @@ CREATE TABLE `attachments` (
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `attachments`
+--
+
+INSERT INTO `attachments` (`id`, `comment_id`, `file_name`, `file_path`, `created_at`) VALUES
+(11, 108, 'attachments.sql', 'uploads/6467eadc75952_attachments.sql', '2023-05-19 23:32:12'),
+(12, 109, 'Hanbal-A.pdf', 'uploads/6467ecc31aebf_Hanbal-A.pdf', '2023-05-19 23:40:19'),
+(13, 110, 'file-svgrepo-com (1).svg', 'uploads/6467fdbe943e0_file-svgrepo-com (1).svg', '2023-05-20 00:52:46');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +57,15 @@ CREATE TABLE `comments` (
   `comment` text NOT NULL,
   `date_added` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `ticket_id`, `user_id`, `comment`, `date_added`) VALUES
+(108, 3497, 1, '<p>gnkgkgk</p>', '2023-05-19 23:32:12'),
+(109, 3497, 1, '<p>ag</p>', '2023-05-19 23:40:19'),
+(110, 3502, 1, '<p>rjrj</p>', '2023-05-20 00:52:46');
 
 -- --------------------------------------------------------
 
@@ -143,7 +161,36 @@ INSERT INTO `ticket` (`id`, `title`, `ticket_description`, `date_added`, `date_u
 (3493, 'Google Workspace ', '', '2023-05-10 19:00:57', '2023-05-10 19:00:57', 1, 1, 0, 'Open'),
 (3494, 'Slack', '<p>Slack not working at all, please look into this.</p>', '2023-05-10 19:06:38', '2023-05-10 19:06:38', 1, 1, 0, 'Open'),
 (3495, 'fjdjdj', '<p>djkdtjkdj</p>', '2023-05-10 19:10:30', '2023-05-10 19:10:30', 1, 1, 0, 'Open'),
-(3496, 'AC Ducts', '<p>AC Ducts Need to be serviced at once.</p>', '2023-05-11 21:04:21', '2023-05-11 21:04:21', 3, 3, 0, 'Open');
+(3496, 'AC Ducts', '<p>AC Ducts Need to be serviced at once.</p>', '2023-05-11 21:04:21', '2023-05-11 21:04:21', 3, 3, 0, 'Open'),
+(3497, 'Fumigation Request', '<p>Rodents detected in the vicinity, Please get it fumigated.</p>', '2023-05-19 21:31:27', '2023-05-19 21:31:27', 3, 3, 0, 'Open'),
+(3498, 'SVG Error', '<p>gdj</p>', '2023-05-20 00:40:58', '2023-05-20 00:40:58', 1, 1, 0, 'Open'),
+(3499, '', '<p>fsdh</p>', '2023-05-20 00:45:27', '2023-05-20 00:45:27', 1, 1, 0, 'Open'),
+(3500, '', '<p>fgfj</p>', '2023-05-20 00:48:05', '2023-05-20 00:48:05', 1, 1, 0, 'Open'),
+(3501, 'awegaweg', '<p>agag</p>', '2023-05-20 00:51:35', '2023-05-20 00:51:35', 1, 1, 0, 'Open'),
+(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Open');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_attachments`
+--
+
+CREATE TABLE `ticket_attachments` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ticket_id` int(10) UNSIGNED NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ticket_attachments`
+--
+
+INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `file_name`, `file_path`, `created_at`) VALUES
+(1, 3500, 'Hanbal-A.pdf', 'uploadsHanbal-A.pdf', '2023-05-20 00:48:05'),
+(2, 3501, 'Hanbal-A.pdf', 'uploads/6467fd7731dee.pdf', '2023-05-20 00:51:35'),
+(3, 3502, 'ticket (1).sql', 'uploads/6467fd97d826c.sql', '2023-05-20 00:52:07');
 
 -- --------------------------------------------------------
 
@@ -235,6 +282,13 @@ ALTER TABLE `ticket`
   ADD KEY `department_id` (`department_id`);
 
 --
+-- Indexes for table `ticket_attachments`
+--
+ALTER TABLE `ticket_attachments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ticket_id` (`ticket_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -257,13 +311,13 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -287,7 +341,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3497;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3503;
+
+--
+-- AUTO_INCREMENT for table `ticket_attachments`
+--
+ALTER TABLE `ticket_attachments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -325,6 +385,12 @@ ALTER TABLE `role_permission`
 ALTER TABLE `ticket`
   ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`);
+
+--
+-- Constraints for table `ticket_attachments`
+--
+ALTER TABLE `ticket_attachments`
+  ADD CONSTRAINT `ticket_attachments_ibfk_1` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user`
