@@ -177,12 +177,43 @@ $ticket_details = mysqli_fetch_assoc($result);
                                     <div class="dx-comment-text">
                                         <p class="mb-0"><?php echo $ticket_details['ticket_description'];?></p>
                                     </div>
-                                    <a href="#" class="dx-comment-file dx-comment-file-jpg">
-                                        <span class="dx-comment-file-img"><img src="assets\images\file-svgrepo-com (1).svg" alt="" width="36"></span>
-                                        <span class="dx-comment-file-name">example-file.jpg</span>
-                                        <span class="dx-comment-file-size">4.8 MB</span>
-                                        <span class="dx-comment-file-icon"><span class="icon pe-7s-download"></span></span>
-                                    </a>
+                                  
+                                  <?php 
+                                   // Fetch ticket attachments from the database
+$attachmentSql = "SELECT * FROM ticket_attachments WHERE ticket_id = '$ticket_id'";
+$attachmentResult = mysqli_query($conn, $attachmentSql);
+
+// Check if there are any attachments
+if (mysqli_num_rows($attachmentResult) > 0) {
+  while ($attachmentRow = mysqli_fetch_assoc($attachmentResult)) {
+    $attachmentName = $attachmentRow['file_name'];
+    $attachmentPath = $attachmentRow['file_path'];
+    if (!function_exists('formatBytes')) {
+        // Helper function to format file size in a human-readable format
+        function formatBytes($bytes, $precision = 2) {
+            $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+            $bytes = max($bytes, 0);
+            $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+            $pow = min($pow, count($units) - 1);
+
+            $bytes /= (1 << (10 * $pow));
+
+            return round($bytes, $precision) . ' ' . $units[$pow];
+        }
+    }
+    $ticketattachmentSize = formatBytes(filesize($attachmentPath));
+
+    // Display the attachment in HTML
+    echo '<a href="' . $attachmentPath . '" class="dx-comment-file dx-comment-file-jpg">';
+    echo '<span class="dx-comment-file-img"><img src="assets\images\file-svgrepo-com (1).svg" alt="" width="36"></span>';
+    echo '<span class="dx-comment-file-name">' . $attachmentName . '</span>';
+    echo '<span class="dx-comment-file-size">' . $ticketattachmentSize . '</span>';
+    echo '</a>';
+  }
+}
+
+                                   ?>
                                 </div>
                             </div>
                         </div>
