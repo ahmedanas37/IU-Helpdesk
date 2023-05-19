@@ -178,7 +178,7 @@ $ticket_details = mysqli_fetch_assoc($result);
                                         <p class="mb-0"><?php echo $ticket_details['ticket_description'];?></p>
                                     </div>
                                     <a href="#" class="dx-comment-file dx-comment-file-jpg">
-                                        <span class="dx-comment-file-img"><img src="assets/images/icon-jpg.svg" alt="" width="36"></span>
+                                        <span class="dx-comment-file-img"><img src="assets\images\file-svgrepo-com (1).svg" alt="" width="36"></span>
                                         <span class="dx-comment-file-name">example-file.jpg</span>
                                         <span class="dx-comment-file-size">4.8 MB</span>
                                         <span class="dx-comment-file-icon"><span class="icon pe-7s-download"></span></span>
@@ -219,12 +219,76 @@ if ($ticket_details['comment_count'] > 0) {
                     <!-- ------------------------------------------------------- -->
                     <?php echo $comment['user_name'];?>
                     <span class="dx-comment-replied">Replied</span>
-                    <span class="dx-comment-new">New</span>
+
+
+                    <?php 
+                   
+                   $timeDiff = time() - strtotime($comment['date_added']);
+
+                        // Check if the time difference is less than 24 hours (86400 seconds)
+                        if ($timeDiff < 86400) {
+                            // Display the "New" tag
+                            echo '<span class="dx-comment-new">New</span>';
+                        }
+                    
+
+                    ?>
+
+
                 </a>
                 <div class="dx-comment-date"><?php echo  time_elapsed_string($comment['date_added']);?></div>
                 <div class="dx-comment-text">
                     <p class="mb-0"><?php echo $comment['comment'];?></p>
                 </div>
+              
+                <?php
+// Assuming you have a database connection established
+$commentId = $comment['id']; // The comment_id associated with the attachments
+
+// Query the attachments table to get the relevant attachments for the given comment_id
+$query = "SELECT * FROM attachments WHERE comment_id = '$commentId'";
+$result = mysqli_query($conn, $query);
+
+// Check if any attachments are found
+if (mysqli_num_rows($result) > 0) {
+    // Check if the formatBytes() function is already defined
+    if (!function_exists('formatBytes')) {
+        // Helper function to format file size in a human-readable format
+        function formatBytes($bytes, $precision = 2) {
+            $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+            $bytes = max($bytes, 0);
+            $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+            $pow = min($pow, count($units) - 1);
+
+            $bytes /= (1 << (10 * $pow));
+
+            return round($bytes, $precision) . ' ' . $units[$pow];
+        }
+    }
+
+    // Loop through the result and generate the dynamic HTML for each attachment
+    while ($row = mysqli_fetch_assoc($result)) {
+        $attachmentName = $row['file_name'];
+        $filePath = $row['file_path'];
+
+        // Get the file size using the filesize() function
+        $attachmentSize = formatBytes(filesize($filePath));
+
+        // Get the file extension
+        $fileExtension = pathinfo($attachmentName, PATHINFO_EXTENSION);
+
+        // Generate the dynamic HTML for each attachment
+        echo '<a href="' . $filePath . '" class="dx-comment-file">';
+        echo '<span class="dx-comment-file-img">';
+        echo '<img src="assets\images\file-svgrepo-com (1).svg" alt="" width="36"></span>';
+        echo '<span class="dx-comment-file-name">' . $attachmentName . '</span>';
+        echo '<span class="dx-comment-file-size">' . $attachmentSize . '</span>';
+        echo '</a>';
+    }
+}
+?>
+
             </div>
         </div>
     </div>
@@ -272,42 +336,36 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
 
 
 
-
  <div class="dx-blog-post-box">
-    <h3 class="h6 mb-25">Write a Reply</h3>
+  <h3 class="h6 mb-25">Write a Reply</h3>
 
-    <form class="dx-form" action="your_php_script.php" method="POST" enctype="multipart/form-data">
-        <div class="dx-form-group">
-            <div class="dx-editor-quill">
-                <div class="dx-editor" name="comment-edit" data-editor-height="150" data-editor-maxHeight="250"></div>
-            </div>
-        </div>
-        <div class="dx-form-group">
-            <div class="dx-dropzone" data-dropzone-action="#" data-dropzone-maxMB="5" data-dropzone-maxFiles="5">
-                <div class="dz-message">
-                    <div class="dx-dropzone-icon">
-                        <span class="icon pe-7s-cloud-upload"></span>
-                    </div>
-                    <div class="h6 dx-dropzone-title">Drop files here or click to upload</div>
-                    <div class="dx-dropzone-text">
-                        <p class="mnb-5 mnt-1">You can upload up to 5 files (maximum 5 MB each) of the following types: .jpg, .jpeg, .png, .zip.</p>
-                    </div>
-                </div>
-                <input type="file" name="attachment[]" multiple>
-            </div>
-            <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
-                <div class="col-auto dx-dropzone-attachment-add">
-                    <label class="mb-0" class="mnt-7"><span class="icon fas fa-paperclip mr-10"></span><span>Add Attachment</span></label>
-                </div>
-                <div class="col-auto dx-dropzone-attachment-btn">
-                    <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
-                </div>
-            </div>
-        </div>
-        <input type="hidden" name="comment-input">
-        <input type="hidden" name="current_user_id" value=<?php echo $_SESSION['userid'];?>>
-        <input type="hidden" name="ticket_id" value=<?php echo $_GET['ticket_id'];?>>
-    </form>
+  
+  <form class="dx-form" method="POST" action="#" enctype="multipart/form-data">
+    <div class="dx-form-group">
+      <div id="comment-editor" class="dx-editor-quill">
+        <div class="dx-editor" data-editor-height="150" data-editor-maxHeight="250"></div>
+      </div>
+      <textarea id="comment-input" name="comment_text" style="display: none;"></textarea>
+    </div>
+    <div class="dx-form-group">
+    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+    </input>
+
+    </div>
+
+   
+<div class="row justify-content-between vertical-gap dx-dropzone-attachment">
+  <div class="col-auto dx-dropzone-attachment-add">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="file-upload" name="attachment[]">
+    <label class="custom-file-label" for="file-upload">Choose File</label>
+  </div>
+  </div>
+  <div class="col-auto dx-dropzone-attachment-btn">
+    <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
+  </div>
+</div>
+</form>
 </div>
 
 
@@ -471,16 +529,17 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
 include ('php_scripts\footer.php');
 
  ?>
-<script>
-
+ <script>
 window.onload = function() {
-    var quill = new Quill('#comment-editor');
+    var quill = new Quill('.dx-editor');
+
+   
+    
     var commentInput = document.getElementById('comment-input');
     quill.on('text-change', function() {
         commentInput.value = quill.root.innerHTML;
     });
 };
-
 </script>
 
 

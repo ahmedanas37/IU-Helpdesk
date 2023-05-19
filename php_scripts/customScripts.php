@@ -39,37 +39,80 @@ if(isset($_POST['btnLogin'])){
     $conn->close();
 }
 
-
 if (isset($_POST['ticketSubmitted2'])) {
-  // Get form data
-  $title = $_POST['title'];
-  $description = $_POST['description'];
-  $date_added = date('Y-m-d H:i:s'); // Current date and time
-  $date_updated = date('Y-m-d H:i:s'); // Current date and time
-  $user_id = $_SESSION['userid'];
-  $department_id = $_POST['category_id'];
-  $comments=0;
-  $status='Open';
+    // Get form data
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $date_added = date('Y-m-d H:i:s'); // Current date and time
+    $date_updated = date('Y-m-d H:i:s'); // Current date and time
+    $user_id = $_SESSION['userid'];
+    $department_id = $_POST['category_id'];
+    $comments = 0;
+    $status = 'Open';
+  
+    // Prepare SQL statement for inserting ticket
+    $sql = "INSERT INTO ticket (title, ticket_description, date_added, date_updated, user_id, department_id, comments, ticket_status)
+            VALUES ('$title', '$description', '$date_added', '$date_updated', '$user_id', '$department_id', '$comments', '$status')";
+  
+    // Execute query and check if successful
+    if (mysqli_query($conn, $sql)) {
+      // Get the ID of the inserted ticket
+      $ticketId = mysqli_insert_id($conn);
+  
+      // Upload attachments
+      // ...
 
-  // Prepare SQL statement
-  $sql = "INSERT INTO ticket (title, ticket_description, date_added, date_updated, user_id, department_id, comments, ticket_status)
-          VALUES ('$title', '$description', '$date_added', '$date_updated', '$user_id', '$department_id', '$comments', '$status')";
+// Upload attachments
+$attachments = $_FILES['attachments'];
+$attachmentCount = count($attachments['name']);
 
-  // Execute query and check if successful
-  if (mysqli_query($conn, $sql)) {
-    // Redirect to success page or display success message
-    header("Location: ticket.php");
-    exit();
+// Directory to store uploaded files
+$uploadDirectory = 'uploads/';
+
+for ($i = 0; $i < $attachmentCount; $i++) {
+  $attachmentName = $attachments['name'][$i];
+  $attachmentSize = $attachments['size'][$i];
+  $attachmentTmpName = $attachments['tmp_name'][$i];
+  $attachmentError = $attachments['error'][$i];
+
+  if ($attachmentError === UPLOAD_ERR_OK) {
+    // Generate a unique filename for better referencing
+    $randomName = uniqid();
+    $fileExtension = pathinfo($attachmentName, PATHINFO_EXTENSION);
+    $attachmentPath = $uploadDirectory . $randomName . '.' . $fileExtension;
+
+    // Move the uploaded file to the upload directory with the unique filename
+    move_uploaded_file($attachmentTmpName, $attachmentPath);
+
+    // Prepare SQL statement for inserting attachment
+    $attachmentSql = "INSERT INTO ticket_attachments (ticket_id, file_name, file_path, created_at)
+                      VALUES ('$ticketId', '$attachmentName', '$attachmentPath', '$date_added' )";
+
+    // Execute query and check if successful
+    if (!mysqli_query($conn, $attachmentSql)) {
+      // Handle attachment insert error
+    }
   } else {
-    // Redirect to error page or display error message
-    header("Location: error.php");
-    exit();
+    // Handle attachment upload error
   }
-
-  // Close database connection
-  mysqli_close($conn);
 }
 
+// ...
+
+  
+      // Redirect to success page or display success message
+      header("Location: ticket.php");
+      exit();
+    } else {
+      // Redirect to error page or display error message
+      header("Location: error.php");
+      exit();
+    }
+  
+    // Close database connection
+    mysqli_close($conn);
+  }
+  
 
 
 
@@ -148,56 +191,54 @@ function time_elapsed_string($datetime, $full = false) {
   return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-
-
 // Check if the form has been submitted
 if (isset($_POST['submitComment'])) {
-  // Get the comment text from the form
-  $comment_text = $_POST['comment_text'];
-  $current_user_id = $_POST['current_user_id'];
-  $ticket_id = $_POST['ticket_id'];
-  $date_added = date('Y-m-d H:i:s');
+    // Get the comment text from the form
+    $comment_text = $_POST['comment_text'];
+    $current_user_id = $_SESSION['userid'];
+    $ticket_id = $_POST['ticket_id'];
+    $date_added = date('Y-m-d H:i:s');
 
-  // Insert the new comment into the database
-  $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
-  mysqli_query($conn, $sql);
+    // Insert the new comment into the database
+    $sql = "INSERT INTO comments (ticket_id, user_id, comment, date_added) VALUES ('$ticket_id', '$current_user_id', '$comment_text', '$date_added')";
+    if (mysqli_query($conn, $sql)) {
+        // Get the ID of the inserted comment
+        $comment_id = mysqli_insert_id($conn);
 
-  // Get the ID of the inserted comment
-  $comment_id = mysqli_insert_id($conn);
+        // Handle file uploads
+        if (isset($_FILES['attachment'])) {
+            $fileCount = count($_FILES['attachment']['name']);
 
+            for ($i = 0; $i < $fileCount; $i++) {
+                $fileName = $_FILES['attachment']['name'][$i];
+                $fileTmpPath = $_FILES['attachment']['tmp_name'][$i];
+                $fileType = $_FILES['attachment']['type'][$i];
+                $fileError = $_FILES['attachment']['error'][$i];
 
- 
-// Handle file uploads
-if (isset($_FILES['attachment'])) {
-  $fileCount = count($_FILES['attachment']['name']);
+                // Check if a file was selected for upload
+                if ($fileError === UPLOAD_ERR_NO_FILE) {
+                    echo 'Failed to upload file';
+                } else {
+                    // Generate a unique file name or use the original file name
+                    $uniqueFileName = uniqid() . '_' . $fileName;
 
-  for ($i = 0; $i < $fileCount; $i++) {
-      $fileName = $_FILES['attachment']['name'][$i];
-      $fileTmpPath = $_FILES['attachment']['tmp_name'][$i];
-      $fileType = $_FILES['attachment']['type'][$i];
-      $fileError = $_FILES['attachment']['error'][$i];
+                    // Set the file path where you want to store the uploaded file
+                    $destination = 'uploads/' . $uniqueFileName;
 
-      // Check if a file was selected for upload
-      if ($fileError === UPLOAD_ERR_NO_FILE) {
-        echo 'Failed to upload file';
-      }
-
-      // Generate a unique file name or use the original file name
-      $uniqueFileName = uniqid() . '_' . $fileName;
-
-      // Set the file path where you want to store the uploaded file
-      $destination = 'uploads/' . $uniqueFileName;
-
-      // Move the uploaded file to the desired directory
-      if (move_uploaded_file($fileTmpPath, $destination)) {
-          // Insert attachment into the database
-          $attachmentSql = "INSERT INTO attachments (comment_id, file_name, file_path, created_at) VALUES ('$comment_id', '$fileName', '$destination', '$date_added')";
-          mysqli_query($conn, $attachmentSql);
-      } else {
-          echo 'Failed to move the uploaded file.';
-      }
-  }
-}
+                    // Move the uploaded file to the desired directory
+                    if (move_uploaded_file($fileTmpPath, $destination)) {
+                        // Insert attachment into the database
+                        $attachmentSql = "INSERT INTO attachments (comment_id, file_name, file_path, created_at) VALUES ('$comment_id', '$fileName', '$destination', '$date_added')";
+                        mysqli_query($conn, $attachmentSql);
+                    } else {
+                        echo 'Failed to move the uploaded file.';
+                    }
+                }
+            }
+        }
+    } else {
+        echo 'Error inserting comment: ' . mysqli_error($conn);
+    }
 }
 
 
