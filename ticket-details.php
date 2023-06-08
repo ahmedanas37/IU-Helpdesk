@@ -133,7 +133,15 @@ $ticket_details = mysqli_fetch_assoc($result);
         <div class="row vertical-gap md-gap">
             <div class="col-lg-8">
                 <div class="dx-box dx-box-decorated">
-                    <div class="dx-blog-post dx-ticket dx-ticket-open">
+                <?php
+                $ticket_status=$ticket_details['ticket_status'];
+// Check if the ticket is closed
+if ($ticket_status === 'Closed') {
+    echo '<div class="dx-blog-post dx-ticket dx-ticket-closed">';
+} else {
+    echo '<div class="dx-blog-post dx-ticket dx-ticket-open">';
+}
+?>
                         <div class="dx-blog-post-box pt-30 pb-30">
                             <h2 class="h4 mnt-5 mb-9 dx-ticket-title"><?php echo $ticket_details['title'];?></h2>
                             
@@ -365,38 +373,39 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
  -->
 
 
-
-
  <div class="dx-blog-post-box">
   <h3 class="h6 mb-25">Write a Reply</h3>
-
   
-  <form class="dx-form" method="POST" action="#" enctype="multipart/form-data">
-    <div class="dx-form-group">
-      <div id="comment-editor" class="dx-editor-quill">
-        <div class="dx-editor" data-editor-height="150" data-editor-maxHeight="250"></div>
-      </div>
-      <textarea id="comment-input" name="comment_text" style="display: none;"></textarea>
-    </div>
-    <div class="dx-form-group">
-    <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
-    </input>
-
-    </div>
-
-   
-<div class="row justify-content-between vertical-gap dx-dropzone-attachment">
-  <div class="col-auto dx-dropzone-attachment-add">
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="file-upload" name="attachment[]">
-    <label class="custom-file-label" for="file-upload">Choose File</label>
-  </div>
-  </div>
-  <div class="col-auto dx-dropzone-attachment-btn">
-    <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
-  </div>
-</div>
-</form>
+  <?php
+  // Check if the ticket is closed
+  if ($ticket_status === 'Closed') {
+      echo '<p>The ticket is closed. You cannot submit a reply.</p>';
+  } else {
+      echo '
+        <form class="dx-form" method="POST" action="#" enctype="multipart/form-data">
+          <div class="dx-form-group">
+            <div id="comment-editor" class="dx-editor-quill">
+              <div class="dx-editor" data-editor-height="150" data-editor-maxHeight="250"></div>
+            </div>
+            <textarea id="comment-input" name="comment_text" style="display: none;"></textarea>
+          </div>
+          <div class="dx-form-group">
+            <input type="hidden" name="ticket_id" value="' . $ticket_id . '">
+          </div>
+          <div class="row justify-content-between vertical-gap dx-dropzone-attachment">
+            <div class="col-auto dx-dropzone-attachment-add">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file-upload" name="attachment[]">
+                <label class="custom-file-label" for="file-upload">Choose File</label>
+              </div>
+            </div>
+            <div class="col-auto dx-dropzone-attachment-btn">
+              <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
+            </div>
+          </div>
+        </form>';
+  }
+  ?>
 </div>
 
 
@@ -470,13 +479,23 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
     </div>
 </div>
 
-                    
-<div class="dx-widget dx-box dx-box-decorated">
-    <form action="#" class="dx-form dx-form-group-inputs">
-        <input type="text" name="" value="" class="form-control form-control-style-2" placeholder="Search...">
-        <button class="dx-btn dx-btn-lg dx-btn-grey dx-btn-grey-style-2 dx-btn-icon"><svg class="svg-inline--fa fa-search fa-w-16 icon" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg><!-- <span class="icon fas fa-search"></span> --></button>
-    </form>
+
+<div>
+    <div class="dx-widget dx-box dx-box-decorated">
+        <form method="post" class="dx-form dx-form-group-inputs" style="display: flex; justify-content: center; align-items: center;">
+        <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+        <input type="hidden" name="author_id" value="<?php echo $ticket_details['user_id']; ?>">
+
+        <?php if ($ticket_details['ticket_status'] == 'Open' && $ticket_details['user_id'] == $_SESSION['userid']) { ?>
+            <button class="dx-btn dx-btn-lg" type="submit" name="closeTicket">Close Ticket</button>
+        <?php } elseif ($ticket_details['ticket_status'] == 'Closed' && $ticket_details['user_id'] ==  $_SESSION['userid']) { ?>
+            <button class="dx-btn dx-btn-lg" type="submit" name="reopenTicket">Reopen Ticket</button>
+        <?php } ?>
+
+        </form>
+    </div>
 </div>
+
 
                     
 <div class="dx-widget dx-box dx-box-decorated">

@@ -167,51 +167,67 @@ include('php_scripts\database.php');
 
             
             <ul class="dx-nav dx-nav-align-right">
+                     <?php
 
 
-           
-             
-                
-               <!-- <li>
-                    <a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;">Log In</a>
-                </li>  -->
-                <!-- <li>
-                    <span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>
-                </li> -->
-
-             
-             
-                <?php
                 
                 if(isset($_SESSION['loggedin']) == true)
                 {
+
+                    
+                // Assuming you have a database connection established
+
+// Get the user's ID or any identifier for the logged-in user
+$userID = $_SESSION['userid'];
+
+
+// Query to count the number of notifications for the user
+$countQuery = "SELECT COUNT(*) AS notificationCount FROM notifications WHERE user_id = $userID";
+$result = mysqli_query($conn, $countQuery);
+$row = mysqli_fetch_assoc($result);
+$notificationCount = $row['notificationCount'];
+                    
+                    
+                    
                     echo('<li>
-                    <li>
                     <span><a href="ticket-submit-1.php" class="dx-btn dx-btn-md dx-btn-transparent">Raise an Issue</a></span>
                 </li>
-                    <div class="dropdown dx-dropdown dx-dropdown-signin">
-                  
 
-                       
+
+
+                
+                <li>
+                <!-- Notification Badge -->
+                <a class="dx-nav-icon" href="checkout.html">
+                    <span class="dx-nav-badge"> ' . $notificationCount . '</span>
+                    <span class="icon"><i class="fas fa-bell fa-lg"></i></span>
+                    </a>
+                
+            </li>
+
+            
+                
+                <div class="dropdown dx-dropdown dx-dropdown-signin">
                     <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="dx-nav-signin-img"><img src="assets/images/avatar-1.png" alt=""></span>
-                            <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
-                            <li>
-                                <a href="account-settings.php"><span class="icon pe-7s-user"></span> Account</a>
-                            </li>
-                           
-                           
-                            <li>
-                            <a href="php_scripts\logout.php"><span class="icon pe-7s-back"></span> Logout</a>
+                        <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
+                    </a>
 
 
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
+                        <li>
+                            <a href="account-settings.php"><span class="icon pe-7s-user"></span> Account</a>
+                        </li>
+                        
+                       
+                        
+                        <li>
+                            <a href="php_scripts/logout.php"><span class="icon pe-7s-back"></span> Logout</a>
+                        </li>
+                    </ul>
+                </div>
                 </li>');
-
+                
+                
 
                 }
 

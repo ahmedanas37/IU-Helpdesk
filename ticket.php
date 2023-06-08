@@ -162,7 +162,12 @@ $currentTime = time();
 $timeDifference = $currentTime - $dateCreated;
 $hoursDifference = round($timeDifference / (60 * 60));
 
-echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
+// Check if the ticket is closed
+if ($row['ticket_status'] === 'Closed') {
+    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-closed dx-block-decorated">';
+} else {
+    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
+}
 echo '<span class="dx-ticket-img">';
 echo '<img src="assets/images/avatar-1.png" alt="">';
 echo '</span>';

@@ -242,4 +242,64 @@ if (isset($_POST['submitComment'])) {
 }
 
 
+
+
+
+//ticket close
+if (isset($_POST['closeTicket'])) {
+  $ticketId = $_POST['ticket_id'];
+  $authorId = $_POST['author_id'];
+
+  try {
+    // Update ticket status to "closed"
+    $updateTicketQuery = "UPDATE ticket SET ticket_status = 'Closed' WHERE id = $ticketId";
+    mysqli_query($conn, $updateTicketQuery);
+
+    // Add notification for the author
+    $notificationMessage = "Your ticket (ID: $ticketId) has been closed.";
+    $addNotificationQuery = "INSERT INTO notifications (user_id, message, created_at) VALUES ($authorId, '$notificationMessage', NOW())";
+    mysqli_query($conn, $addNotificationQuery);
+
+    // Redirect after successful execution
+    header("Location: http://localhost/project/ticket.php");
+    exit;
+  } catch (Exception $e) {
+    // Handle any exceptions or errors here
+    echo "An error occurred: " . $e->getMessage();
+  }
+}
+
+
+
+
+// Reopen ticket
+if (isset($_POST['reopenTicket'])) {
+  $ticketId = $_POST['ticket_id'];
+  $authorId = $_POST['author_id'];
+
+  try {
+      // Update ticket status to "Open"
+      $updateTicketQuery = "UPDATE ticket SET ticket_status = 'Open' WHERE id = $ticketId";
+      mysqli_query($conn, $updateTicketQuery);
+
+      // Add notification for the author
+      $notificationMessage = "Your ticket (ID: $ticketId) has been reopened.";
+      $addNotificationQuery = "INSERT INTO notifications (user_id, message, created_at) VALUES ($authorId, '$notificationMessage', NOW())";
+      mysqli_query($conn, $addNotificationQuery);
+
+      // Redirect to ticket.php after successful reopening
+      header("Location: http://localhost/project/ticket.php");
+      exit;
+  } catch (Exception $e) {
+      // Handle any exceptions or errors here
+  }
+}
+
+
+
+
+
+
+
+
 ?>
