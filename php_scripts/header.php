@@ -195,17 +195,46 @@ $notificationCount = $row['notificationCount'];
 
 
 
-                
                 <li>
-                <!-- Notification Badge -->
-                <a class="dx-nav-icon" href="checkout.html">
-                    <span class="dx-nav-badge"> ' . $notificationCount . '</span>
-                    <span class="icon"><i class="fas fa-bell fa-lg"></i></span>
+                <div class="dropdown dx-dropdown dx-dropdown-checkout">
+                    <a class="dx-nav-icon" href="#" role="button" id="dropdownCheckout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="dx-nav-badge">'.$notificationCount.'</span>
+                        <span class="icon dx-icon-bag"></span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownCheckout">
+                    <table class="dx-table dx-table-checkout">
+                    <tbody>
+                        <?php
+                        // Fetch notifications from the database
+                        $notificationQuery = "SELECT * FROM notifications WHERE user_id = $user_id";
+                        $notificationResult = mysqli_query($conn, $notificationQuery);
                 
+                        // Loop through notifications and generate table rows
+                        while ($notification = mysqli_fetch_assoc($notificationResult)) {
+                            $notificationId = $notification['id'];
+                            $notificationTitle = $notification['title'];
+                            
+                            echo '
+                            <tr>
+                                <td class="dx-table-checkout-title">
+                                    <a href="notification-details.php?id=' . $notificationId . '">' . $notificationTitle . '</a>
+                                </td>
+                                <td class="dx-table-checkout-delete">
+                                    <a href="delete-notification.php?id=' . $notificationId . '"><span class="icon pe-7s-close"></span></a>
+                                </td>
+                            </tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                
+                       
+                        <div class="dx-box-content">
+                            <a href="checkout.html" class="dx-btn dx-btn-md dx-btn-block">Clear All Notifications</a>
+                        </div>
+                    </div>
+                </div>
             </li>
-
-            
                 
                 <div class="dropdown dx-dropdown dx-dropdown-signin">
                     <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -430,12 +459,7 @@ $notificationCount = $row['notificationCount'];
             
             <ul class="dx-nav dx-nav-align-right">
                 
-                <li>
-                    <a class="dx-nav-icon" href="checkout.html">
-                        <span class="dx-nav-badge">2</span>
-                        <span class="icon dx-icon-bag"></span>
-                    </a>
-                </li>
+               
                 <li>
                     <a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;">Log In</a>
                 </li>

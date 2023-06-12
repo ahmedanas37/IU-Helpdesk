@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2023 at 01:03 AM
+-- Generation Time: Jun 12, 2023 at 03:02 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -42,7 +42,8 @@ CREATE TABLE `attachments` (
 INSERT INTO `attachments` (`id`, `comment_id`, `file_name`, `file_path`, `created_at`) VALUES
 (11, 108, 'attachments.sql', 'uploads/6467eadc75952_attachments.sql', '2023-05-19 23:32:12'),
 (12, 109, 'Hanbal-A.pdf', 'uploads/6467ecc31aebf_Hanbal-A.pdf', '2023-05-19 23:40:19'),
-(13, 110, 'file-svgrepo-com (1).svg', 'uploads/6467fdbe943e0_file-svgrepo-com (1).svg', '2023-05-20 00:52:46');
+(13, 110, 'file-svgrepo-com (1).svg', 'uploads/6467fdbe943e0_file-svgrepo-com (1).svg', '2023-05-20 00:52:46'),
+(14, 111, 'Core Temp.exe', 'uploads/647f8ce389d4d_Core Temp.exe', '2023-06-06 21:45:39');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,8 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`id`, `ticket_id`, `user_id`, `comment`, `date_added`) VALUES
 (108, 3497, 1, '<p>gnkgkgk</p>', '2023-05-19 23:32:12'),
 (109, 3497, 1, '<p>ag</p>', '2023-05-19 23:40:19'),
-(110, 3502, 1, '<p>rjrj</p>', '2023-05-20 00:52:46');
+(110, 3502, 1, '<p>rjrj</p>', '2023-05-20 00:52:46'),
+(111, 3502, 1, '<p>Done</p>', '2023-06-06 21:45:39');
 
 -- --------------------------------------------------------
 
@@ -88,6 +90,32 @@ CREATE TABLE `departments` (
 INSERT INTO `departments` (`id`, `name`, `description`, `date_added`, `admin_id`) VALUES
 (1, 'IT', 'IT department of IQRA University', NULL, 0),
 (3, 'Admin', 'Facilitation & Administration Department of IU.', '2023-05-12', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `message`, `is_read`, `created_at`) VALUES
+(3, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-07 23:59:47'),
+(4, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-07 23:59:55'),
+(5, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-08 00:00:06'),
+(6, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-08 00:00:27'),
+(7, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-08 00:26:27'),
+(8, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-08 00:26:31');
 
 -- --------------------------------------------------------
 
@@ -167,7 +195,7 @@ INSERT INTO `ticket` (`id`, `title`, `ticket_description`, `date_added`, `date_u
 (3499, '', '<p>fsdh</p>', '2023-05-20 00:45:27', '2023-05-20 00:45:27', 1, 1, 0, 'Open'),
 (3500, '', '<p>fgfj</p>', '2023-05-20 00:48:05', '2023-05-20 00:48:05', 1, 1, 0, 'Open'),
 (3501, 'awegaweg', '<p>agag</p>', '2023-05-20 00:51:35', '2023-05-20 00:51:35', 1, 1, 0, 'Open'),
-(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Open');
+(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Closed');
 
 -- --------------------------------------------------------
 
@@ -255,6 +283,14 @@ ALTER TABLE `departments`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `is_read` (`is_read`);
+
+--
 -- Indexes for table `permission`
 --
 ALTER TABLE `permission`
@@ -311,19 +347,25 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `attachments`
 --
 ALTER TABLE `attachments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `permission`
