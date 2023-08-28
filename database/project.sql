@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2023 at 03:02 AM
+-- Generation Time: Aug 28, 2023 at 05:40 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -67,7 +67,9 @@ INSERT INTO `comments` (`id`, `ticket_id`, `user_id`, `comment`, `date_added`) V
 (108, 3497, 1, '<p>gnkgkgk</p>', '2023-05-19 23:32:12'),
 (109, 3497, 1, '<p>ag</p>', '2023-05-19 23:40:19'),
 (110, 3502, 1, '<p>rjrj</p>', '2023-05-20 00:52:46'),
-(111, 3502, 1, '<p>Done</p>', '2023-06-06 21:45:39');
+(111, 3502, 1, '<p>Done</p>', '2023-06-06 21:45:39'),
+(112, 3503, 1, '', '2023-08-24 21:03:24'),
+(113, 3503, 1, '<p>ryjrj</p>', '2023-08-24 21:03:29');
 
 -- --------------------------------------------------------
 
@@ -89,7 +91,13 @@ CREATE TABLE `departments` (
 
 INSERT INTO `departments` (`id`, `name`, `description`, `date_added`, `admin_id`) VALUES
 (1, 'IT', 'IT department of IQRA University', NULL, 0),
-(3, 'Admin', 'Facilitation & Administration Department of IU.', '2023-05-12', 0);
+(3, 'Admin', 'Facilitation & Administration Department of IU.', '2023-05-12', 0),
+(4, 'Finance', '', '', 0),
+(5, 'Sales', '', '', 0),
+(6, 'Accounting', '', '', 0),
+(7, 'Human Resource', '', '', 0),
+(8, 'Marketing', '', '', 0),
+(9, 'Faculty', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -104,18 +112,6 @@ CREATE TABLE `notifications` (
   `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`id`, `user_id`, `message`, `is_read`, `created_at`) VALUES
-(3, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-07 23:59:47'),
-(4, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-07 23:59:55'),
-(5, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-08 00:00:06'),
-(6, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-08 00:00:27'),
-(7, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-06-08 00:26:27'),
-(8, 1, 'Your ticket (ID: 3502) has been closed.', 0, '2023-06-08 00:26:31');
 
 -- --------------------------------------------------------
 
@@ -148,7 +144,10 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `name`, `icon`, `date_added`) VALUES
-(1, 'superadmin', NULL, '2023-05-02');
+(1, 'superadmin', NULL, '2023-05-02'),
+(2, 'Admin', '', ''),
+(3, 'Support', '', ''),
+(4, 'User', '', '');
 
 -- --------------------------------------------------------
 
@@ -185,9 +184,9 @@ CREATE TABLE `ticket` (
 
 INSERT INTO `ticket` (`id`, `title`, `ticket_description`, `date_added`, `date_updated`, `user_id`, `department_id`, `comments`, `ticket_status`) VALUES
 (3482, 'Website Error	', 'Hi, I\'m trying to access your website but keep getting an error message. Can you please help me resolve this?	', '2023-04-06 09:21:00	', '2023-04-06 09:27:15	', 1, 1, 4, 'Open'),
-(3485, 'JIRA Issue', 'Jira not working', NULL, NULL, 1, 1, 9, 'Open'),
+(3485, 'JIRA Issue', 'Jira not working', NULL, NULL, 1, 1, 9, 'Closed'),
 (3493, 'Google Workspace ', '', '2023-05-10 19:00:57', '2023-05-10 19:00:57', 1, 1, 0, 'Open'),
-(3494, 'Slack', '<p>Slack not working at all, please look into this.</p>', '2023-05-10 19:06:38', '2023-05-10 19:06:38', 1, 1, 0, 'Open'),
+(3494, 'Slack', '<p>Slack not working at all, please look into this.</p>', '2023-05-10 19:06:38', '2023-05-10 19:06:38', 1, 1, 0, 'Closed'),
 (3495, 'fjdjdj', '<p>djkdtjkdj</p>', '2023-05-10 19:10:30', '2023-05-10 19:10:30', 1, 1, 0, 'Open'),
 (3496, 'AC Ducts', '<p>AC Ducts Need to be serviced at once.</p>', '2023-05-11 21:04:21', '2023-05-11 21:04:21', 3, 3, 0, 'Open'),
 (3497, 'Fumigation Request', '<p>Rodents detected in the vicinity, Please get it fumigated.</p>', '2023-05-19 21:31:27', '2023-05-19 21:31:27', 3, 3, 0, 'Open'),
@@ -195,7 +194,8 @@ INSERT INTO `ticket` (`id`, `title`, `ticket_description`, `date_added`, `date_u
 (3499, '', '<p>fsdh</p>', '2023-05-20 00:45:27', '2023-05-20 00:45:27', 1, 1, 0, 'Open'),
 (3500, '', '<p>fgfj</p>', '2023-05-20 00:48:05', '2023-05-20 00:48:05', 1, 1, 0, 'Open'),
 (3501, 'awegaweg', '<p>agag</p>', '2023-05-20 00:51:35', '2023-05-20 00:51:35', 1, 1, 0, 'Open'),
-(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Closed');
+(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Closed'),
+(3503, 'fhhw', '<p>whwhwh</p>', '2023-08-24 21:02:55', '2023-08-24 21:02:55', 1, 1, 0, 'Closed');
 
 -- --------------------------------------------------------
 
@@ -234,16 +234,19 @@ CREATE TABLE `user` (
   `created_at` varchar(30) DEFAULT NULL,
   `profile_picture` varchar(256) DEFAULT NULL,
   `phone_number` varchar(20) DEFAULT NULL,
-  `department_id` int(11) UNSIGNED NOT NULL
+  `department_id` int(11) UNSIGNED NOT NULL,
+  `role` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `profile_picture`, `phone_number`, `department_id`) VALUES
-(1, 'Anas', 'anas@abc.com', 'anas@123', '2023-04-06', NULL, '84945487915', 1),
-(3, 'Fahad', 'fahad@abc.com', 'fahad@123', '2023-05-12', NULL, '46954954', 1);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `profile_picture`, `phone_number`, `department_id`, `role`) VALUES
+(1, 'Anas', 'anas@abc.com', 'anas@123', '2023-04-06', NULL, '84945487915', 1, 'admin'),
+(3, 'Fahad', 'fahad@abc.com', 'fahad@123', '2023-05-12', NULL, '46954954', 1, 'user'),
+(4, 'Arif', 'arif@abc.com', 'arif@123', '', '', '12512616', 4, NULL),
+(5, 'Mujeeb', 'mujeeb@abc.com', 'mujeeb@123', '', '', '315161616', 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -255,6 +258,16 @@ CREATE TABLE `user_role` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_role`
+--
+
+INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
+(1, 1),
+(3, 1),
+(4, 4),
+(5, 4);
 
 --
 -- Indexes for dumped tables
@@ -353,19 +366,19 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -377,13 +390,13 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3503;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3504;
 
 --
 -- AUTO_INCREMENT for table `ticket_attachments`
@@ -395,7 +408,7 @@ ALTER TABLE `ticket_attachments`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
