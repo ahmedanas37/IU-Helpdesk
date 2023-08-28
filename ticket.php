@@ -145,11 +145,25 @@ include ('php_scripts\header.php');
 
         
         <?php
-$sql = "SELECT ticket.*, user.name, departments.name AS department_name 
-FROM ticket
-INNER JOIN user ON ticket.user_id = user.id
-INNER JOIN departments ON ticket.department_id = departments.id
-ORDER BY ticket.date_added DESC";
+
+$userRole = $_SESSION['user_role'];
+
+// SQL query to fetch tickets based on user role
+if ($userRole === 'admin') {
+    $sql = "SELECT ticket.*, user.name, departments.name AS department_name 
+    FROM ticket
+    INNER JOIN user ON ticket.user_id = user.id
+    INNER JOIN departments ON ticket.department_id = departments.id
+    ORDER BY ticket.date_added DESC";
+} else {
+    $userId = $_SESSION['userid'];
+    $sql = "SELECT ticket.*, user.name, departments.name AS department_name 
+    FROM ticket
+    INNER JOIN user ON ticket.user_id = user.id
+    INNER JOIN departments ON ticket.department_id = departments.id
+    WHERE user.id = $userId
+    ORDER BY ticket.date_added DESC";
+}
 
 // Execute the query and fetch the result
 $result = mysqli_query($conn, $sql);

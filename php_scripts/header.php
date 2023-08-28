@@ -167,112 +167,103 @@ include('php_scripts\database.php');
 
             
             <ul class="dx-nav dx-nav-align-right">
-                     <?php
+            <?php
+if (isset($_SESSION['loggedin']) == true) {
+    // Assuming you have a database connection established
+    // Get the user's ID or any identifier for the logged-in user
+    $userID = $_SESSION['userid'];
 
+    // Query to count the number of notifications for the user
+    $countQuery = "SELECT COUNT(*) AS notificationCount FROM notifications WHERE user_id = $userID";
+    $result = mysqli_query($conn, $countQuery);
+    $row = mysqli_fetch_assoc($result);
+    $notificationCount = $row['notificationCount'];
 
-                
-                if(isset($_SESSION['loggedin']) == true)
-                {
+    echo '
+        <li>
+            <span><a href="ticket-submit-1.php" class="dx-btn dx-btn-md dx-btn-transparent">Raise an Issue</a></span>
+        </li>
 
-                    
-                // Assuming you have a database connection established
-
-// Get the user's ID or any identifier for the logged-in user
-$userID = $_SESSION['userid'];
-
-
-// Query to count the number of notifications for the user
-$countQuery = "SELECT COUNT(*) AS notificationCount FROM notifications WHERE user_id = $userID";
-$result = mysqli_query($conn, $countQuery);
-$row = mysqli_fetch_assoc($result);
-$notificationCount = $row['notificationCount'];
-                    
-                    
-                    
-                    echo('<li>
-                    <span><a href="ticket-submit-1.php" class="dx-btn dx-btn-md dx-btn-transparent">Raise an Issue</a></span>
-                </li>
-
-
-
-                <li>
-                <div class="dropdown dx-dropdown dx-dropdown-checkout">
-                    <a class="dx-nav-icon" href="#" role="button" id="dropdownCheckout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="dx-nav-badge">'.$notificationCount.'</span>
-                        <span class="icon dx-icon-bag"></span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownCheckout">
+        <li>
+            <div class="dropdown dx-dropdown dx-dropdown-checkout">
+                <a class="dx-nav-icon" href="#" role="button" id="dropdownCheckout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="dx-nav-badge">' . $notificationCount . '</span>
+                    <span class="icon dx-icon-bag"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownCheckout">
                     <table class="dx-table dx-table-checkout">
-                    <tbody>
-                        <?php
-                        // Fetch notifications from the database
-                        $notificationQuery = "SELECT * FROM notifications WHERE user_id = $user_id";
-                        $notificationResult = mysqli_query($conn, $notificationQuery);
-                
-                        // Loop through notifications and generate table rows
-                        while ($notification = mysqli_fetch_assoc($notificationResult)) {
-                            $notificationId = $notification['id'];
-                            $notificationTitle = $notification['title'];
-                            
-                            echo '
-                            <tr>
-                                <td class="dx-table-checkout-title">
-                                    <a href="notification-details.php?id=' . $notificationId . '">' . $notificationTitle . '</a>
-                                </td>
-                                <td class="dx-table-checkout-delete">
-                                    <a href="delete-notification.php?id=' . $notificationId . '"><span class="icon pe-7s-close"></span></a>
-                                </td>
-                            </tr>';
-                        }
-                        ?>
-                    </tbody>
-                </table>
-                
-                       
-                        <div class="dx-box-content">
-                            <a href="checkout.html" class="dx-btn dx-btn-md dx-btn-block">Clear All Notifications</a>
-                        </div>
+                        <tbody>';
+
+    // Fetch notifications from the database
+    $notificationQuery = "SELECT * FROM notifications WHERE user_id = $userID ORDER BY created_at DESC";
+    $notificationResult = mysqli_query($conn, $notificationQuery);
+    $notificationCount = mysqli_num_rows($notificationResult);
+
+    if ($notificationCount > 0) {
+        // Loop through notifications and generate table rows
+        while ($notification = mysqli_fetch_assoc($notificationResult)) {
+            $notificationId = $notification['id'];
+            $notificationTitle = $notification['message'];
+
+            echo '
+                <tr>
+                    <td class="dx-table-checkout-title">
+                        <a href="#">' . $notificationTitle . '</a>
+                    </td>
+                    <td class="dx-table-checkout-delete">
+                        <a href="php_scripts\delete-notifications.php?id=' . $notificationId . '"><span class="icon pe-7s-close"></span></a>
+                    </td>
+                </tr>';
+        }
+    } else {
+        echo '
+                <tr>
+                    <td class="dx-table-checkout-title" colspan="2">No notifications</td>
+                </tr>';
+    }
+
+    echo '
+                        </tbody>
+                    </table>
+
+                    <div class="dx-box-content">
+                        <a href="php_scripts\clear-notifications.php" class="dx-btn dx-btn-md dx-btn-block">Clear All Notifications</a>
                     </div>
                 </div>
-            </li>
-                
-                <div class="dropdown dx-dropdown dx-dropdown-signin">
-                    <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
-                    </a>
-
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
-                        <li>
-                            <a href="account-settings.php"><span class="icon pe-7s-user"></span> Account</a>
-                        </li>
-                        
-                       
-                        
-                        <li>
-                            <a href="php_scripts/logout.php"><span class="icon pe-7s-back"></span> Logout</a>
-                        </li>
-                    </ul>
-                </div>
-                </li>');
-                
-                
-
-                }
-
-                else 
-                {
-                    echo('<li>
-                    <span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>
-                </li>');
-
-                }
-
-
-                ?>
+            </div>
+        </li>
 
 
 
+
+
+
+
+
+
+        
+        <div class="dropdown dx-dropdown dx-dropdown-signin">
+            <a class="dx-nav-signin" href="account.html" role="button" id="dropdownSignin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dx-nav-signin-name">Welcome, ' . $_SESSION['username'] . '</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownSignin">
+                <li>
+                    <a href="account-settings.php"><span class="icon pe-7s-user"></span> Account</a>
+                </li>
+                <li>
+                    <a href="php_scripts/logout.php"><span class="icon pe-7s-back"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
+    ';
+} else {
+    echo '
+        <li>
+            <span><a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;" class="dx-btn dx-btn-md dx-btn-transparent">Log In</a></span>
+        </li>
+    ';
+}
+?>
 
 
                
