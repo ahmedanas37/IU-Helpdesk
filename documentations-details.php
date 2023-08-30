@@ -1,3 +1,18 @@
+
+<?php
+include ('php_scripts\database.php');
+// Assuming you have already connected to the database
+// $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
+
+if (isset($_GET['documentation_id'])) {
+    $documentationId = $_GET['documentation_id'];
+
+    // Update the page view count in the database
+    $updateSql = "UPDATE documentations SET views = views + 1 WHERE id = $documentationId";
+    mysqli_query($conn, $updateSql);
+}
+?>
+
 <!DOCTYPE html>
 
     
@@ -129,118 +144,127 @@ include ('php_scripts\header.php');
 </div>
 <div class="dx-separator"></div>
 
-<div class="dx-box-5 bg-grey-6">
-    <div class="container">
-        <div class="row align-items-center justify-content-between vertical-gap mnt-30 sm-gap mb-50">
-            <div class="col-auto">
-                <h2 class="h4 mb-0 mt-0">Your Tickets</h2>
-            </div>
-            <div class="col pl-30 pr-30 d-none d-sm-block">
-                <div class="dx-separator ml-10 mr-10"></div>
-            </div>
-            <div class="col-auto">
-                <a href="ticket-submit-1.php" class="dx-btn dx-btn-md">Submit a ticket</a>
-            </div>
-        </div>
 
-        
+
+
+
+
+<div class="dx-box-5 pb-100 bg-grey-6">
+        <div class="container">
+            <div class="row vertical-gap md-gap">
+                <div class="col-lg-4">
+                    <div class="dx-sticky dx-sidebar" data-sticky-offsetTop="120" data-sticky-offsetBot="40">
+                    <div class="dx-box dx-box-decorated">
+    <ul class="dx-list dx-list-documentation accordion dx-accordion" id="accordionList">
         <?php
+        // Assuming you have already connected to the database
+        // $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
 
-$userRole = $_SESSION['user_role'];
+        // Fetch documentation sections from the database
+        $sql = "SELECT id, title FROM documentations";
+        $result = mysqli_query($conn, $sql);
 
-// SQL query to fetch tickets based on user role
-if ($userRole === 'admin') {
-    $sql = "SELECT ticket.*, user.name, departments.name AS department_name, 
-            (SELECT COUNT(*) FROM comments WHERE comments.ticket_id = ticket.id) AS comment_count
-    FROM ticket
-    INNER JOIN user ON ticket.user_id = user.id
-    INNER JOIN departments ON ticket.department_id = departments.id
-    ORDER BY ticket.date_added DESC";
-} else {
-    $userId = $_SESSION['userid'];
-    $sql = "SELECT ticket.*, user.name, departments.name AS department_name, 
-            (SELECT COUNT(*) FROM comments WHERE comments.ticket_id = ticket.id) AS comment_count
-    FROM ticket
-    INNER JOIN user ON ticket.user_id = user.id
-    INNER JOIN departments ON ticket.department_id = departments.id
-    WHERE user.id = $userId
-    ORDER BY ticket.date_added DESC";
-}
+        while ($row = mysqli_fetch_assoc($result)) {
+            $sectionId = $row['id'];
+            $sectionTitle = $row['title'];
 
-// Execute the query and fetch the result
+            echo '<li>';
+            echo '<a href="single-documentation.php?section_id=' . $sectionId . '">' . $sectionTitle . '</a>';
+
+            // Check if the section has child subsections
+            $childSql = "SELECT id, title FROM subsections WHERE parent_id = $sectionId";
+            $childResult = mysqli_query($conn, $childSql);
+
+            if (mysqli_num_rows($childResult) > 0) {
+                echo '<button class="collapsed dx-accordion-btn" type="button" data-toggle="collapse" data-target="#collapse_' . $sectionId . '" aria-expanded="true" aria-controls="collapse_' . $sectionId . '">';
+                echo '<span class="icon pe-7s-angle-right"></span>';
+                echo '</button>';
+                echo '<div id="collapse_' . $sectionId . '" class="collapse dx-collapse" data-parent="#accordionList">';
+                echo '<ul class="dx-list dx-list-documentation">';
+
+                while ($childRow = mysqli_fetch_assoc($childResult)) {
+                    $childSectionId = $childRow['id'];
+                    $childSectionTitle = $childRow['title'];
+
+                    echo '<li>';
+                    echo '<a href="single-documentation.php?section_id=' . $childSectionId . '">' . $childSectionTitle . '</a>';
+                    echo '</li>';
+                }
+
+                echo '</ul>';
+                echo '</div>';
+            }
+
+            echo '</li>';
+        }
+        ?>
+    </ul>
+</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                <?php
+// Assuming you have already connected to the database
+// $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
+
+// SQL query to fetch documentation content
+$sql = "SELECT * FROM documentations ORDER BY date_published DESC";
 $result = mysqli_query($conn, $sql);
 
-// Generate the HTML elements dynamically based on the data
+// Generate HTML for each documentation entry
 while ($row = mysqli_fetch_assoc($result)) {
-// Calculate the time difference between current time and date_created
-$dateCreated = strtotime($row['date_added']);
-$currentTime = time();
-$timeDifference = $currentTime - $dateCreated;
-$hoursDifference = round($timeDifference / (60 * 60));
-
-// Check if the ticket is closed
-if ($row['ticket_status'] === 'Closed') {
-    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-closed dx-block-decorated">';
-} else {
-    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
-}
-echo '<span class="dx-ticket-img">';
-echo '<img src="assets/images/avatar-1.png" alt="">';
-echo '</span>';
-echo '<span class="dx-ticket-cont">';
-echo '<span class="dx-ticket-name">' . $row['name'] . '</span>';
-echo '<span class="dx-ticket-title h5">' . $row['title'] . '</span>';
-echo '<ul class="dx-ticket-info">';
-echo '<li>Update: ' . $row['date_updated'] . '</li>';
-echo '<li>Department: ' . $row['department_name'] . '</li>';
-echo '<li>Comments: ' . $row['comment_count'] . '</li>';
-// Display the "New" element if less than 24 hours
-if ($hoursDifference < 24) {
-echo '<li class="dx-ticket-new">New</li>';
-}
-
-echo '</ul>';
-echo '</span>';
-echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
-echo '</a>';
+    echo '<div class="dx-box dx-box-decorated">';
+    echo '<div class="dx-blog-post">';
+    echo '<div class="dx-blog-post-box pt-40 pb-40">';
+    echo '<h2 class="h4 mb-0">' . $row['title'] . '</h2>';
+    echo '</div>';
+    echo '<div class="dx-separator"></div>';
+    echo '<div class="dx-blog-post-box">';
+    echo '<p>' . nl2br($row['content']) . '</p>';
+    echo '</div>';
+    echo '<div class="dx-separator"></div>';
+    echo '<div class="dx-blog-post-box pt-30 pb-30">';
+    echo '<ul class="dx-blog-post-info mnt-15 mnb-2">';
+    echo '<li>Date: ' . $row['date_published'] . '</li>';
+    echo '<li>Views: ' . $row['views'] . '</li>';
+    echo '</ul>';
+    // Add social links here if needed
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 }
 
 // Close the database connection
 mysqli_close($conn);
 ?>
-        
-<!-- <a href="single-ticket.html" class="dx-ticket-item dx-ticket-closed dx-block-decorated">
-    <span class="dx-ticket-img">
-        
-        <img src="assets/images/avatar-default.svg" alt="">
-        
-    </span>
-    <span class="dx-ticket-cont">
-        <span class="dx-ticket-name">
-            Bruno Rice
-        </span>
-        <span class="dx-ticket-title h5">
-            Theme not updating in downloads
-        </span>
-        <ul class="dx-ticket-info">
-            
-            <li>Update: 4 Nov 2018</li>
-            
-            <li>Product: Sensific</li>
-            
-            <li>Comments: 11</li>
-            
-            
-        </ul>
-    </span>
-    <span class="dx-ticket-status">
-        Closed
-    </span>
-</a> -->
 
+                    <div class="dx-box dx-box-content dx-box-decorated mt-40">
+                        <div class="row vertical-gap align-items-center justify-content-center">
+                            <div class="col-auto">
+                                <h3 class="h5 mnt-6 mnb-6">Was this helpful to you?</h3>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <a href="#" class="dx-btn dx-btn-md dx-btn-main-1">Yes</a>
+                                <a href="#" class="dx-btn dx-btn-md dx-btn-grey-2 ml-20">No</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+
+
+
+
+
+
+
 <div class="dx-separator"></div>
+
+
 
 <div class="dx-box-1">
 

@@ -129,117 +129,52 @@ include ('php_scripts\header.php');
 </div>
 <div class="dx-separator"></div>
 
-<div class="dx-box-5 bg-grey-6">
+
+
+
+
+
+
+
+
+<div class="dx-box-5 pb-100 bg-grey-6">
     <div class="container">
-        <div class="row align-items-center justify-content-between vertical-gap mnt-30 sm-gap mb-50">
-            <div class="col-auto">
-                <h2 class="h4 mb-0 mt-0">Your Tickets</h2>
-            </div>
-            <div class="col pl-30 pr-30 d-none d-sm-block">
-                <div class="dx-separator ml-10 mr-10"></div>
-            </div>
-            <div class="col-auto">
-                <a href="ticket-submit-1.php" class="dx-btn dx-btn-md">Submit a ticket</a>
-            </div>
+        <div class="row vertical-gap">
+            <?php
+            // Assuming you have already connected to the database
+            // $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
+
+            // SQL query to fetch documentation entries
+            $sql = "SELECT * FROM documentations";
+            $result = mysqli_query($conn, $sql);
+
+            // Generate HTML for each documentation entry
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="col-12 col-md-6 col-lg-4">';
+                echo '<a href="documentations-details.php?documentation_id=' . $row['id'] . '" class="dx-portfolio-item dx-portfolio-item-style-2 dx-block-decorated">';
+                echo '<span class="dx-portfolio-item-img">';
+                echo '<img src="assets/images/product-1-sm.png" alt="">'; // You can replace this with an appropriate image URL from the database
+                echo '</span>';
+                echo '<span class="dx-portfolio-item-title">' . $row['title'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         </div>
-
-        
-        <?php
-
-$userRole = $_SESSION['user_role'];
-
-// SQL query to fetch tickets based on user role
-if ($userRole === 'admin') {
-    $sql = "SELECT ticket.*, user.name, departments.name AS department_name, 
-            (SELECT COUNT(*) FROM comments WHERE comments.ticket_id = ticket.id) AS comment_count
-    FROM ticket
-    INNER JOIN user ON ticket.user_id = user.id
-    INNER JOIN departments ON ticket.department_id = departments.id
-    ORDER BY ticket.date_added DESC";
-} else {
-    $userId = $_SESSION['userid'];
-    $sql = "SELECT ticket.*, user.name, departments.name AS department_name, 
-            (SELECT COUNT(*) FROM comments WHERE comments.ticket_id = ticket.id) AS comment_count
-    FROM ticket
-    INNER JOIN user ON ticket.user_id = user.id
-    INNER JOIN departments ON ticket.department_id = departments.id
-    WHERE user.id = $userId
-    ORDER BY ticket.date_added DESC";
-}
-
-// Execute the query and fetch the result
-$result = mysqli_query($conn, $sql);
-
-// Generate the HTML elements dynamically based on the data
-while ($row = mysqli_fetch_assoc($result)) {
-// Calculate the time difference between current time and date_created
-$dateCreated = strtotime($row['date_added']);
-$currentTime = time();
-$timeDifference = $currentTime - $dateCreated;
-$hoursDifference = round($timeDifference / (60 * 60));
-
-// Check if the ticket is closed
-if ($row['ticket_status'] === 'Closed') {
-    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-closed dx-block-decorated">';
-} else {
-    echo '<a href="ticket-details.php?ticket_id=' . $row['id'] . '" class="dx-ticket-item dx-ticket-new dx-ticket-open dx-block-decorated">';
-}
-echo '<span class="dx-ticket-img">';
-echo '<img src="assets/images/avatar-1.png" alt="">';
-echo '</span>';
-echo '<span class="dx-ticket-cont">';
-echo '<span class="dx-ticket-name">' . $row['name'] . '</span>';
-echo '<span class="dx-ticket-title h5">' . $row['title'] . '</span>';
-echo '<ul class="dx-ticket-info">';
-echo '<li>Update: ' . $row['date_updated'] . '</li>';
-echo '<li>Department: ' . $row['department_name'] . '</li>';
-echo '<li>Comments: ' . $row['comment_count'] . '</li>';
-// Display the "New" element if less than 24 hours
-if ($hoursDifference < 24) {
-echo '<li class="dx-ticket-new">New</li>';
-}
-
-echo '</ul>';
-echo '</span>';
-echo '<span class="dx-ticket-status">'  .$row['ticket_status'].  '</span>';
-echo '</a>';
-}
-
-// Close the database connection
-mysqli_close($conn);
-?>
-        
-<!-- <a href="single-ticket.html" class="dx-ticket-item dx-ticket-closed dx-block-decorated">
-    <span class="dx-ticket-img">
-        
-        <img src="assets/images/avatar-default.svg" alt="">
-        
-    </span>
-    <span class="dx-ticket-cont">
-        <span class="dx-ticket-name">
-            Bruno Rice
-        </span>
-        <span class="dx-ticket-title h5">
-            Theme not updating in downloads
-        </span>
-        <ul class="dx-ticket-info">
-            
-            <li>Update: 4 Nov 2018</li>
-            
-            <li>Product: Sensific</li>
-            
-            <li>Comments: 11</li>
-            
-            
-        </ul>
-    </span>
-    <span class="dx-ticket-status">
-        Closed
-    </span>
-</a> -->
-
+        <div class="text-center mt-70">
+            <a href="#" class="dx-btn dx-btn-grey dx-btn-lg dx-btn-load dx-btn-loaded" data-btn-loaded="all products shown">all documentations shown</a>
+        </div>
     </div>
 </div>
+
+
+
+
+
+
 <div class="dx-separator"></div>
 
 <div class="dx-box-1">
