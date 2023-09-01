@@ -24,14 +24,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">Role Details</h2>
-                        <a href="role-create.php" class="btn btn-success float-right">Add New Record</a>
-                        <a href="role-index.php" class="btn btn-info float-right mr-2">Reset View</a>
+                        <h2 class="float-left">documentations Details</h2>
+                        <a href="documentations-create.php" class="btn btn-success float-right">Add New Record</a>
+                        <a href="documentations-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
                     </div>
 
                     <div class="form-row">
-                        <form action="role-index.php" method="get">
+                        <form action="documentations-index.php" method="get">
                         <div class="col">
                           <input type="text" class="form-control" placeholder="Search this table" name="search">
                         </div>
@@ -61,13 +61,13 @@
                     //$no_of_records_per_page is set on the index page. Default is 10.
                     $offset = ($pageno-1) * $no_of_records_per_page;
 
-                    $total_pages_sql = "SELECT COUNT(*) FROM role";
+                    $total_pages_sql = "SELECT COUNT(*) FROM documentations";
                     $result = mysqli_query($link,$total_pages_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
 
                     //Column sorting on column name
-                    $orderBy = array('id', 'name', 'icon', 'date_added');
+                    $orderBy = array('id', 'title', 'content', 'date_published', 'views');
                     $order = 'id';
                     if (isset($_GET['order']) && in_array($_GET['order'], $orderBy)) {
                             $order = $_GET['order'];
@@ -85,19 +85,19 @@
                     }
 
                     // Attempt select query execution
-                    $sql = "SELECT * FROM role ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
-                    $count_pages = "SELECT * FROM role";
+                    $sql = "SELECT * FROM documentations ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
+                    $count_pages = "SELECT * FROM documentations";
 
 
                     if(!empty($_GET['search'])) {
                         $search = ($_GET['search']);
-                        $sql = "SELECT * FROM role
-                            WHERE CONCAT_WS (id,name,icon,date_added)
+                        $sql = "SELECT * FROM documentations
+                            WHERE CONCAT_WS (id,title,content,date_published,views)
                             LIKE '%$search%'
                             ORDER BY $order $sort
                             LIMIT $offset, $no_of_records_per_page";
-                        $count_pages = "SELECT * FROM role
-                            WHERE CONCAT_WS (id,name,icon,date_added)
+                        $count_pages = "SELECT * FROM documentations
+                            WHERE CONCAT_WS (id,title,content,date_published,views)
                             LIKE '%$search%'
                             ORDER BY $order $sort";
                     }
@@ -116,10 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Role ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>Role Name</th>";
-										echo "<th><a href=?search=$search&sort=&order=icon&sort=$sort>icon</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>Date Created</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
+										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>title</th>";
+										echo "<th><a href=?search=$search&sort=&order=content&sort=$sort>content</th>";
+										echo "<th><a href=?search=$search&sort=&order=date_published&sort=$sort>date_published</th>";
+										echo "<th><a href=?search=$search&sort=&order=views&sort=$sort>views</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";
@@ -127,11 +128,11 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['name']) . "</td>";echo "<td>" . htmlspecialchars($row['icon']) . "</td>";echo "<td>" . htmlspecialchars($row['date_added']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['title']) . "</td>";echo "<td>" . htmlspecialchars($row['content']) . "</td>";echo "<td>" . htmlspecialchars($row['date_published']) . "</td>";echo "<td>" . htmlspecialchars($row['views']) . "</td>";
                                         echo "<td>";
-                                            echo "<a href='role-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
-                                            echo "<a href='role-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
-                                            echo "<a href='role-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
+                                            echo "<a href='documentations-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
+                                            echo "<a href='documentations-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
+                                            echo "<a href='documentations-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }

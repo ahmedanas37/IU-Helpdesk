@@ -69,17 +69,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Name</label>
+                                <label>name</label>
                                 <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
                                 <span class="form-text"><?php echo $name_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Description</label>
+                                <label>description</label>
                                 <textarea name="description" class="form-control"><?php echo $description ; ?></textarea>
                                 <span class="form-text"><?php echo $description_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Added</label>
+                                <label>date_added</label>
                                 <input type="text" name="date_added" maxlength="30"class="form-control" value="<?php echo $date_added; ?>">
                                 <span class="form-text"><?php echo $date_added_err; ?></span>
                             </div>

@@ -11,18 +11,16 @@
           Select Page
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a href="attachments-index.php" class="dropdown-item">Attachments</a> 
+        <a href="attachments-index.php" class="dropdown-item">attachments</a> 
 	                                                                                                                                                                                                     
-        	<a class="dropdown-item" href="comments-index.php">Comments</a>
-		<a class="dropdown-item" href="departments-index.php">Departments</a>
-		<a class="dropdown-item" href="notifications-index.php">Notifications</a>
-		<a class="dropdown-item" href="permission-index.php">Permission</a>
-		<a class="dropdown-item" href="role-index.php">Role</a>
-		<a class="dropdown-item" href="role_permission-index.php">Role permission</a>
-		<a class="dropdown-item" href="ticket-index.php">Ticket</a>
-		<a class="dropdown-item" href="ticket_attachments-index.php">Ticket Attachments</a>
-		<a class="dropdown-item" href="user-index.php">User</a>
-		<a class="dropdown-item" href="user_role-index.php">User Role</a>
+        	<a class="dropdown-item" href="comments-index.php">comments</a>
+		<a class="dropdown-item" href="departments-index.php">departments</a>
+		<a class="dropdown-item" href="documentations-index.php">documentations</a>
+		<a class="dropdown-item" href="notifications-index.php">notifications</a>
+		<a class="dropdown-item" href="subsections-index.php">subsections</a>
+		<a class="dropdown-item" href="ticket-index.php">ticket</a>
+		<a class="dropdown-item" href="ticket_attachments-index.php">ticket_attachments</a>
+		<a class="dropdown-item" href="user-index.php">user</a>
 	<!-- TABLE_BUTTONS -->
         </div>
       </li>

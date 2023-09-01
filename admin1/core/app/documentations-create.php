@@ -4,20 +4,23 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$name = "";
-$icon = "";
-$date_added = "";
+$title = "";
+$content = "";
+$date_published = "";
+$views = "";
 
-$name_err = "";
-$icon_err = "";
-$date_added_err = "";
+$title_err = "";
+$content_err = "";
+$date_published_err = "";
+$views_err = "";
 
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $name = trim($_POST["name"]);
-		$icon = trim($_POST["icon"]);
-		$date_added = trim($_POST["date_added"]);
+        $title = trim($_POST["title"]);
+		$content = trim($_POST["content"]);
+		$date_published = trim($_POST["date_published"]);
+		$views = trim($_POST["views"]);
 		
 
         $dsn = "mysql:host=$db_server;dbname=$db_name;charset=utf8mb4";
@@ -33,12 +36,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           exit('Something weird happened'); //something a user can understand
         }
 
-        $vars = parse_columns('permission', $_POST);
-        $stmt = $pdo->prepare("INSERT INTO permission (name,icon,date_added) VALUES (?,?,?)");
+        $vars = parse_columns('documentations', $_POST);
+        $stmt = $pdo->prepare("INSERT INTO documentations (title,content,date_published,views) VALUES (?,?,?,?)");
 
-        if($stmt->execute([ $name,$icon,$date_added  ])) {
+        if($stmt->execute([ $title,$content,$date_published,$views  ])) {
                 $stmt = null;
-                header("location: permission-index.php");
+                header("location: documentations-index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -66,23 +69,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Permission Name</label>
-                                <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
-                                <span class="form-text"><?php echo $name_err; ?></span>
+                                <label>title</label>
+                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
+                                <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Permission Icons</label>
-                                <input type="text" name="icon" maxlength="50"class="form-control" value="<?php echo $icon; ?>">
-                                <span class="form-text"><?php echo $icon_err; ?></span>
+                                <label>content</label>
+                                <textarea name="content" class="form-control"><?php echo $content ; ?></textarea>
+                                <span class="form-text"><?php echo $content_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Created</label>
-                                <input type="text" name="date_added" maxlength="30"class="form-control" value="<?php echo $date_added; ?>">
-                                <span class="form-text"><?php echo $date_added_err; ?></span>
+                                <label>date_published</label>
+                                <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
+                                <span class="form-text"><?php echo $date_published_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>views</label>
+                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
+                                <span class="form-text"><?php echo $views_err; ?></span>
                             </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="permission-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

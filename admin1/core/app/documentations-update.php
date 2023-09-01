@@ -4,13 +4,15 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$name = "";
-$icon = "";
-$date_added = "";
+$title = "";
+$content = "";
+$date_published = "";
+$views = "";
 
-$name_err = "";
-$icon_err = "";
-$date_added_err = "";
+$title_err = "";
+$content_err = "";
+$date_published_err = "";
+$views_err = "";
 
 
 // Processing form data when form is submitted
@@ -18,9 +20,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
     $id = $_POST["id"];
 
-    $name = trim($_POST["name"]);
-		$icon = trim($_POST["icon"]);
-		$date_added = trim($_POST["date_added"]);
+    $title = trim($_POST["title"]);
+		$content = trim($_POST["content"]);
+		$date_published = trim($_POST["date_published"]);
+		$views = trim($_POST["views"]);
 		
 
     // Prepare an update statement
@@ -37,15 +40,15 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         exit('Something weird happened');
     }
 
-    $vars = parse_columns('permission', $_POST);
-    $stmt = $pdo->prepare("UPDATE permission SET name=?,icon=?,date_added=? WHERE id=?");
+    $vars = parse_columns('documentations', $_POST);
+    $stmt = $pdo->prepare("UPDATE documentations SET title=?,content=?,date_published=?,views=? WHERE id=?");
 
-    if(!$stmt->execute([ $name,$icon,$date_added,$id  ])) {
+    if(!$stmt->execute([ $title,$content,$date_published,$views,$id  ])) {
         echo "Something went wrong. Please try again later.";
         header("location: error.php");
     } else {
         $stmt = null;
-        header("location: permission-read.php?id=$id");
+        header("location: documentations-read.php?id=$id");
     }
 } else {
     // Check existence of id parameter before processing further
@@ -55,7 +58,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $id =  trim($_GET["id"]);
 
         // Prepare a select statement
-        $sql = "SELECT * FROM permission WHERE id = ?";
+        $sql = "SELECT * FROM documentations WHERE id = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Set parameters
             $param_id = $id;
@@ -78,9 +81,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
                     // Retrieve individual field value
 
-                    $name = htmlspecialchars($row["name"]);
-					$icon = htmlspecialchars($row["icon"]);
-					$date_added = htmlspecialchars($row["date_added"]);
+                    $title = htmlspecialchars($row["title"]);
+					$content = htmlspecialchars($row["content"]);
+					$date_published = htmlspecialchars($row["date_published"]);
+					$views = htmlspecialchars($row["views"]);
 					
 
                 } else{
@@ -125,24 +129,29 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Permission Name</label>
-                                <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
-                                <span class="form-text"><?php echo $name_err; ?></span>
+                                <label>title</label>
+                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
+                                <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Permission Icons</label>
-                                <input type="text" name="icon" maxlength="50"class="form-control" value="<?php echo $icon; ?>">
-                                <span class="form-text"><?php echo $icon_err; ?></span>
+                                <label>content</label>
+                                <textarea name="content" class="form-control"><?php echo $content ; ?></textarea>
+                                <span class="form-text"><?php echo $content_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Created</label>
-                                <input type="text" name="date_added" maxlength="30"class="form-control" value="<?php echo $date_added; ?>">
-                                <span class="form-text"><?php echo $date_added_err; ?></span>
+                                <label>date_published</label>
+                                <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
+                                <span class="form-text"><?php echo $date_published_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>views</label>
+                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
+                                <span class="form-text"><?php echo $views_err; ?></span>
                             </div>
 
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="permission-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2023 at 05:40 PM
+-- Generation Time: Sep 02, 2023 at 01:43 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,6 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `articles`
+--
+
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `date_published` datetime NOT NULL DEFAULT current_timestamp(),
+  `view_count` int(11) NOT NULL,
+  `helpful` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `content`, `category`, `date_published`, `view_count`, `helpful`) VALUES
+(1, 'TEST', 'TEST TEST TEST', 'Software', '2023-09-02 04:31:25', 4, 0),
+(2, 'TEST2', 'TEST2', 'Software', '2023-09-02 04:31:25', 10, 0),
+(3, 'TEST1', 'TEST1', 'Hardware', '2023-09-02 04:31:25', 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `attachments`
 --
 
@@ -34,16 +59,6 @@ CREATE TABLE `attachments` (
   `file_path` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `attachments`
---
-
-INSERT INTO `attachments` (`id`, `comment_id`, `file_name`, `file_path`, `created_at`) VALUES
-(11, 108, 'attachments.sql', 'uploads/6467eadc75952_attachments.sql', '2023-05-19 23:32:12'),
-(12, 109, 'Hanbal-A.pdf', 'uploads/6467ecc31aebf_Hanbal-A.pdf', '2023-05-19 23:40:19'),
-(13, 110, 'file-svgrepo-com (1).svg', 'uploads/6467fdbe943e0_file-svgrepo-com (1).svg', '2023-05-20 00:52:46'),
-(14, 111, 'Core Temp.exe', 'uploads/647f8ce389d4d_Core Temp.exe', '2023-06-06 21:45:39');
 
 -- --------------------------------------------------------
 
@@ -64,12 +79,8 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `ticket_id`, `user_id`, `comment`, `date_added`) VALUES
-(108, 3497, 1, '<p>gnkgkgk</p>', '2023-05-19 23:32:12'),
-(109, 3497, 1, '<p>ag</p>', '2023-05-19 23:40:19'),
-(110, 3502, 1, '<p>rjrj</p>', '2023-05-20 00:52:46'),
-(111, 3502, 1, '<p>Done</p>', '2023-06-06 21:45:39'),
-(112, 3503, 1, '', '2023-08-24 21:03:24'),
-(113, 3503, 1, '<p>ryjrj</p>', '2023-08-24 21:03:29');
+(114, 3506, 3, '<p>Test comment</p>', '2023-08-29 20:04:00'),
+(115, 3506, 3, '<p>TEST Comment 2</p>', '2023-08-29 20:07:36');
 
 -- --------------------------------------------------------
 
@@ -93,11 +104,29 @@ INSERT INTO `departments` (`id`, `name`, `description`, `date_added`, `admin_id`
 (1, 'IT', 'IT department of IQRA University', NULL, 0),
 (3, 'Admin', 'Facilitation & Administration Department of IU.', '2023-05-12', 0),
 (4, 'Finance', '', '', 0),
-(5, 'Sales', '', '', 0),
-(6, 'Accounting', '', '', 0),
-(7, 'Human Resource', '', '', 0),
-(8, 'Marketing', '', '', 0),
-(9, 'Faculty', '', '', 0);
+(5, 'Sales', '', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `documentations`
+--
+
+CREATE TABLE `documentations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `content` text NOT NULL,
+  `date_published` datetime NOT NULL,
+  `views` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `documentations`
+--
+
+INSERT INTO `documentations` (`id`, `title`, `content`, `date_published`, `views`) VALUES
+(1, 'Example Documentation', 'Example content.', '2023-08-29 21:11:51', 22),
+(2, 'Example Documentation 2', 'Example Documentation Content 2', '2023-08-30 01:00:00', 14);
 
 -- --------------------------------------------------------
 
@@ -113,51 +142,23 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `message`, `is_read`, `created_at`) VALUES
+(26, 1, 'Your ticket (ID: 3502) has been reopened.', 0, '2023-08-29 22:32:10');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission`
+-- Table structure for table `subsections`
 --
 
-CREATE TABLE `permission` (
+CREATE TABLE `subsections` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(128) DEFAULT NULL,
-  `icon` varchar(50) DEFAULT NULL,
-  `date_added` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(128) DEFAULT NULL,
-  `icon` varchar(50) DEFAULT NULL,
-  `date_added` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`id`, `name`, `icon`, `date_added`) VALUES
-(1, 'superadmin', NULL, '2023-05-02'),
-(2, 'Admin', '', ''),
-(3, 'Support', '', ''),
-(4, 'User', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role_permission`
---
-
-CREATE TABLE `role_permission` (
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `permission_id` int(10) UNSIGNED NOT NULL
+  `title` varchar(255) NOT NULL,
+  `parent_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -183,19 +184,7 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`id`, `title`, `ticket_description`, `date_added`, `date_updated`, `user_id`, `department_id`, `comments`, `ticket_status`) VALUES
-(3482, 'Website Error	', 'Hi, I\'m trying to access your website but keep getting an error message. Can you please help me resolve this?	', '2023-04-06 09:21:00	', '2023-04-06 09:27:15	', 1, 1, 4, 'Open'),
-(3485, 'JIRA Issue', 'Jira not working', NULL, NULL, 1, 1, 9, 'Closed'),
-(3493, 'Google Workspace ', '', '2023-05-10 19:00:57', '2023-05-10 19:00:57', 1, 1, 0, 'Open'),
-(3494, 'Slack', '<p>Slack not working at all, please look into this.</p>', '2023-05-10 19:06:38', '2023-05-10 19:06:38', 1, 1, 0, 'Closed'),
-(3495, 'fjdjdj', '<p>djkdtjkdj</p>', '2023-05-10 19:10:30', '2023-05-10 19:10:30', 1, 1, 0, 'Open'),
-(3496, 'AC Ducts', '<p>AC Ducts Need to be serviced at once.</p>', '2023-05-11 21:04:21', '2023-05-11 21:04:21', 3, 3, 0, 'Open'),
-(3497, 'Fumigation Request', '<p>Rodents detected in the vicinity, Please get it fumigated.</p>', '2023-05-19 21:31:27', '2023-05-19 21:31:27', 3, 3, 0, 'Open'),
-(3498, 'SVG Error', '<p>gdj</p>', '2023-05-20 00:40:58', '2023-05-20 00:40:58', 1, 1, 0, 'Open'),
-(3499, '', '<p>fsdh</p>', '2023-05-20 00:45:27', '2023-05-20 00:45:27', 1, 1, 0, 'Open'),
-(3500, '', '<p>fgfj</p>', '2023-05-20 00:48:05', '2023-05-20 00:48:05', 1, 1, 0, 'Open'),
-(3501, 'awegaweg', '<p>agag</p>', '2023-05-20 00:51:35', '2023-05-20 00:51:35', 1, 1, 0, 'Open'),
-(3502, 'jhlhyk;uo', '<p>iup;46</p>', '2023-05-20 00:52:07', '2023-05-20 00:52:07', 1, 1, 0, 'Closed'),
-(3503, 'fhhw', '<p>whwhwh</p>', '2023-08-24 21:02:55', '2023-08-24 21:02:55', 1, 1, 0, 'Closed');
+(3506, 'TEST', '<p>TEST</p>', '2023-08-29 20:03:48', '2023-08-29 20:03:48', 3, 1, 0, 'Open');
 
 -- --------------------------------------------------------
 
@@ -210,15 +199,6 @@ CREATE TABLE `ticket_attachments` (
   `file_path` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ticket_attachments`
---
-
-INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `file_name`, `file_path`, `created_at`) VALUES
-(1, 3500, 'Hanbal-A.pdf', 'uploadsHanbal-A.pdf', '2023-05-20 00:48:05'),
-(2, 3501, 'Hanbal-A.pdf', 'uploads/6467fd7731dee.pdf', '2023-05-20 00:51:35'),
-(3, 3502, 'ticket (1).sql', 'uploads/6467fd97d826c.sql', '2023-05-20 00:52:07');
 
 -- --------------------------------------------------------
 
@@ -248,30 +228,15 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `profile_pi
 (4, 'Arif', 'arif@abc.com', 'arif@123', '', '', '12512616', 4, NULL),
 (5, 'Mujeeb', 'mujeeb@abc.com', 'mujeeb@123', '', '', '315161616', 5, NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user_role`
---
-
-CREATE TABLE `user_role` (
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `role_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_role`
---
-
-INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
-(1, 1),
-(3, 1),
-(4, 4),
-(5, 4);
-
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `attachments`
@@ -296,6 +261,12 @@ ALTER TABLE `departments`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `documentations`
+--
+ALTER TABLE `documentations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
@@ -304,23 +275,11 @@ ALTER TABLE `notifications`
   ADD KEY `is_read` (`is_read`);
 
 --
--- Indexes for table `permission`
+-- Indexes for table `subsections`
 --
-ALTER TABLE `permission`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `role_permission`
---
-ALTER TABLE `role_permission`
-  ADD PRIMARY KEY (`role_id`,`permission_id`),
-  ADD KEY `permission_id` (`permission_id`);
+ALTER TABLE `subsections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent_id` (`parent_id`);
 
 --
 -- Indexes for table `ticket`
@@ -346,15 +305,14 @@ ALTER TABLE `user`
   ADD KEY `fk_department_id` (`department_id`);
 
 --
--- Indexes for table `user_role`
---
-ALTER TABLE `user_role`
-  ADD PRIMARY KEY (`user_id`,`role_id`),
-  ADD KEY `role_id` (`role_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `attachments`
@@ -366,7 +324,7 @@ ALTER TABLE `attachments`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -375,28 +333,28 @@ ALTER TABLE `departments`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `documentations`
+--
+ALTER TABLE `documentations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `permission`
+-- AUTO_INCREMENT for table `subsections`
 --
-ALTER TABLE `permission`
+ALTER TABLE `subsections`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3504;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3507;
 
 --
 -- AUTO_INCREMENT for table `ticket_attachments`
@@ -428,11 +386,10 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `role_permission`
+-- Constraints for table `subsections`
 --
-ALTER TABLE `role_permission`
-  ADD CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  ADD CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`);
+ALTER TABLE `subsections`
+  ADD CONSTRAINT `subsections_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `documentations` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `ticket`
@@ -452,13 +409,6 @@ ALTER TABLE `ticket_attachments`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `user_role`
---
-ALTER TABLE `user_role`
-  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

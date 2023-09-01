@@ -1,17 +1,16 @@
 
 <?php
 include ('php_scripts\database.php');
-// Assuming you have already connected to the database
-// $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
 
-if (isset($_GET['documentation_id'])) {
-    $documentationId = $_GET['documentation_id'];
+if (isset($_GET['id'])) {
+    $articleId = $_GET['id'];
 
     // Update the page view count in the database
-    $updateSql = "UPDATE documentations SET views = views + 1 WHERE id = $documentationId";
+    $updateSql = "UPDATE articles SET view_count = view_count + 1 WHERE id = $articleId";
     mysqli_query($conn, $updateSql);
 }
 ?>
+
 
 <!DOCTYPE html>
 
@@ -146,119 +145,250 @@ include ('php_scripts\header.php');
 
 
 
-
-
-
 <div class="dx-box-5 pb-100 bg-grey-6">
         <div class="container">
             <div class="row vertical-gap md-gap">
-                <div class="col-lg-4">
-                    <div class="dx-sticky dx-sidebar" data-sticky-offsetTop="120" data-sticky-offsetBot="40">
-                    <div class="dx-box dx-box-decorated">
-    <ul class="dx-list dx-list-documentation accordion dx-accordion" id="accordionList">
-        <?php
-
-$documentationId = $_GET['documentation_id'];
 
 
-        $sql = "SELECT id, title FROM documentations WHERE id = $documentationId";
-        $result = mysqli_query($conn, $sql);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $sectionId = $row['id'];
-            $sectionTitle = $row['title'];
 
-            echo '<li>';
-            echo '<a href="single-documentation.php?section_id=' . $sectionId . '">' . $sectionTitle . '</a>';
 
-            // Check if the section has child subsections
-            $childSql = "SELECT id, title FROM subsections WHERE parent_id = $sectionId";
-            $childResult = mysqli_query($conn, $childSql);
 
-            if (mysqli_num_rows($childResult) > 0) {
-                echo '<button class="collapsed dx-accordion-btn" type="button" data-toggle="collapse" data-target="#collapse_' . $sectionId . '" aria-expanded="true" aria-controls="collapse_' . $sectionId . '">';
-                echo '<span class="icon pe-7s-angle-right"></span>';
-                echo '</button>';
-                echo '<div id="collapse_' . $sectionId . '" class="collapse dx-collapse" data-parent="#accordionList">';
-                echo '<ul class="dx-list dx-list-documentation">';
 
-                while ($childRow = mysqli_fetch_assoc($childResult)) {
-                    $childSectionId = $childRow['id'];
-                    $childSectionTitle = $childRow['title'];
+            <?php
 
-                    echo '<li>';
-                    echo '<a href="single-documentation.php?section_id=' . $childSectionId . '">' . $childSectionTitle . '</a>';
-                    echo '</li>';
-                }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-                echo '</ul>';
-                echo '</div>';
-            }
+// Retrieve the article ID from the URL parameter
+if (isset($_GET['id'])) {
+    $articleId = $_GET['id'];
 
-            echo '</li>';
+    // Query to fetch the article based on the article ID
+    $sql = "SELECT * FROM articles WHERE id = $articleId";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $articleTitle = $row["title"];
+            $articleContent = $row["content"];
+            $articleCategory = $row["category"];
+            $datePublished = $row["date_published"];
+            $viewCount = $row["view_count"];
         }
-        ?>
-    </ul>
-</div>
-
-                    </div>
-                </div>
-                <div class="col-lg-8">
-
-
-                <?php
-// Assuming you have already connected to the database
-// $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
-
-// SQL query to fetch documentation content
-$documentationId = $_GET['documentation_id'];
-
-$sql = "SELECT * FROM documentations WHERE id = $documentationId";
-$result = mysqli_query($conn, $sql);
-
-
-// Generate HTML for each documentation entry
-while ($row = mysqli_fetch_assoc($result)) {
-    echo '<div class="dx-box dx-box-decorated">';
-    echo '<div class="dx-blog-post">';
-    echo '<div class="dx-blog-post-box pt-40 pb-40">';
-    echo '<h2 class="h4 mb-0">' . $row['title'] . '</h2>';
-    echo '</div>';
-    echo '<div class="dx-separator"></div>';
-    echo '<div class="dx-blog-post-box">';
-    echo '<p>' . nl2br($row['content']) . '</p>';
-    echo '</div>';
-    echo '<div class="dx-separator"></div>';
-    echo '<div class="dx-blog-post-box pt-30 pb-30">';
-    echo '<ul class="dx-blog-post-info mnt-15 mnb-2">';
-    echo '<li>Date: ' . $row['date_published'] . '</li>';
-    echo '<li>Views: ' . $row['views'] . '</li>';
-    echo '</ul>';
-    // Add social links here if needed
-    echo '</div>';
-    echo '</div>';
-    echo '</div>';
+    } else {
+        echo "Article not found";
+    }
+} else {
+    echo "Article ID not provided";
 }
 
 // Close the database connection
-mysqli_close($conn);
+$conn->close();
 ?>
 
 
 
+<div class="col-lg-8">
+    <div class="dx-box dx-box-decorated">
+        <div class="dx-blog-post">
+            <div class="dx-blog-post-box pt-30 pb-30">
+                <h2 class="h4 mnt-5 mb-8"><?php echo $articleTitle; ?></h2>
+
+                <!-- START: Breadcrumbs -->
+                <ul class="dx-breadcrumbs text-left dx-breadcrumbs-dark mnb-8">
+
+                    <li><a href="help-center.html">Support Home</a></li>
+
+
+                    <li><a href="articles.html">Articles</a></li>
+
+
+                    <li><a href="single-article-category.html"><?php echo $articleCategory?></a></li>
+
+                    <li><?php echo $articleTitle; ?></li>
+
+                </ul>
+                <!-- END: Breadcrumbs -->
+
+            </div>
+            <div class="dx-separator"></div>
+            <div class="dx-blog-post-box">
+
+                <h4 class="h6"><?php echo $articleContent; ?></h4>
+               
+
+            </div>
+            <div class="dx-separator"></div>
+            <div class="dx-blog-post-box pt-30 pb-30">
+                <ul class="dx-blog-post-info mnt-15 mnb-2">
+                    <li>Date Published: <?php echo $datePublished?></li>
+                    <li>Views: <?php echo $viewCount?></li>
+                </ul>
+                <ul class="dx-social-links dx-social-links-style-2 mt-20">
+                    <li>
+                        <a href="#" class="dx-social-twitter"><span class="icon fab fa-twitter"></span> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dx-social-facebook"><span class="icon fab fa-facebook"></span> Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dx-social-google"><span class="icon fab fa-google"></span> Google</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dx-social-pinterest"><span class="icon fab fa-pinterest"></span> Pinterest</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dx-box dx-box-content dx-box-decorated mt-40">
+        <div class="row vertical-gap align-items-center justify-content-center">
+            <div class="col-auto">
+                <h3 class="h5 mnt-6 mnb-6">Was this helpful to you?</h3>
+            </div>
+            <div class="col-auto d-flex">
+                <a href="#" class="dx-btn dx-btn-md dx-btn-main-1">Yes</a>
+                <a href="#" class="dx-btn dx-btn-md dx-btn-grey-2 ml-20">No</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-                    <div class="dx-box dx-box-content dx-box-decorated mt-40">
-                        <div class="row vertical-gap align-items-center justify-content-center">
-                            <div class="col-auto">
-                                <h3 class="h5 mnt-6 mnb-6">Was this helpful to you?</h3>
-                            </div>
-                            <div class="col-auto d-flex">
-                                <a href="#" class="dx-btn dx-btn-md dx-btn-main-1">Yes</a>
-                                <a href="#" class="dx-btn dx-btn-md dx-btn-grey-2 ml-20">No</a>
-                            </div>
-                        </div>
+
+
+
+
+
+
+
+            
+
+
+
+            
+
+
+
+
+
+          
+
+
+           
+           
+                <div class="col-lg-4">
+                    <div class="dx-sticky dx-sidebar" data-sticky-offsetTop="120" data-sticky-offsetBot="40">
+                        
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Subscribe to Newsletter
+    </div>
+    <div class="dx-widget-subscribe">
+        <div class="dx-widget-text">
+            <p>Join the newsletter to receive news, updates, new products and freebies in your inbox.</p>
+        </div>
+        <form action="#" class="dx-form dx-form-group-inputs">
+            <input type="email" name="" value="" aria-describedby="emailHelp" class="form-control form-control-style-2" placeholder="Your Email Address">
+            <button class="dx-btn dx-btn-lg dx-btn-icon"><span class="icon fas fa-paper-plane"></span></button>
+        </form>
+    </div>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <form action="#" class="dx-form dx-form-group-inputs">
+        <input type="text" name="" value="" class="form-control form-control-style-2" placeholder="Search...">
+        <button class="dx-btn dx-btn-lg dx-btn-grey dx-btn-grey-style-2 dx-btn-icon"><span class="icon fas fa-search"></span></button>
+    </form>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">Articles Categories</div>
+    <ul class="dx-widget-categories">
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Quantial</span>
+                <span class="dx-widget-categories-badge">(4)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Sensific</span>
+                <span class="dx-widget-categories-badge">(4)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Minist</span>
+                <span class="dx-widget-categories-badge">(8)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Desty</span>
+                <span class="dx-widget-categories-badge">(2)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Silies</span>
+                <span class="dx-widget-categories-badge">(3)</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Latest Articles
+    </div>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">How to manually import Demo data (if you faced with problems in one-click demo import)</span>
+        <span class="dx-widget-link-date">6 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Make menu dropdown working without JavaScript</span>
+        <span class="dx-widget-link-date">2 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Add top menu link inside dropdown on mobile devices</span>
+        <span class="dx-widget-link-date">27 Aug 2018</span>
+    </a>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Latest Forum Topics
+    </div>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Need help with customization. Some options are not appearing...</span>
+        <span class="dx-widget-link-date">6 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">My images on profile and item pages doesnt show up?! Whats the matter?</span>
+        <span class="dx-widget-link-date">2 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Theme not updating in downloads</span>
+        <span class="dx-widget-link-date">27 Aug 2018</span>
+    </a>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -268,13 +398,7 @@ mysqli_close($conn);
 
 
 
-
-
-
-
 <div class="dx-separator"></div>
-
-
 
 <div class="dx-box-1">
 

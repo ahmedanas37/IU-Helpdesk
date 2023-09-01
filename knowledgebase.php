@@ -134,6 +134,192 @@ include ('php_scripts\header.php');
 
 
 
+    
+<div class="dx-box-5 pb-100 bg-grey-6">
+        <div class="container">
+            <div class="row vertical-gap md-gap">
+              
+            
+
+
+
+            <?php
+// Assuming you have already connected to the database
+// $conn = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
+
+// SQL query to fetch article categories
+$sql = "SELECT DISTINCT category FROM articles";
+$result = mysqli_query($conn, $sql);
+?>
+
+<div class="col-lg-8">
+    <div class="dx-box dx-box-decorated">
+        <div class="dx-blog-post">
+            <div class="dx-blog-post-box pt-30 pb-30">
+                <h2 class="h4 mnt-5 mb-8">Browse Article Categories</h2>
+                <!-- START: Breadcrumbs -->
+                <ul class="dx-breadcrumbs text-left dx-breadcrumbs-dark mnb-8">
+                    <li><a href="help-center.html">Support Home</a></li>
+                    <li>Articles</li>
+                </ul>
+                <!-- END: Breadcrumbs -->
+            </div>
+            <div class="dx-separator"></div>
+            <div class="dx-blog-post-box">
+                <div class="row vertical-gap lg-gap">
+                    <?php
+                    // Generate HTML for each article category
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<div class="col-sm-6">';
+                        echo '<div class="dx-article dx-article-list">';
+                        echo '<h3 class="h6 dx-article-title">' . $row['category'] . '</h3>';
+                        
+                        // SQL query to fetch top 3 articles for the current category
+                        $category = $row['category'];
+                        $articleSql = "SELECT title FROM articles WHERE category = '$category' LIMIT 3";
+                        $articleResult = mysqli_query($conn, $articleSql);
+                        
+                        echo '<ul class="dx-list">';
+                        while ($articleRow = mysqli_fetch_assoc($articleResult)) {
+                            echo '<li><a href="single-article.html">' . $articleRow['title'] . '</a></li>';
+                        }
+                        echo '</ul>';
+                        
+                        echo '<a href="all-articles.php?category=' . urlencode($row['category']) . '" class="dx-btn dx-btn-xs dx-btn-grey-1 dx-article-btn">' . mysqli_num_rows($articleResult) . ' Articles</a>';
+                        
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+// Close the database connection
+mysqli_close($conn);
+?>
+
+
+
+
+
+
+                <div class="col-lg-4">
+                    <div class="dx-sticky dx-sidebar" data-sticky-offsetTop="120" data-sticky-offsetBot="40">
+                        
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Subscribe to Newsletter
+    </div>
+    <div class="dx-widget-subscribe">
+        <div class="dx-widget-text">
+            <p>Join the newsletter to receive news, updates, new products and freebies in your inbox.</p>
+        </div>
+        <form action="#" class="dx-form dx-form-group-inputs">
+            <input type="email" name="" value="" aria-describedby="emailHelp" class="form-control form-control-style-2" placeholder="Your Email Address">
+            <button class="dx-btn dx-btn-lg dx-btn-icon"><span class="icon fas fa-paper-plane"></span></button>
+        </form>
+    </div>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <form action="#" class="dx-form dx-form-group-inputs">
+        <input type="text" name="" value="" class="form-control form-control-style-2" placeholder="Search...">
+        <button class="dx-btn dx-btn-lg dx-btn-grey dx-btn-grey-style-2 dx-btn-icon"><span class="icon fas fa-search"></span></button>
+    </form>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">Articles Categories</div>
+    <ul class="dx-widget-categories">
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Quantial</span>
+                <span class="dx-widget-categories-badge">(4)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Sensific</span>
+                <span class="dx-widget-categories-badge">(4)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Minist</span>
+                <span class="dx-widget-categories-badge">(8)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Desty</span>
+                <span class="dx-widget-categories-badge">(2)</span>
+            </a>
+        </li>
+        <li>
+            <a href="single-article.html">
+                <span class="icon pe-7s-angle-right"></span>
+                <span class="dx-widget-categories-category">Silies</span>
+                <span class="dx-widget-categories-badge">(3)</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Latest Articles
+    </div>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">How to manually import Demo data (if you faced with problems in one-click demo import)</span>
+        <span class="dx-widget-link-date">6 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Make menu dropdown working without JavaScript</span>
+        <span class="dx-widget-link-date">2 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Add top menu link inside dropdown on mobile devices</span>
+        <span class="dx-widget-link-date">27 Aug 2018</span>
+    </a>
+</div>
+
+                        
+<div class="dx-widget dx-box dx-box-decorated">
+    <div class="dx-widget-title">
+        Latest Forum Topics
+    </div>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Need help with customization. Some options are not appearing...</span>
+        <span class="dx-widget-link-date">6 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">My images on profile and item pages doesnt show up?! Whats the matter?</span>
+        <span class="dx-widget-link-date">2 Sep 2018</span>
+    </a>
+    <a href="single-article.html" class="dx-widget-link">
+        <span class="dx-widget-link-text">Theme not updating in downloads</span>
+        <span class="dx-widget-link-date">27 Aug 2018</span>
+    </a>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 

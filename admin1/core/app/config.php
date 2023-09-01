@@ -3,7 +3,7 @@ $db_server = 'localhost';
 $db_name = 'project'; 
 $db_user = 'root'; 
 $db_password = ''; 
-$no_of_records_per_page = 25; 
+$no_of_records_per_page = 10; 
 $appname = 'IU Service Management System'; 
 
 $link = mysqli_connect($db_server, $db_user, $db_password, $db_name); 

@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Ticket ID</label>
+                                <label>ticket_id</label>
                                     <select class="form-control" id="ticket_id" name="ticket_id">
                                     <?php
                                         $sql = "SELECT *,id FROM ticket";
@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="form-text"><?php echo $ticket_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Author/User</label>
+                                <label>user_id</label>
                                     <select class="form-control" id="user_id" name="user_id">
                                     <?php
                                         $sql = "SELECT *,id FROM user";
@@ -109,12 +109,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="form-text"><?php echo $user_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Comment</label>
+                                <label>comment</label>
                                 <textarea name="comment" class="form-control"><?php echo $comment ; ?></textarea>
                                 <span class="form-text"><?php echo $comment_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Added</label>
+                                <label>date_added</label>
                                 <input type="datetime-local" name="date_added" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_added)); ?>">
                                 <span class="form-text"><?php echo $date_added_err; ?></span>
                             </div>

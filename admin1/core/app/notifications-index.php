@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">Notifications Details</h2>
+                        <h2 class="float-left">notifications Details</h2>
                         <a href="notifications-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="notifications-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,11 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Notification ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>User</th>";
-										echo "<th><a href=?search=$search&sort=&order=message&sort=$sort>Notification Message</th>";
-										echo "<th><a href=?search=$search&sort=&order=is_read&sort=$sort>Read Status</th>";
-										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>Date Created</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
+										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>user_id</th>";
+										echo "<th><a href=?search=$search&sort=&order=message&sort=$sort>message</th>";
+										echo "<th><a href=?search=$search&sort=&order=is_read&sort=$sort>is_read</th>";
+										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>created_at</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

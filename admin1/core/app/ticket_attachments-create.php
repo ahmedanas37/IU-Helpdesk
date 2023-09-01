@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Attached to Ticket ID</label>
+                                <label>ticket_id</label>
                                     <select class="form-control" id="ticket_id" name="ticket_id">
                                     <?php
                                         $sql = "SELECT *,id FROM ticket";
@@ -89,17 +89,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="form-text"><?php echo $ticket_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>File Name</label>
+                                <label>file_name</label>
                                 <input type="text" name="file_name" maxlength="255"class="form-control" value="<?php echo $file_name; ?>">
                                 <span class="form-text"><?php echo $file_name_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>File Path</label>
+                                <label>file_path</label>
                                 <input type="text" name="file_path" maxlength="255"class="form-control" value="<?php echo $file_path; ?>">
                                 <span class="form-text"><?php echo $file_path_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Created At</label>
+                                <label>created_at</label>
                                 <input type="datetime-local" name="created_at" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($created_at)); ?>">
                                 <span class="form-text"><?php echo $created_at_err; ?></span>
                             </div>

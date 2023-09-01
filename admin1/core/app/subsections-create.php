@@ -4,20 +4,17 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$name = "";
-$icon = "";
-$date_added = "";
+$title = "";
+$parent_id = "";
 
-$name_err = "";
-$icon_err = "";
-$date_added_err = "";
+$title_err = "";
+$parent_id_err = "";
 
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $name = trim($_POST["name"]);
-		$icon = trim($_POST["icon"]);
-		$date_added = trim($_POST["date_added"]);
+        $title = trim($_POST["title"]);
+		$parent_id = trim($_POST["parent_id"]);
 		
 
         $dsn = "mysql:host=$db_server;dbname=$db_name;charset=utf8mb4";
@@ -33,12 +30,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           exit('Something weird happened'); //something a user can understand
         }
 
-        $vars = parse_columns('role', $_POST);
-        $stmt = $pdo->prepare("INSERT INTO role (name,icon,date_added) VALUES (?,?,?)");
+        $vars = parse_columns('subsections', $_POST);
+        $stmt = $pdo->prepare("INSERT INTO subsections (title,parent_id) VALUES (?,?)");
 
-        if($stmt->execute([ $name,$icon,$date_added  ])) {
+        if($stmt->execute([ $title,$parent_id  ])) {
                 $stmt = null;
-                header("location: role-index.php");
+                header("location: subsections-index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -66,23 +63,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Role Name</label>
-                                <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
-                                <span class="form-text"><?php echo $name_err; ?></span>
+                                <label>title</label>
+                                <input type="text" name="title" maxlength="255"class="form-control" value="<?php echo $title; ?>">
+                                <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>icon</label>
-                                <input type="text" name="icon" maxlength="50"class="form-control" value="<?php echo $icon; ?>">
-                                <span class="form-text"><?php echo $icon_err; ?></span>
-                            </div>
-						<div class="form-group">
-                                <label>Date Created</label>
-                                <input type="text" name="date_added" maxlength="30"class="form-control" value="<?php echo $date_added; ?>">
-                                <span class="form-text"><?php echo $date_added_err; ?></span>
+                                <label>parent_id</label>
+                                    <select class="form-control" id="parent_id" name="parent_id">
+                                    <?php
+                                        $sql = "SELECT *,id FROM documentations";
+                                        $result = mysqli_query($link, $sql);
+                                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                            $duprow = $row;
+                                            unset($duprow["id"]);
+                                            $value = implode(" | ", $duprow);
+                                            if ($row["id"] == $parent_id){
+                                            echo '<option value="' . "$row[id]" . '"selected="selected">' . "$value" . '</option>';
+                                            } else {
+                                                echo '<option value="' . "$row[id]" . '">' . "$value" . '</option>';
+                                        }
+                                        }
+                                    ?>
+                                    </select>
+                                <span class="form-text"><?php echo $parent_id_err; ?></span>
                             </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="role-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="subsections-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

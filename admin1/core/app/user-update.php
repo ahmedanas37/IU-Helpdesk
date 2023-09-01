@@ -11,6 +11,7 @@ $created_at = "";
 $profile_picture = "";
 $phone_number = "";
 $department_id = "";
+$role = "";
 
 $name_err = "";
 $email_err = "";
@@ -19,6 +20,7 @@ $created_at_err = "";
 $profile_picture_err = "";
 $phone_number_err = "";
 $department_id_err = "";
+$role_err = "";
 
 
 // Processing form data when form is submitted
@@ -33,6 +35,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 		$profile_picture = trim($_POST["profile_picture"]);
 		$phone_number = trim($_POST["phone_number"]);
 		$department_id = trim($_POST["department_id"]);
+		$role = trim($_POST["role"]);
 		
 
     // Prepare an update statement
@@ -50,9 +53,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
 
     $vars = parse_columns('user', $_POST);
-    $stmt = $pdo->prepare("UPDATE user SET name=?,email=?,password=?,created_at=?,profile_picture=?,phone_number=?,department_id=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE user SET name=?,email=?,password=?,created_at=?,profile_picture=?,phone_number=?,department_id=?,role=? WHERE id=?");
 
-    if(!$stmt->execute([ $name,$email,$password,$created_at,$profile_picture,$phone_number,$department_id,$id  ])) {
+    if(!$stmt->execute([ $name,$email,$password,$created_at,$profile_picture,$phone_number,$department_id,$role,$id  ])) {
         echo "Something went wrong. Please try again later.";
         header("location: error.php");
     } else {
@@ -97,6 +100,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 					$profile_picture = htmlspecialchars($row["profile_picture"]);
 					$phone_number = htmlspecialchars($row["phone_number"]);
 					$department_id = htmlspecialchars($row["department_id"]);
+					$role = htmlspecialchars($row["role"]);
 					
 
                 } else{
@@ -141,37 +145,37 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Name</label>
+                                <label>name</label>
                                 <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
                                 <span class="form-text"><?php echo $name_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Email</label>
+                                <label>email</label>
                                 <input type="text" name="email" maxlength="128"class="form-control" value="<?php echo $email; ?>">
                                 <span class="form-text"><?php echo $email_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Password</label>
+                                <label>password</label>
                                 <input type="text" name="password" maxlength="128"class="form-control" value="<?php echo $password; ?>">
                                 <span class="form-text"><?php echo $password_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Created At</label>
+                                <label>created_at</label>
                                 <input type="text" name="created_at" maxlength="30"class="form-control" value="<?php echo $created_at; ?>">
                                 <span class="form-text"><?php echo $created_at_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Profile Picture</label>
+                                <label>profile_picture</label>
                                 <input type="text" name="profile_picture" maxlength="256"class="form-control" value="<?php echo $profile_picture; ?>">
                                 <span class="form-text"><?php echo $profile_picture_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Phone Number</label>
+                                <label>phone_number</label>
                                 <input type="text" name="phone_number" maxlength="20"class="form-control" value="<?php echo $phone_number; ?>">
                                 <span class="form-text"><?php echo $phone_number_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Department ID</label>
+                                <label>department_id</label>
                                     <select class="form-control" id="department_id" name="department_id">
                                     <?php
                                         $sql = "SELECT *,id FROM departments";
@@ -189,6 +193,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                     ?>
                                     </select>
                                 <span class="form-text"><?php echo $department_id_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>role</label>
+                                <input type="text" name="role" maxlength="20"class="form-control" value="<?php echo $role; ?>">
+                                <span class="form-text"><?php echo $role_err; ?></span>
                             </div>
 
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>

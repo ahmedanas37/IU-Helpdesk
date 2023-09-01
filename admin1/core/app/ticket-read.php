@@ -68,28 +68,28 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>Ticket Title</h4>
+                            <h4>title</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["title"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Ticket Description</h4>
+                            <h4>ticket_description</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["ticket_description"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Date Added</h4>
+                            <h4>date_added</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["date_added"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Date Updated</h4>
+                            <h4>date_updated</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["date_updated"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Ticket Author</h4>
+                            <h4>user_id</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["user_id"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Department ID</h4>
+                            <h4>department_id</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["department_id"]); ?></p>
                         </div><div class="form-group">
-                            <h4>No. of Comments</h4>
+                            <h4>comments</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["comments"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Ticket Status</h4>
+                            <h4>ticket_status</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["ticket_status"]); ?></p>
                         </div>
 

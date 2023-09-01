@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">User Details</h2>
+                        <h2 class="float-left">user Details</h2>
                         <a href="user-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="user-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -67,7 +67,7 @@
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
 
                     //Column sorting on column name
-                    $orderBy = array('id', 'name', 'email', 'password', 'created_at', 'profile_picture', 'phone_number', 'department_id');
+                    $orderBy = array('id', 'name', 'email', 'password', 'created_at', 'profile_picture', 'phone_number', 'department_id', 'role');
                     $order = 'id';
                     if (isset($_GET['order']) && in_array($_GET['order'], $orderBy)) {
                             $order = $_GET['order'];
@@ -92,12 +92,12 @@
                     if(!empty($_GET['search'])) {
                         $search = ($_GET['search']);
                         $sql = "SELECT * FROM user
-                            WHERE CONCAT_WS (id,name,email,password,created_at,profile_picture,phone_number,department_id)
+                            WHERE CONCAT_WS (id,name,email,password,created_at,profile_picture,phone_number,department_id,role)
                             LIKE '%$search%'
                             ORDER BY $order $sort
                             LIMIT $offset, $no_of_records_per_page";
                         $count_pages = "SELECT * FROM user
-                            WHERE CONCAT_WS (id,name,email,password,created_at,profile_picture,phone_number,department_id)
+                            WHERE CONCAT_WS (id,name,email,password,created_at,profile_picture,phone_number,department_id,role)
                             LIKE '%$search%'
                             ORDER BY $order $sort";
                     }
@@ -116,14 +116,15 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>User ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>Name</th>";
-										echo "<th><a href=?search=$search&sort=&order=email&sort=$sort>Email</th>";
-										echo "<th><a href=?search=$search&sort=&order=password&sort=$sort>Password</th>";
-										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>Created At</th>";
-										echo "<th><a href=?search=$search&sort=&order=profile_picture&sort=$sort>Profile Picture</th>";
-										echo "<th><a href=?search=$search&sort=&order=phone_number&sort=$sort>Phone Number</th>";
-										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>Department ID</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
+										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>name</th>";
+										echo "<th><a href=?search=$search&sort=&order=email&sort=$sort>email</th>";
+										echo "<th><a href=?search=$search&sort=&order=password&sort=$sort>password</th>";
+										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>created_at</th>";
+										echo "<th><a href=?search=$search&sort=&order=profile_picture&sort=$sort>profile_picture</th>";
+										echo "<th><a href=?search=$search&sort=&order=phone_number&sort=$sort>phone_number</th>";
+										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>department_id</th>";
+										echo "<th><a href=?search=$search&sort=&order=role&sort=$sort>role</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";
@@ -131,7 +132,7 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['name']) . "</td>";echo "<td>" . htmlspecialchars($row['email']) . "</td>";echo "<td>" . htmlspecialchars($row['password']) . "</td>";echo "<td>" . htmlspecialchars($row['created_at']) . "</td>";echo "<td>" . htmlspecialchars($row['profile_picture']) . "</td>";echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";echo "<td>" . htmlspecialchars($row['department_id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['name']) . "</td>";echo "<td>" . htmlspecialchars($row['email']) . "</td>";echo "<td>" . htmlspecialchars($row['password']) . "</td>";echo "<td>" . htmlspecialchars($row['created_at']) . "</td>";echo "<td>" . htmlspecialchars($row['profile_picture']) . "</td>";echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";echo "<td>" . htmlspecialchars($row['department_id']) . "</td>";echo "<td>" . htmlspecialchars($row['role']) . "</td>";
                                         echo "<td>";
                                             echo "<a href='user-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
                                             echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";

@@ -24,14 +24,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">User Role Details</h2>
-                        <a href="user_role-create.php" class="btn btn-success float-right">Add New Record</a>
-                        <a href="user_role-index.php" class="btn btn-info float-right mr-2">Reset View</a>
+                        <h2 class="float-left">subsections Details</h2>
+                        <a href="subsections-create.php" class="btn btn-success float-right">Add New Record</a>
+                        <a href="subsections-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
                     </div>
 
                     <div class="form-row">
-                        <form action="user_role-index.php" method="get">
+                        <form action="subsections-index.php" method="get">
                         <div class="col">
                           <input type="text" class="form-control" placeholder="Search this table" name="search">
                         </div>
@@ -61,14 +61,14 @@
                     //$no_of_records_per_page is set on the index page. Default is 10.
                     $offset = ($pageno-1) * $no_of_records_per_page;
 
-                    $total_pages_sql = "SELECT COUNT(*) FROM user_role";
+                    $total_pages_sql = "SELECT COUNT(*) FROM subsections";
                     $result = mysqli_query($link,$total_pages_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
 
                     //Column sorting on column name
-                    $orderBy = array('user_id', 'role_id');
-                    $order = 'role_id';
+                    $orderBy = array('id', 'title', 'parent_id');
+                    $order = 'id';
                     if (isset($_GET['order']) && in_array($_GET['order'], $orderBy)) {
                             $order = $_GET['order'];
                         }
@@ -85,19 +85,19 @@
                     }
 
                     // Attempt select query execution
-                    $sql = "SELECT * FROM user_role ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
-                    $count_pages = "SELECT * FROM user_role";
+                    $sql = "SELECT * FROM subsections ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
+                    $count_pages = "SELECT * FROM subsections";
 
 
                     if(!empty($_GET['search'])) {
                         $search = ($_GET['search']);
-                        $sql = "SELECT * FROM user_role
-                            WHERE CONCAT_WS (user_id,role_id)
+                        $sql = "SELECT * FROM subsections
+                            WHERE CONCAT_WS (id,title,parent_id)
                             LIKE '%$search%'
                             ORDER BY $order $sort
                             LIMIT $offset, $no_of_records_per_page";
-                        $count_pages = "SELECT * FROM user_role
-                            WHERE CONCAT_WS (user_id,role_id)
+                        $count_pages = "SELECT * FROM subsections
+                            WHERE CONCAT_WS (id,title,parent_id)
                             LIKE '%$search%'
                             ORDER BY $order $sort";
                     }
@@ -116,8 +116,9 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>User ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=role_id&sort=$sort>User Role</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
+										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>title</th>";
+										echo "<th><a href=?search=$search&sort=&order=parent_id&sort=$sort>parent_id</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";
@@ -125,11 +126,11 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";echo "<td>" . htmlspecialchars($row['role_id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['title']) . "</td>";echo "<td>" . htmlspecialchars($row['parent_id']) . "</td>";
                                         echo "<td>";
-                                            echo "<a href='user_role-read.php?role_id=". $row['role_id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
-                                            echo "<a href='user_role-update.php?role_id=". $row['role_id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
-                                            echo "<a href='user_role-delete.php?role_id=". $row['role_id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
+                                            echo "<a href='subsections-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
+                                            echo "<a href='subsections-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
+                                            echo "<a href='subsections-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }

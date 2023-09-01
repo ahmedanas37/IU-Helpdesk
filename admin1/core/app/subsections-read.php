@@ -1,17 +1,17 @@
 <?php
 // Check existence of id parameter before processing further
-$_GET["permission_id"] = trim($_GET["permission_id"]);
-if(isset($_GET["permission_id"]) && !empty($_GET["permission_id"])){
+$_GET["id"] = trim($_GET["id"]);
+if(isset($_GET["id"]) && !empty($_GET["id"])){
     // Include config file
     require_once "config.php";
     require_once "helpers.php";
 
     // Prepare a select statement
-    $sql = "SELECT * FROM role_permission WHERE permission_id = ?";
+    $sql = "SELECT * FROM subsections WHERE id = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
         // Set parameters
-        $param_id = trim($_GET["permission_id"]);
+        $param_id = trim($_GET["id"]);
 
         // Bind variables to the prepared statement as parameters
 		if (is_int($param_id)) $__vartype = "i";
@@ -68,14 +68,14 @@ if(isset($_GET["permission_id"]) && !empty($_GET["permission_id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>role_id</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["role_id"]); ?></p>
+                            <h4>title</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["title"]); ?></p>
                         </div><div class="form-group">
-                            <h4>permission_id</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["permission_id"]); ?></p>
+                            <h4>parent_id</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["parent_id"]); ?></p>
                         </div>
 
-                    <p><a href="role_permission-index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="subsections-index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>
         </div>

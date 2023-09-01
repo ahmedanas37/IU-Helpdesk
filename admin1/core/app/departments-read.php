@@ -68,13 +68,13 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>Name</h4>
+                            <h4>name</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["name"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Description</h4>
+                            <h4>description</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["description"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Date Added</h4>
+                            <h4>date_added</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["date_added"]); ?></p>
                         </div><div class="form-group">
                             <h4>admin_id</h4>

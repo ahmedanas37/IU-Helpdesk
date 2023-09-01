@@ -1,17 +1,17 @@
 <?php
 // Check existence of id parameter before processing further
-$_GET["role_id"] = trim($_GET["role_id"]);
-if(isset($_GET["role_id"]) && !empty($_GET["role_id"])){
+$_GET["id"] = trim($_GET["id"]);
+if(isset($_GET["id"]) && !empty($_GET["id"])){
     // Include config file
     require_once "config.php";
     require_once "helpers.php";
 
     // Prepare a select statement
-    $sql = "SELECT * FROM user_role WHERE role_id = ?";
+    $sql = "SELECT * FROM documentations WHERE id = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
         // Set parameters
-        $param_id = trim($_GET["role_id"]);
+        $param_id = trim($_GET["id"]);
 
         // Bind variables to the prepared statement as parameters
 		if (is_int($param_id)) $__vartype = "i";
@@ -68,14 +68,20 @@ if(isset($_GET["role_id"]) && !empty($_GET["role_id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>User ID</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["user_id"]); ?></p>
+                            <h4>title</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["title"]); ?></p>
                         </div><div class="form-group">
-                            <h4>User Role</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["role_id"]); ?></p>
+                            <h4>content</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["content"]); ?></p>
+                        </div><div class="form-group">
+                            <h4>date_published</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["date_published"]); ?></p>
+                        </div><div class="form-group">
+                            <h4>views</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["views"]); ?></p>
                         </div>
 
-                    <p><a href="user_role-index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="documentations-index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>
         </div>

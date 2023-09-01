@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">Comments Details</h2>
+                        <h2 class="float-left">comments Details</h2>
                         <a href="comments-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="comments-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,11 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Commend ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=ticket_id&sort=$sort>Ticket ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>Author/User</th>";
-										echo "<th><a href=?search=$search&sort=&order=comment&sort=$sort>Comment</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>Date Added</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
+										echo "<th><a href=?search=$search&sort=&order=ticket_id&sort=$sort>ticket_id</th>";
+										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>user_id</th>";
+										echo "<th><a href=?search=$search&sort=&order=comment&sort=$sort>comment</th>";
+										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>date_added</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

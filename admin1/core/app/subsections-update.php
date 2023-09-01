@@ -4,20 +4,20 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$user_id = "";
-$role_id = "";
+$title = "";
+$parent_id = "";
 
-$user_id_err = "";
-$role_id_err = "";
+$title_err = "";
+$parent_id_err = "";
 
 
 // Processing form data when form is submitted
-if(isset($_POST["role_id"]) && !empty($_POST["role_id"])){
+if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
-    $role_id = $_POST["role_id"];
+    $id = $_POST["id"];
 
-    $user_id = trim($_POST["user_id"]);
-		$role_id = trim($_POST["role_id"]);
+    $title = trim($_POST["title"]);
+		$parent_id = trim($_POST["parent_id"]);
 		
 
     // Prepare an update statement
@@ -34,28 +34,28 @@ if(isset($_POST["role_id"]) && !empty($_POST["role_id"])){
         exit('Something weird happened');
     }
 
-    $vars = parse_columns('user_role', $_POST);
-    $stmt = $pdo->prepare("UPDATE user_role SET user_id=?,role_id=? WHERE role_id=?");
+    $vars = parse_columns('subsections', $_POST);
+    $stmt = $pdo->prepare("UPDATE subsections SET title=?,parent_id=? WHERE id=?");
 
-    if(!$stmt->execute([ $user_id,$role_id,$role_id  ])) {
+    if(!$stmt->execute([ $title,$parent_id,$id  ])) {
         echo "Something went wrong. Please try again later.";
         header("location: error.php");
     } else {
         $stmt = null;
-        header("location: user_role-read.php?role_id=$role_id");
+        header("location: subsections-read.php?id=$id");
     }
 } else {
     // Check existence of id parameter before processing further
-	$_GET["role_id"] = trim($_GET["role_id"]);
-    if(isset($_GET["role_id"]) && !empty($_GET["role_id"])){
+	$_GET["id"] = trim($_GET["id"]);
+    if(isset($_GET["id"]) && !empty($_GET["id"])){
         // Get URL parameter
-        $role_id =  trim($_GET["role_id"]);
+        $id =  trim($_GET["id"]);
 
         // Prepare a select statement
-        $sql = "SELECT * FROM user_role WHERE role_id = ?";
+        $sql = "SELECT * FROM subsections WHERE id = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Set parameters
-            $param_id = $role_id;
+            $param_id = $id;
 
             // Bind variables to the prepared statement as parameters
 			if (is_int($param_id)) $__vartype = "i";
@@ -75,8 +75,8 @@ if(isset($_POST["role_id"]) && !empty($_POST["role_id"])){
 
                     // Retrieve individual field value
 
-                    $user_id = htmlspecialchars($row["user_id"]);
-					$role_id = htmlspecialchars($row["role_id"]);
+                    $title = htmlspecialchars($row["title"]);
+					$parent_id = htmlspecialchars($row["parent_id"]);
 					
 
                 } else{
@@ -121,36 +121,21 @@ if(isset($_POST["role_id"]) && !empty($_POST["role_id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>User ID</label>
-                                    <select class="form-control" id="user_id" name="user_id">
-                                    <?php
-                                        $sql = "SELECT *,id FROM user";
-                                        $result = mysqli_query($link, $sql);
-                                        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                            $duprow = $row;
-                                            unset($duprow["id"]);
-                                            $value = implode(" | ", $duprow);
-                                            if ($row["id"] == $user_id){
-                                            echo '<option value="' . "$row[id]" . '"selected="selected">' . "$value" . '</option>';
-                                            } else {
-                                                echo '<option value="' . "$row[id]" . '">' . "$value" . '</option>';
-                                        }
-                                        }
-                                    ?>
-                                    </select>
-                                <span class="form-text"><?php echo $user_id_err; ?></span>
+                                <label>title</label>
+                                <input type="text" name="title" maxlength="255"class="form-control" value="<?php echo $title; ?>">
+                                <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>User Role</label>
-                                    <select class="form-control" id="role_id" name="role_id">
+                                <label>parent_id</label>
+                                    <select class="form-control" id="parent_id" name="parent_id">
                                     <?php
-                                        $sql = "SELECT *,id FROM role";
+                                        $sql = "SELECT *,id FROM documentations";
                                         $result = mysqli_query($link, $sql);
                                         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                             $duprow = $row;
                                             unset($duprow["id"]);
                                             $value = implode(" | ", $duprow);
-                                            if ($row["id"] == $role_id){
+                                            if ($row["id"] == $parent_id){
                                             echo '<option value="' . "$row[id]" . '"selected="selected">' . "$value" . '</option>';
                                             } else {
                                                 echo '<option value="' . "$row[id]" . '">' . "$value" . '</option>';
@@ -158,12 +143,12 @@ if(isset($_POST["role_id"]) && !empty($_POST["role_id"])){
                                         }
                                     ?>
                                     </select>
-                                <span class="form-text"><?php echo $role_id_err; ?></span>
+                                <span class="form-text"><?php echo $parent_id_err; ?></span>
                             </div>
 
-                        <input type="hidden" name="role_id" value="<?php echo $role_id; ?>"/>
+                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="user_role-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="subsections-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

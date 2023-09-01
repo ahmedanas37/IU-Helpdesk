@@ -68,26 +68,29 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>Name</h4>
+                            <h4>name</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["name"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Email</h4>
+                            <h4>email</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["email"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Password</h4>
+                            <h4>password</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["password"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Created At</h4>
+                            <h4>created_at</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["created_at"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Profile Picture</h4>
+                            <h4>profile_picture</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["profile_picture"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Phone Number</h4>
+                            <h4>phone_number</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["phone_number"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Department ID</h4>
+                            <h4>department_id</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["department_id"]); ?></p>
+                        </div><div class="form-group">
+                            <h4>role</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["role"]); ?></p>
                         </div>
 
                     <p><a href="user-index.php" class="btn btn-primary">Back</a></p>
