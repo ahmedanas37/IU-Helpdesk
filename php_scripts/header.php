@@ -1,6 +1,8 @@
 
 <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
 
 <!--
@@ -36,6 +38,18 @@ include('php_scripts\database.php');
         </button>
 
         <div class="dx-navbar-content">
+
+
+
+        <?php
+    // Check if the 'loggedin' session variable is set and is true
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    ?>
+
+
+
+
+
             
             <ul class="dx-nav dx-nav-align-left">
                 
@@ -46,116 +60,57 @@ include('php_scripts\database.php');
                 Help Center
             </a><ul class="dx-navbar-dropdown">
                     
-        <li class=" active">
-            <a href="help-center.html">
-                Help Center
-            </a>
-        </li>
+       
         <li class="dx-drop-item">
-            <a href="documentations.html">
+            <a href="documentations.php">
                 Documentations
             </a><ul class="dx-navbar-dropdown">
                     
-        <li>
-            <a href="documentations.html">
-                Documentations
-            </a>
-        </li>
-        <li>
-            <a href="single-documentation.html">
-                Single documentation
-            </a>
-        </li>
+       
                 </ul>
         </li>
         <li class="dx-drop-item">
-            <a href="articles.html">
+            <a href="knowledgebase.php">
                 Knowledge Base
             </a><ul class="dx-navbar-dropdown">
                     
-        <li>
-            <a href="articles.html">
-                Knowledge Base
-            </a>
-        </li>
-        <li>
-            <a href="single-article-category.html">
-                Single Article Category
-            </a>
-        </li>
-        <li>
-            <a href="single-article.html">
-                Single Article
-            </a>
-        </li>
+     
+        
                 </ul>
         </li>
+  
         <li class="dx-drop-item">
-            <a href="forums.html">
-                Forums
-            </a><ul class="dx-navbar-dropdown">
-                    
-        <li>
-            <a href="forums.html">
-                Forums
-            </a>
-        </li>
-        <li>
-            <a href="topics.html">
-                Topics
-            </a>
-        </li>
-        <li>
-            <a href="single-topic.html">
-                Single Topic
-            </a>
-        </li>
-                </ul>
-        </li>
-        <li class="dx-drop-item">
-            <a href="ticket.html">
+            <a href="ticket.php">
                 Ticket System
             </a><ul class="dx-navbar-dropdown">
                     
         <li>
-            <a href="ticket.html">
+            <a href="ticket.php">
                 Ticket System
             </a>
         </li>
         <li>
-            <a href="ticket-submit.html">
+            <a href="ticket-submit-1.php">
                 Submit Ticket
             </a>
         </li>
-        <li>
-            <a href="ticket-submit-2.html">
-                Submit Ticket 2
-            </a>
-        </li>
-        <li>
-            <a href="single-ticket.html">
-                Single Ticket
-            </a>
-        </li>
+      
+      
                 </ul>
         </li>
                 </ul>
         </li>
         <li class="dx-drop-item">
-            <a href="account.html">
+            <a href="account-settings.php">
                 Account
             </a><ul class="dx-navbar-dropdown">
                     
         <li>
-            <a href="account.html">
+            <a href="account-settings.php">
                 Account
             </a>
         </li>
-        <li>
-            <a href="account-licenses.html">
-                Licenses
-            </a>
-        </li>
+       
         <li>
             <a href="account-settings.html">
                 Settings
@@ -163,7 +118,40 @@ include('php_scripts\database.php');
         </li>
                 </ul>
         </li>
+
+
+
+
+
+        <li class="dx-drop-item">
+            <a href="live-support.php">
+                Live Support
+            </a>
+        </li>
+
+
+        
+
+
+
+        <?php
+
+
+// Check if the user is logged in and their role is 'admin'
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+    echo '<li class="dx-drop-item">';
+    echo '<a href="admin1\core\app\index.php">Admin Panel</a>';
+    echo '</li>';
+}
+?>
+
+
+
             </ul>
+
+            <?php
+    }
+    ?>
 
             
             <ul class="dx-nav dx-nav-align-right">
@@ -188,8 +176,11 @@ if (isset($_SESSION['loggedin']) == true) {
             <div class="dropdown dx-dropdown dx-dropdown-checkout">
                 <a class="dx-nav-icon" href="#" role="button" id="dropdownCheckout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="dx-nav-badge">' . $notificationCount . '</span>
-                    <span class="icon dx-icon-bag"></span>
-                </a>
+
+
+                    <span class="fa-regular fa-bell fa-lg" style="color: #fcfcfd;"></span>                    </a>
+
+                    
                 <div class="dropdown-menu" aria-labelledby="dropdownCheckout">
                     <table class="dx-table dx-table-checkout">
                         <tbody>';
@@ -276,6 +267,18 @@ if (isset($_SESSION['loggedin']) == true) {
         </div>
     </div>
 </nav>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="dx-navbar dx-navbar-fullscreen">
     <div class="container">
         <button class="dx-navbar-burger">
@@ -425,12 +428,12 @@ if (isset($_SESSION['loggedin']) == true) {
                 </ul>
         </li>
         <li class="dx-drop-item">
-            <a href="account.html">
+            <a href="account-settings.php">
                 Account
             </a><ul class="dx-navbar-dropdown">
                     
         <li>
-            <a href="account.html">
+            <a href="account-settings.php">
                 Account
             </a>
         </li>

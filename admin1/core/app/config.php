@@ -19,4 +19,8 @@ if ($result = mysqli_query($link, $query)) {
     }
 }
 
+date_default_timezone_set('Asia/Karachi');
+
+
+
 ?>

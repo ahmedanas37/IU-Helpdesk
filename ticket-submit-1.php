@@ -106,11 +106,11 @@ include ('php_scripts\header.php');
 <div class="dx-box bg-white">
     <div class="container">
         <ul class="dx-links text-center">
-            <li><a href="help-center.html">Support Home</a></li>
-            <li><a href="documentations.html">Documentations</a></li>
-            <li><a href="articles.html">Knowledge Base</a></li>
-            <li><a href="forums.html">Forums</a></li>
-            <li><a href="ticket.html">Ticket System</a></li>
+            <li class="active"><a href="index.php">Support Home</a></li>
+            <li><a href="documentations.php">Documentations</a></li>
+            <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <!-- <li><a href="forums.html">Forums</a></li> -->
+            <li><a href="ticket.php">Ticket System</a></li>
         </ul>
     </div>
 </div>
@@ -299,7 +299,7 @@ include ('php_scripts\header.php');
                             <div class="dx-box-1">
                                 <h2 class="text-white">Visit IU Service Desk</h2>
                                 <p class="text-white op-8">Get the support you need - visit the IU Service Desk.</p>
-                                <a href="help-center.html" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
+                                <a href="ticket-submit-1.php" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
                             </div>
                         </div>
                     </div>

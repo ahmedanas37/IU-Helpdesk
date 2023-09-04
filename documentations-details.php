@@ -134,10 +134,10 @@ include ('php_scripts\header.php');
 <div class="dx-box bg-white">
     <div class="container">
         <ul class="dx-links text-center">
-            <li class="active"><a href="help-center.html">Support Home</a></li>
-            <li><a href="documentations.html">Documentations</a></li>
-            <li><a href="articles.html">Knowledge Base</a></li>
-            <li><a href="forums.html">Forums</a></li>
+            <li class="active"><a href="index.php">Support Home</a></li>
+            <li><a href="documentations.php">Documentations</a></li>
+            <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <!-- <li><a href="forums.html">Forums</a></li> -->
             <li><a href="ticket.php">Ticket System</a></li>
         </ul>
     </div>

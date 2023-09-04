@@ -116,17 +116,29 @@ include ('php_scripts\header.php');
 
 <div class="dx-separator"></div>
 
+
+
+<?php
+    // Check if the user is logged in (assuming 'loggedin' session variable is set)
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        ?>
+
+
+
+
 <div class="dx-box bg-white">
     <div class="container">
         <ul class="dx-links text-center">
-            <li class="active"><a href="help-center.html">Support Home</a></li>
-            <li><a href="documentations.html">Documentations</a></li>
-            <li><a href="articles.html">Knowledge Base</a></li>
-            <li><a href="forums.html">Forums</a></li>
+            <li class="active"><a href="index.php">Support Home</a></li>
+            <li><a href="documentations.php">Documentations</a></li>
+            <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <!-- <li><a href="forums.html">Forums</a></li> -->
             <li><a href="ticket.php">Ticket System</a></li>
         </ul>
     </div>
 </div>
+
+
 <div class="dx-separator"></div>
 
 <div class="dx-box-5 bg-grey-6">
@@ -140,9 +152,9 @@ include ('php_scripts\header.php');
         <span class="icon pe-7s-copy-file"></span>
     </div>
     <div class="dx-feature-cont">
-        <div class="dx-feature-title"><a href="documentations.html">Documentations</a></div>
+        <div class="dx-feature-title"><a href="documentations.php">Documentations</a></div>
         <div class="dx-feature-text">Explore our resources for system guidance and support.</div>
-        <a href="documentations.html" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
+        <a href="documentations.php" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
     </div>
 </div>
 
@@ -154,27 +166,14 @@ include ('php_scripts\header.php');
         <span class="icon pe-7s-notebook"></span>
     </div>
     <div class="dx-feature-cont">
-        <div class="dx-feature-title"><a href="articles.html">Knowledge Base</a></div>
+        <div class="dx-feature-title"><a href="knowledgebase.php">Knowledge Base</a></div>
         <div class="dx-feature-text">Discover answers and insights to enhance your experience.</div>
-        <a href="articles.html" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
+        <a href="knowledgebase.php" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
     </div>
 </div>
 
             </div>
-            <div class="col-12 col-md-4 col-lg-3 dx-feature-variable">
-                
-<div class="dx-feature dx-feature-3 dx-feature-color-3 dx-block-decorated">
-    <div class="dx-feature-icon">
-        <span class="icon pe-7s-chat"></span>
-    </div>
-    <div class="dx-feature-cont">
-        <div class="dx-feature-title"><a href="forum.html">Forums</a></div>
-        <div class="dx-feature-text">Connect and get help from fellow users.</div>
-        <a href="forum.html" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
-    </div>
-</div>
-
-            </div>
+           
             <div class="col-12 col-md-4 col-lg-3 dx-feature-variable">
                 
 <div class="dx-feature dx-feature-3 dx-feature-color-4 dx-block-decorated">
@@ -192,6 +191,16 @@ include ('php_scripts\header.php');
         </div>
     </div>
 </div>
+
+
+
+<?php
+    }
+    ?>
+
+
+
+
 <div class="dx-separator"></div>
 
 <div class="dx-box-1">

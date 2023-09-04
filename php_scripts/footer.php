@@ -9,11 +9,11 @@
         <div class="container">
             <div class="row vertical-gap lg-gap">
                 
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     
 <div class="dx-widget-footer">
     <div class="dx-widget-title">
-        <a href="index.html" class="dx-widget-logo">
+        <a href="index.php" class="dx-widget-logo">
             <img src="https://iqra.edu.pk/wp-content/uploads/2021/03/favicon-1.png" alt="" width="80px">
         </a>
     </div>
@@ -33,70 +33,83 @@
 </div>
 
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     
 <div class="dx-widget-footer">
     <div class="dx-widget-title">
         Useful Links
     </div>
     <ul class="dx-widget-list">
-        <li><a href="store.html">Store</a></li>
-        <li><a href="checkout.html">Checkout</a></li>
-        <li><a href="forums.html">Forums</a></li>
-        <li><a href="blog.html">Blog</a></li>
+        <li><a href="ticket-submit-1.php">Raise a Ticket</a></li>
+        <li><a href="documentations.php">Documentations</a></li>
+        <li><a href="knowledgebase.php">Knowledgebase</a></li>
     </ul>
+
     <ul class="dx-widget-list">
-        <li><a href="help-center.html">Help Center</a></li>
-        <li>
-            <a data-fancybox data-touch="false" data-close-existing="true" data-src="#signup" href="javascript:;">Sign Up</a>
-        </li>
+        <li><a href="index.php">Help Center</a></li>
+       
         <li>
             <a data-fancybox data-touch="false" data-close-existing="true" data-src="#login" href="javascript:;">Log In</a>
         </li>
+
     </ul>
 </div>
 
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    
-<div class="dx-widget-footer">
-    <div class="dx-widget-title">
-        Latest Products
-    </div>
-    <div class="dx-widget-portfolio">
-        <a href="product.html">Quantial – Moving Upon Signs Moveth Lesser</a>
-        <a href="product.html">Sensific – Saying Beast Lesser for in Fruitful</a>
-        <a href="product.html">Minist – Subdue Above for Signs Dry is Have Great</a>
-    </div>
-</div>
+                
+                <div class="col-sm-6 col-lg-4">
+                <?php
+// Define your database credentials
+$host = "localhost"; // Your database host name
+$user = "root"; // Your database username
+$password = ""; // Your database password
+$database = "project"; // Your database name
 
-                </div>
-                <div class="col-sm-6 col-lg-3">
-                    
-<div class="dx-widget-footer">
-    <div class="dx-widget-title">
-        Latest Posts
-    </div>
-    <a href="single-post.html" class="dx-widget-post">
-        
-        <span class="dx-widget-post-text">
-            <span class="dx-widget-post-title">The Big Thing in Design</span>
-            <span class="dx-widget-post-date">25 Sep 2018</span>
-        </span>
-        
-    </a>
-    <a href="single-post.html" class="dx-widget-post">
-        
-        <span class="dx-widget-post-text">
-            <span class="dx-widget-post-title">Will Coding Ever Rule the World?</span>
-            <span class="dx-widget-post-date">24 Sep 2018</span>
-        </span>
-        
-    </a>
+// Create a new database connection
+$conn = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Query to fetch the 2 latest knowledge base articles
+$sql = "SELECT * FROM articles ORDER BY date_published DESC LIMIT 2";
+
+// Execute the query
+$result = $conn->query($sql);
+
+// Check for errors
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+// Process the query result
+if ($result->num_rows > 0) {
+    echo '<div class="dx-widget-footer">';
+    echo '<div class="dx-widget-title">Latest Posts</div>';
+
+    // Loop through the fetched articles
+    while ($row = $result->fetch_assoc()) {
+        echo '<a href="article-details.php?id=' . $row['id'] . '" class="dx-widget-post">';
+        echo '<span class="dx-widget-post-text">';
+        echo '<span class="dx-widget-post-title">' . $row['title'] . '</span>';
+        echo '<span class="dx-widget-post-date">' . date('d M Y', strtotime($row['date_published'])) . '</span>';
+        echo '</span>';
+        echo '</a>';
+    }
+
+    echo '</div>'; // Close dx-widget-footer
+} else {
+    echo "No results found.";
+}
+
+// Close the new database connection
+mysqli_close($conn);
+?>
 
 
 
-</div>
                 </div>
             </div>
         </div>

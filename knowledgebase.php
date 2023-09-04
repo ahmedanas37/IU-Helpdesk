@@ -119,10 +119,10 @@ include ('php_scripts\header.php');
 <div class="dx-box bg-white">
     <div class="container">
         <ul class="dx-links text-center">
-            <li class="active"><a href="help-center.html">Support Home</a></li>
-            <li><a href="documentations.html">Documentations</a></li>
-            <li><a href="articles.html">Knowledge Base</a></li>
-            <li><a href="forums.html">Forums</a></li>
+            <li class="active"><a href="index.php">Support Home</a></li>
+            <li><a href="documentations.php">Documentations</a></li>
+            <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <!-- <li><a href="forums.html">Forums</a></li> -->
             <li><a href="ticket.php">Ticket System</a></li>
         </ul>
     </div>
@@ -167,30 +167,32 @@ $result = mysqli_query($conn, $sql);
             <div class="dx-separator"></div>
             <div class="dx-blog-post-box">
                 <div class="row vertical-gap lg-gap">
-                    <?php
-                    // Generate HTML for each article category
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="col-sm-6">';
-                        echo '<div class="dx-article dx-article-list">';
-                        echo '<h3 class="h6 dx-article-title">' . $row['category'] . '</h3>';
-                        
-                        // SQL query to fetch top 3 articles for the current category
-                        $category = $row['category'];
-                        $articleSql = "SELECT title FROM articles WHERE category = '$category' LIMIT 3";
-                        $articleResult = mysqli_query($conn, $articleSql);
-                        
-                        echo '<ul class="dx-list">';
-                        while ($articleRow = mysqli_fetch_assoc($articleResult)) {
-                            echo '<li><a href="single-article.html">' . $articleRow['title'] . '</a></li>';
-                        }
-                        echo '</ul>';
-                        
-                        echo '<a href="all-articles.php?category=' . urlencode($row['category']) . '" class="dx-btn dx-btn-xs dx-btn-grey-1 dx-article-btn">' . mysqli_num_rows($articleResult) . ' Articles</a>';
-                        
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                    ?>
+                <?php
+// Generate HTML for each article category
+while ($row = mysqli_fetch_assoc($result)) {
+    echo '<div class="col-sm-6">';
+    echo '<div class="dx-article dx-article-list">';
+    echo '<h3 class="h6 dx-article-title">' . $row['category'] . '</h3>';
+    
+    // SQL query to fetch top 3 articles for the current category
+    $category = $row['category'];
+    $articleSql = "SELECT id, title FROM articles WHERE category = '$category' LIMIT 3"; // Include 'id' in the SELECT query
+    $articleResult = mysqli_query($conn, $articleSql);
+    
+    echo '<ul class="dx-list">';
+    while ($articleRow = mysqli_fetch_assoc($articleResult)) {
+        // Generate the link with the article ID
+        echo '<li><a href="article-details.php?id=' . $articleRow['id'] . '">' . $articleRow['title'] . '</a></li>';
+    }
+    echo '</ul>';
+    
+    echo '<a href="all-articles.php?category=' . urlencode($row['category']) . '" class="dx-btn dx-btn-xs dx-btn-grey-1 dx-article-btn">' . mysqli_num_rows($articleResult) . ' Articles</a>';
+    
+    echo '</div>';
+    echo '</div>';
+}
+?>
+
                 </div>
             </div>
         </div>
@@ -839,7 +841,7 @@ mysqli_close($conn);
                             <div class="dx-box-1">
                                 <h2 class="text-white">Visit IU Service Desk</h2>
                                 <p class="text-white op-8">Get the support you need - visit the IU Service Desk.</p>
-                                <a href="help-center.html" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
+                                <a href="ticket-submit-1.php" class="dx-btn dx-btn-lg dx-btn-transparent">Raise an Issue</a>
                             </div>
                         </div>
                     </div>

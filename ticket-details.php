@@ -400,7 +400,7 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
               </div>
             </div>
             <div class="col-auto dx-dropzone-attachment-btn">
-              <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit a ticket</button>
+              <button class="dx-btn dx-btn-lg" type="submit" name="submitComment">Submit Reply</button>
             </div>
           </div>
         </form>';
@@ -496,44 +496,77 @@ echo ('<div class="dx-comment dx-ticket-comment dx-comment-replied dx-comment-ne
     </div>
 </div>
 
+<?php
+// Assuming you have a database connection established ($conn)
 
-                    
-<div class="dx-widget dx-box dx-box-decorated">
-    <div class="dx-widget-title">
-        Latest Articles
-    </div>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">How to manually import Demo data (if you faced with problems in one-click demo import)</span>
-        <span class="dx-widget-link-date">6 Sep 2018</span>
-    </a>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">Make menu dropdown working without JavaScript</span>
-        <span class="dx-widget-link-date">2 Sep 2018</span>
-    </a>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">Add top menu link inside dropdown on mobile devices</span>
-        <span class="dx-widget-link-date">27 Aug 2018</span>
-    </a>
-</div>
+// Query to fetch the 2 latest articles
+$sql = "SELECT * FROM articles ORDER BY date_published DESC LIMIT 2";
+// Execute the query
+$result = $conn->query($sql);
 
-                    
-<div class="dx-widget dx-box dx-box-decorated">
-    <div class="dx-widget-title">
-        Latest Forum Topics
-    </div>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">Need help with customization. Some options are not appearing...</span>
-        <span class="dx-widget-link-date">6 Sep 2018</span>
-    </a>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">My images on profile and item pages doesnt show up?! Whats the matter?</span>
-        <span class="dx-widget-link-date">2 Sep 2018</span>
-    </a>
-    <a href="single-article.html" class="dx-widget-link">
-        <span class="dx-widget-link-text">Theme not updating in downloads</span>
-        <span class="dx-widget-link-date">27 Aug 2018</span>
-    </a>
-</div>
+// Check for errors
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+// Process the query result
+if ($result->num_rows > 0) {
+    echo '<div class="dx-widget dx-box dx-box-decorated">';
+    echo '<div class="dx-widget-title">Latest Articles</div>';
+
+    // Loop through the fetched articles
+    while ($row = $result->fetch_assoc()) {
+        echo '<a href="article-details.php?id=' . $row['id'] . '" class="dx-widget-link">';
+        echo '<span class="dx-widget-link-text">' . $row['title'] . '</span>';
+        echo '<span class="dx-widget-link-date">' . date('j M Y', strtotime($row['date_published'])) . '</span>';
+        echo '</a>';
+    }
+
+    echo '</div>'; // Close dx-widget
+} else {
+    echo "No results found.";
+}
+// Close the database connection
+?>
+
+
+
+
+
+
+   <?php
+// Assuming you have a database connection established ($conn)
+
+// Query to fetch the 2 latest documentations
+$sql = "SELECT * FROM documentations ORDER BY date_published DESC LIMIT 2";
+// Execute the query
+$result = $conn->query($sql);
+
+// Check for errors
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+// Process the query result
+if ($result->num_rows > 0) {
+    echo '<div class="dx-widget dx-box dx-box-decorated">';
+    echo '<div class="dx-widget-title">Helpful Documentations</div>';
+
+    // Loop through the fetched documentations
+    while ($row = $result->fetch_assoc()) {
+        echo '<a href="documentations-details.php?documentation_id=' . $row['id'] . '" class="dx-widget-link">';
+        echo '<span class="dx-widget-link-text">' . $row['title'] . '</span>';
+        echo '<span class="dx-widget-link-date">' . date('j M Y', strtotime($row['date_published'])) . '</span>';
+        echo '</a>';
+    }
+
+    echo '</div>'; // Close dx-widget
+} else {
+    echo "No results found.";
+}
+// Close the database connection
+?>
+
 
                 </div>
             </div>
