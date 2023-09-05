@@ -52,6 +52,8 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/custom.css">
     
+
+    
     <!-- END: Styles -->
 
     <!-- jQuery -->
@@ -62,7 +64,8 @@
 
 
 <body>
-    
+
+
         
 <?php
 include ('php_scripts\header.php');
@@ -633,7 +636,6 @@ window.onload = function() {
 
 
 <!-- closing body tag -->
-</body>
 
 
 

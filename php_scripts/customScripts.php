@@ -31,6 +31,7 @@ if(isset($_POST['btnLogin'])){
       $_SESSION['user_role'] = $row['role'];
 
       header('Location: index.php');
+
       exit;
   } else {
       // Display error message if username or password is incorrect
@@ -268,8 +269,14 @@ if (isset($_POST['closeTicket'])) {
     $addNotificationQuery = "INSERT INTO notifications (user_id, message, created_at) VALUES ($authorId, '$notificationMessage', NOW())";
     mysqli_query($conn, $addNotificationQuery);
 
+
+
+
+
+
     // Redirect after successful execution
-    header("Location: http://localhost/project/ticket.php");
+    header("Location: http://localhost/project/ticket-details.php?ticket_id=" .$ticketId);
+
     exit;
   } catch (Exception $e) {
     // Handle any exceptions or errors here
@@ -295,22 +302,19 @@ if (isset($_POST['reopenTicket'])) {
       $addNotificationQuery = "INSERT INTO notifications (user_id, message, created_at) VALUES ($authorId, '$notificationMessage', NOW())";
       mysqli_query($conn, $addNotificationQuery);
 
+
+
+
+
+
+
       // Redirect to ticket.php after successful reopening
-      header("Location: http://localhost/project/ticket.php");
+      header("Location: http://localhost/project/ticket-details.php?ticket_id=" .$ticketId);
       exit;
   } catch (Exception $e) {
       // Handle any exceptions or errors here
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 ?>

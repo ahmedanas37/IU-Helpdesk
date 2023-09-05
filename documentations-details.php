@@ -137,6 +137,8 @@ include ('php_scripts\header.php');
             <li class="active"><a href="index.php">Support Home</a></li>
             <li><a href="documentations.php">Documentations</a></li>
             <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <li><a href="live-support.php">Live Support</a></li>
+
             <!-- <li><a href="forums.html">Forums</a></li> -->
             <li><a href="ticket.php">Ticket System</a></li>
         </ul>

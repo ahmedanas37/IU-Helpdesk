@@ -20,7 +20,10 @@
 include('php_scripts\customScripts.php');
 include('php_scripts\database.php');
 
+
+
 ?>
+
 
 
 
@@ -467,4 +470,4 @@ if (isset($_SESSION['loggedin']) == true) {
 </div>
 <!-- END: Navbar -->
 
-    
+

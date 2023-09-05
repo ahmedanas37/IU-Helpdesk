@@ -121,7 +121,7 @@ include ('php_scripts\header.php');
 <?php
     // Check if the user is logged in (assuming 'loggedin' session variable is set)
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        ?>
+    ?>
 
 
 
@@ -132,6 +132,8 @@ include ('php_scripts\header.php');
             <li class="active"><a href="index.php">Support Home</a></li>
             <li><a href="documentations.php">Documentations</a></li>
             <li><a href="knowledgebase.php">Knowledge Base</a></li>
+            <li><a href="knowledgebase.php">Live Support</a></li>
+
             <!-- <li><a href="forums.html">Forums</a></li> -->
             <li><a href="ticket.php">Ticket System</a></li>
         </ul>
@@ -173,6 +175,21 @@ include ('php_scripts\header.php');
 </div>
 
             </div>
+
+            <div class="col-12 col-md-4 col-lg-3 dx-feature-variable">
+                
+                <div class="dx-feature dx-feature-3 dx-feature-color-3 dx-block-decorated">
+                    <div class="dx-feature-icon">
+                    <span class="icon fas fa-comments"></span>
+                    </div>
+                    <div class="dx-feature-cont">
+                        <div class="dx-feature-title"><a href="live-support.php">Live Support</a></div>
+                        <div class="dx-feature-text">Chat with our professional support agents.</div>
+                        <a href="live-support.php" class="dx-btn dx-btn-link d-flex dx-feature-link">Read More <span class="icon pe-7s-angle-right"></span></a>
+                    </div>
+                </div>
+                
+                            </div>
            
             <div class="col-12 col-md-4 col-lg-3 dx-feature-variable">
                 
