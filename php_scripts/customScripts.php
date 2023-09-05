@@ -3,6 +3,14 @@ session_start();
 include('php_scripts\database.php');
 
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+include('vendor/autoload.php');
+
+
+
 
 if(isset($_POST['btnLogin'])){
   // Perform validation of username and password here
@@ -26,6 +34,9 @@ if(isset($_POST['btnLogin'])){
       $_SESSION['loggedin'] = true;
       $_SESSION['username'] = $row['name'];
       $_SESSION['userid'] = $row['id'];
+      $_SESSION['loggedinEmail'] = $row['email'];
+
+
 
       // Set the user's role as a session variable
       $_SESSION['user_role'] = $row['role'];
@@ -106,9 +117,40 @@ for ($i = 0; $i < $attachmentCount; $i++) {
   }
 }
 
-// ...
 
-  
+
+
+// Query to fetch the user's email using the user ID
+$sql = "SELECT email FROM user WHERE id = $user_id";
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Fetch the user's email
+    $row = $result->fetch_assoc();
+    $user_email = $row['email'];
+    echo "User Email: " . $user_email;
+} else {
+    echo "User not found or email not available.";
+}
+
+
+$email_subject = "Ticket Submission Confirmation";
+$email_message = "
+<h2>Thank you for submitting a ticket!</h2>
+<p>Title: $title</p>
+<p>Description: $description</p>
+<p>Date Added: $date_added</p>
+<p>Date Updated: $date_updated</p>
+<p>User ID: $user_id</p>
+<p>Department ID: $department_id</p>
+<p>Comments: $comments</p>
+<p>Status: $status</p>
+";
+
+
+  sendStyledEmail($user_email,$email_subject,$email_message);
+
       // Redirect to success page or display success message
       header("Location: ticket.php");
       exit();
@@ -117,7 +159,6 @@ for ($i = 0; $i < $attachmentCount; $i++) {
       header("Location: error.php");
       exit();
     }
-  
     // Close database connection
     mysqli_close($conn);
   }
@@ -136,12 +177,16 @@ if (isset($_POST['updateUser'])) {
 
 
   
-
   // Prepare SQL statement
   $sql = "UPDATE user SET name = '$name', email = '$email', phone_number = '$phone', department_id = $department_id WHERE id = $user_id";
 
   // Execute query and check if successful
   if (mysqli_query($conn, $sql)) {
+
+
+    
+
+
     // Display success alert
     // Redirect to success page or display success message
     // header("Location: success.php");
@@ -245,6 +290,8 @@ if (isset($_POST['submitComment'])) {
                 }
             }
         }
+
+
     } else {
         echo 'Error inserting comment: ' . mysqli_error($conn);
     }
@@ -268,6 +315,10 @@ if (isset($_POST['closeTicket'])) {
     $notificationMessage = "Your ticket (ID: $ticketId) has been closed.";
     $addNotificationQuery = "INSERT INTO notifications (user_id, message, created_at) VALUES ($authorId, '$notificationMessage', NOW())";
     mysqli_query($conn, $addNotificationQuery);
+
+   
+   
+
 
 
 
@@ -315,6 +366,79 @@ if (isset($_POST['reopenTicket'])) {
       // Handle any exceptions or errors here
   }
 }
+
+
+function sendStyledEmail($to, $subject, $message) {
+  $mail = new PHPMailer(true);
+  
+  $mail->isSMTP();
+    $mail->SMTPDebug = 0; // Set to 2 for debugging
+    $mail->Host = 'mail.gettexh.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'iuhelpdesk@gettexh.com';
+    $mail->Password = 'HelpDesk@786!';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+  // SMTP configuration (same as before)
+
+  // Sender information
+  $mail->setFrom('iuhelpdesk@gettexh.com', 'IU Service Management');
+  $mail->addReplyTo('iuhelpdesk@gettexh.com', 'No-Reply');
+
+  // Recipient
+  $mail->addAddress($to);
+
+  // Email content with HTML and CSS styling
+  $mail->isHTML(true);
+  $mail->Subject = $subject;
+
+  // Add your branding and styling here
+  $message = "
+      <html>
+      <head>
+          <style>
+              /* Add your CSS styles here */
+              body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+              }
+              .container {
+                  max-width: 600px;
+                  margin: 0 auto;a kh
+                  padding: 20px;
+                  background-color: #fff;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                  color: #333;
+              }
+          </style>
+      </head>
+      <body>
+          <div class='container'>
+              <h1>IU Service Management</h1>
+              <p>Hello,</p>
+              $message <!-- Your email content -->
+              <p>This is an atuo generated email, please do not reply.</p>
+
+          </div>
+      </body>
+      </html>
+  ";
+
+  $mail->Body = $message;
+
+  // Send the email (same as before)
+
+  if ($mail->send()) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
+
+
 
 
 ?>
