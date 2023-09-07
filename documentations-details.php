@@ -64,8 +64,10 @@ if (isset($_GET['documentation_id'])) {
     <!-- IU -->
     <link rel="stylesheet" href="assets/css/amdesk.css">
 
-    <!-- Custom Styles -->
+       <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/custom.css">
+
+    <link rel="stylesheet" href="chatbot/style.css">
     
     <!-- END: Styles -->
 

@@ -49,19 +49,32 @@
     <!-- IU -->
     <link rel="stylesheet" href="assets/css/amdesk.css">
 
-    <!-- Custom Styles -->
+       <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/custom.css">
+
+    <link rel="stylesheet" href="chatbot/style.css">
+
+    <link rel="stylesheet" href="chatbot/style.css">
+
     
     <!-- END: Styles -->
 
     <!-- jQuery -->
     <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+
+
+    
+
     
     
 </head>
 
 
 <body>
+
+
+
+
     
         
 <?php
@@ -69,6 +82,10 @@ include ('php_scripts\header.php');
 ?>
 
     <div class="dx-main">
+
+
+
+
         
 
 
@@ -100,14 +117,24 @@ include ('php_scripts\header.php');
 
 
 
+<?php
+    // Check if the user is logged in (assuming 'loggedin' session variable is set)
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    ?>
+
+
+
+
+
+
 <div class="dx-box bg-grey-6">
     <div class="container" style="padding: 60px;">
     <div class="row justify-content-center">
             <div class="col-xl-7">
                 <h1 class="h2 mb-30 text-main-1 text-center">How can we help you?</h1>
-                <form action="#" class="dx-form dx-form-group-inputs">
-                    <input type="text" name="" value="" class="form-control" placeholder="Keyword search...">
-                    <button class="dx-btn dx-btn-lg">Search</button>
+                <form  method="post"  class="dx-form dx-form-group-inputs">
+                    <input type="text" name="ticket_id_post" value="" class="form-control" placeholder="Enter your ticket ID...">
+                    <button type="submit" name="search_ticket" class="dx-btn dx-btn-lg">Search</button>
                 </form>
             </div>
         </div>
@@ -118,10 +145,6 @@ include ('php_scripts\header.php');
 
 
 
-<?php
-    // Check if the user is logged in (assuming 'loggedin' session variable is set)
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    ?>
 
 
 

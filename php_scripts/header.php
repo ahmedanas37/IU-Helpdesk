@@ -5,6 +5,7 @@
 
 
 
+
 <!--
     START: Navbar
 
@@ -21,8 +22,23 @@ include('php_scripts\customScripts.php');
 include('php_scripts\database.php');
 
 
-
 ?>
+<!-- Icon chatbot button -->
+<div id="chatbot-button" onclick="toggleChatbot()">
+    <i class="fas fa-comment" style="font-size: 24px;"></i> <!-- Adjust the font-size as needed -->
+</div>
+
+<!-- Your main application content -->
+
+
+    <!-- Your main application content -->
+
+    
+    <!-- Chatbot popup -->
+    <div id="chatbot-popup" style="display: none;">
+        <?php include('chatbot\bot.php');?>
+    </div>
+
 
 
 

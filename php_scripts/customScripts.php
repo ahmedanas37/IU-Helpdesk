@@ -7,7 +7,15 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+use BotMan\BotMan\BotMan;
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
+
 include('vendor/autoload.php');
+
+
+
+
 
 
 
@@ -436,6 +444,31 @@ function sendStyledEmail($to, $subject, $message) {
       return false;
   }
 }
+
+
+if (isset($_POST['search_ticket'])) {
+  // Use $_POST to retrieve form data sent via POST method
+  $ticketId = $_POST['ticket_id_post'];
+  $sql = "SELECT * FROM ticket WHERE id = $ticketId";
+  $result = $conn->query($sql);
+
+
+  // Your SQL query and other code here
+
+  if ($result->num_rows > 0) {
+      // Handle ticket found case
+      header("Location: ticket-details.php?ticket_id=$ticketId");
+      exit(); // Important to exit after redirecting
+  } else {
+      echo "Ticket not found";
+  }
+} 
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,11 @@
 
+
+
+
+
+
+
+
  
         <!-- START: Footer -->
 
@@ -131,7 +138,7 @@ mysqli_close($conn);
                 <div class="dx-signin-or">Please Login Using Your Credentials</div>
             </div>
             <div class="dx-form-group-md">
-                <input name="username" type="text" class="form-control form-control-style-4" placeholder="Username Or Email">
+                <input name="username" type="text" class="form-control form-control-style-4" placeholder="Email">
             </div>
             <div class="dx-form-group-md">
                 <input name="password" type="password" class="form-control form-control-style-4" placeholder="Password">
@@ -142,13 +149,13 @@ mysqli_close($conn);
             <div class="dx-form-group-md">
                 <div class="d-flex justify-content-between">
                     <a data-fancybox data-touch="false" data-close-existing="true" data-src="#reset-password" href="javascript:;">Reset your password</a>
-                    <a data-fancybox data-touch="false" data-close-existing="true" data-src="#signup" href="javascript:;">Sign Up</a>
+                    <!-- <a data-fancybox data-touch="false" data-close-existing="true" data-src="#signup" href="javascript:;">Sign Up</a> -->
                 </div>
             </div>
         </form>
     </div>
 </div>
-
+<!-- 
 <div class="dx-popup dx-popup-signin" id="signup">
     <button type="button" data-fancybox-close class="fancybox-button fancybox-close-small" title="Close"><svg xmlns="http://www.w3.org/2000/svg" version="10" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
     <div class="dx-popup-content dx-signin text-center">
@@ -180,7 +187,9 @@ mysqli_close($conn);
             </div>
         </form>
     </div>
-</div>
+</div> -->
+
+
 
 <div class="dx-popup dx-popup-signin" id="reset-password">
     <button type="button" data-fancybox-close class="fancybox-button fancybox-close-small" title="Close"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
@@ -198,6 +207,8 @@ mysqli_close($conn);
     </div>
 </div>
 
+
+
 <div id="subscribe" class="dx-popup dx-popup-modal dx-popup-subscribe">
     <button type="button" data-fancybox-close class="fancybox-button fancybox-close-small" title="Close"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
     <div class="dx-box dx-box-decorated">
@@ -214,6 +225,15 @@ mysqli_close($conn);
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
 
     
 
@@ -273,6 +293,54 @@ mysqli_close($conn);
 
 
 
+
+<script>
+        function toggleChatbot() {
+            var chatbotPopup = document.getElementById('chatbot-popup');
+            if (chatbotPopup.style.display === 'none' || chatbotPopup.style.display === '') {
+                chatbotPopup.style.display = 'block';
+            } else {
+                chatbotPopup.style.display = 'none';
+            }
+        }
+    </script>
+
+
+
+<script>
+        $(document).ready(function(){
+            $("#send-btn").on("click", function(){
+                $value = $("#data").val();
+                $msg = '<div class="user-inbox inbox"><div class="msg-header"><p>'+ $value +'</p></div></div>';
+                $(".form").append($msg);
+                $("#data").val('');
+                
+                // start ajax code
+                $.ajax({
+                    url: 'chatbot/message.php',
+                    type: 'POST',
+                    data: 'text='+$value,
+                    success: function(result){
+                        $replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+ result +'</p></div></div>';
+                        $(".form").append($replay);
+                        // when chat goes down the scroll bar automatically comes to the bottom
+                        $(".form").scrollTop($(".form")[0].scrollHeight);
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+        function toggleChatbot() {
+            var chatbotPopup = document.getElementById('chatbot-popup');
+            if (chatbotPopup.style.display === 'none' || chatbotPopup.style.display === '') {
+                chatbotPopup.style.display = 'block';
+            } else {
+                chatbotPopup.style.display = 'none';
+            }
+        }
+    </script>
 
 
 

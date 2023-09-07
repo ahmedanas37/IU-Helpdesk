@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2023 at 10:24 PM
+-- Generation Time: Sep 07, 2023 at 11:17 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -42,7 +42,7 @@ CREATE TABLE `articles` (
 --
 
 INSERT INTO `articles` (`id`, `title`, `content`, `category`, `date_published`, `view_count`, `helpful`) VALUES
-(1, 'TEST', 'TEST TEST TEST', 'Software', '2023-09-02 04:31:25', 17, 0),
+(1, 'TEST', 'TEST TEST TEST', 'Software', '2023-09-02 04:31:25', 20, 0),
 (2, 'TEST2', 'TEST2', 'Software', '2023-09-02 04:31:25', 16, 0),
 (3, 'TEST1', 'TEST1', 'Hardware', '2023-09-02 04:31:25', 3, 0);
 
@@ -66,6 +66,50 @@ CREATE TABLE `attachments` (
 
 INSERT INTO `attachments` (`id`, `comment_id`, `file_name`, `file_path`, `created_at`) VALUES
 (15, 119, '127_0_0_1.sql', 'uploads/64f78d6b29669_127_0_0_1.sql', '2023-09-05 22:19:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatbot`
+--
+
+CREATE TABLE `chatbot` (
+  `id` int(11) NOT NULL,
+  `queries` varchar(300) NOT NULL,
+  `replies` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chatbot`
+--
+
+INSERT INTO `chatbot` (`id`, `queries`, `replies`) VALUES
+(1, 'IS it IS it IQRA University Service Management?', 'Yes, it is IS it IQRA University Service Management. How can I help you?'),
+(2, 'How do I submit a support ticket?', 'To submit a support ticket, log in to your IQRA University account, navigate to the Helpdesk section, and click on \"Submit Ticket.\" Fill out the required information and submit your request.'),
+(3, 'What types of issues can I report through the helpdesk?', 'You can report issues related to IT, campus facilities, academics, and general inquiries through the helpdesk.'),
+(4, 'How can I check the status of my submitted ticket?', 'You can check the status of your ticket by logging in to your account and visiting the Helpdesk section. Your ticket\'s status and updates will be displayed there.'),
+(5, 'What should I do if I forgot my login credentials for the helpdesk system?', 'If you forget your login credentials, click on the \"Forgot Password\" link on the login page. You will receive instructions to reset your password.'),
+(6, 'Can I attach files to my support ticket?', 'Yes, you can attach relevant files or screenshots when submitting your support ticket. This helps us better understand and resolve your issue.'),
+(7, 'How long does it usually take to receive a response to my ticket?', 'We strive to respond to tickets within 24 hours during business days. For urgent issues, our response time may be faster.'),
+(8, 'Is there a specific format for ticket descriptions?', 'While there\'s no strict format, it\'s helpful to provide a clear and detailed description of the issue, including any error messages and steps to reproduce the problem.'),
+(9, 'Can I request technical assistance for my online courses?', 'Yes, our helpdesk supports technical issues related to online courses, such as login problems or access to course materials.'),
+(10, 'What do I do if I have a complaint about a university service?', 'You can use the helpdesk to submit complaints. We take all feedback seriously and strive to improve our services.'),
+(11, 'How can I update the contact information associated with my helpdesk account?', 'You can update your contact information by going to your profile settings in the helpdesk system.'),
+(12, 'What is the process for requesting access to specific campus facilities?', 'To request access to specific campus facilities, submit a ticket with details of your request, and our team will assist you.'),
+(13, 'Can I request an extension for an assignment or exam through the helpdesk?', 'Yes, you can request an extension for academic assignments or exams by submitting a ticket with a valid reason.'),
+(14, 'How can I report an issue with the university\'s Wi-Fi network?', 'Use the helpdesk to report Wi-Fi issues, including slow connectivity or network outages. Our IT team will investigate and resolve them.'),
+(15, 'Is there a dedicated support team for online students?', 'Yes, online students have access to dedicated support through the helpdesk for any technical or academic assistance they may need.'),
+(16, 'What is the process for requesting a transcript or academic record?', 'To request a transcript or academic record, submit a ticket with your details and the specific documents you need.'),
+(17, 'How can I reset my student portal password?', 'If you need to reset your student portal password, submit a ticket to our IT support team, and they will assist you in the process.'),
+(18, 'Can I request tutoring services through the helpdesk?', 'Yes, you can request tutoring services by submitting a ticket with your subject and availability. We will arrange a tutor for you.'),
+(19, 'How do I report a lost or stolen student ID card?', 'To report a lost or stolen student ID card, please submit a ticket to our security team for immediate action.'),
+(20, 'What is the procedure for requesting an official letter from the university?', 'You can request an official letter by submitting a ticket with your details and the purpose of the letter. We will generate it for you.'),
+(21, 'How can I provide feedback on a specific course or instructor?', 'Share your feedback on courses or instructors by submitting a ticket. Your input is valuable for ongoing improvement.'),
+(22, 'What should I do if I encounter an error while accessing the student portal?', 'If you encounter an error while using the student portal, submit a ticket to our IT team with details of the error message and your browser.'),
+(23, 'Can I request assistance with library services through the helpdesk?', 'Yes, you can request assistance with library services, including book reservations and research support, through the helpdesk.'),
+(24, 'How do I enroll in a specific course or program?', 'To enroll in a course or program, submit a ticket with your request and the program details, and our academic advisors will assist you.'),
+(25, 'Can I track the progress of my submitted ticket online?', 'Yes, you can track the progress of your ticket by logging into your helpdesk account and checking the ticket status.'),
+(26, 'Is there a helpline or emergency contact available through the helpdesk?', 'For emergencies or immediate assistance, please contact our dedicated helpline. The helpdesk can also assist in routing urgent requests.');
 
 -- --------------------------------------------------------
 
@@ -136,7 +180,7 @@ CREATE TABLE `documentations` (
 --
 
 INSERT INTO `documentations` (`id`, `title`, `content`, `date_published`, `views`) VALUES
-(1, 'Example Documentation', 'Example content.', '2023-08-29 21:11:51', 40),
+(1, 'Example Documentation', 'Example content.', '2023-08-29 21:11:51', 41),
 (2, 'Example Documentation 2', 'Example Documentation Content 2', '2023-08-30 01:00:00', 18),
 (3, 'RANDOM', 'RANDOM', '2023-09-04 01:00:00', 5);
 
@@ -175,76 +219,6 @@ CREATE TABLE `notifications` (
   `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`id`, `user_id`, `message`, `is_read`, `created_at`) VALUES
-(64, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:21:19'),
-(65, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:21:54'),
-(66, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:21:57'),
-(67, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:22:28'),
-(68, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:22:31'),
-(69, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:22:33'),
-(70, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:22:37'),
-(71, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:26:19'),
-(72, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:26:22'),
-(73, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:27:25'),
-(74, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:27:49'),
-(75, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:27:52'),
-(76, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:28:15'),
-(77, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:28:19'),
-(78, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:28:28'),
-(80, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:32:09'),
-(81, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:40:11'),
-(82, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:43:05'),
-(83, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:43:06'),
-(84, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:43:28'),
-(85, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:43:30'),
-(86, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:43:37'),
-(87, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:51:34'),
-(88, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:52:05'),
-(89, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:52:15'),
-(90, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:52:18'),
-(91, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:52:46'),
-(92, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:53:12'),
-(93, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:53:21'),
-(94, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:58:19'),
-(95, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:58:22'),
-(96, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:58:26'),
-(97, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 22:59:56'),
-(98, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 22:59:59'),
-(99, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:00:07'),
-(100, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 23:01:16'),
-(101, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:01:24'),
-(102, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 23:02:08'),
-(103, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:02:56'),
-(104, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 23:03:09'),
-(105, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:03:18'),
-(106, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 23:03:39'),
-(107, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:05:40'),
-(108, 3, 'Your ticket (ID: 3506) has been reopened.', 0, '2023-09-05 23:05:43'),
-(109, 3, 'Your ticket (ID: 3506) has been closed.', 0, '2023-09-05 23:06:21'),
-(110, 1, 'Your ticket (ID: 3510) has been closed.', 0, '2023-09-06 00:54:00'),
-(111, 1, 'Your ticket (ID: 3510) has been reopened.', 0, '2023-09-06 00:54:51'),
-(112, 1, 'Your ticket (ID: 3510) has been closed.', 0, '2023-09-06 00:54:52'),
-(113, 1, 'Your ticket (ID: 3510) has been closed.', 0, '2023-09-06 00:55:53'),
-(114, 1, 'Your ticket (ID: 3510) has been reopened.', 0, '2023-09-06 00:55:58'),
-(115, 1, 'Your ticket (ID: 3510) has been closed.', 0, '2023-09-06 00:55:59'),
-(116, 1, 'Your ticket (ID: 3510) has been closed.', 0, '2023-09-06 00:56:11'),
-(117, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:03:56'),
-(118, 1, 'Your ticket (ID: 3511) has been reopened.', 0, '2023-09-06 01:04:31'),
-(119, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:04:32'),
-(120, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:04:46'),
-(121, 1, 'Your ticket (ID: 3511) has been reopened.', 0, '2023-09-06 01:04:51'),
-(122, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:04:52'),
-(123, 1, 'Your ticket (ID: 3511) has been reopened.', 0, '2023-09-06 01:06:10'),
-(124, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:06:28'),
-(125, 1, 'Your ticket (ID: 3511) has been reopened.', 0, '2023-09-06 01:07:08'),
-(126, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:07:09'),
-(127, 1, 'Your ticket (ID: 3511) has been closed.', 0, '2023-09-06 01:07:29'),
-(128, 1, 'Your ticket (ID: 3512) has been closed.', 0, '2023-09-06 01:20:18');
 
 -- --------------------------------------------------------
 
@@ -329,8 +303,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `profile_picture`, `phone_number`, `department_id`, `role`) VALUES
 (1, 'Anas', 'ahmedanas37@gmail.com', 'anas@123', '2023-04-06', NULL, '84945487915', 3, 'admin'),
 (3, 'Fahad', 'fahad.49808@iqra.edu.pk', 'fahad@123', '2023-05-12', NULL, '46954954', 1, 'user'),
-(4, 'Arif', 'arif@abc.com', 'arif@123', '', '', '12512616', 4, NULL),
-(5, 'Mujeeb', 'mujeeb@abc.com', 'mujeeb@123', '', '', '315161616', 5, NULL);
+(4, 'Arif', 'arif@abc.com', 'arif@123', '', '', '12512616', 4, 'support'),
+(5, 'Mujeeb', 'mujeeb@abc.com', 'mujeeb@123', '', '', '315161616', 5, 'support');
 
 --
 -- Indexes for dumped tables
@@ -348,6 +322,12 @@ ALTER TABLE `articles`
 ALTER TABLE `attachments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `comment_id` (`comment_id`);
+
+--
+-- Indexes for table `chatbot`
+--
+ALTER TABLE `chatbot`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `comments`
@@ -429,6 +409,12 @@ ALTER TABLE `articles`
 --
 ALTER TABLE `attachments`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `chatbot`
+--
+ALTER TABLE `chatbot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `comments`
