@@ -6,21 +6,27 @@ require_once "helpers.php";
 // Define variables and initialize with empty values
 $title = "";
 $content = "";
+$category = "";
 $date_published = "";
-$views = "";
+$view_count = "";
+$helpful = "";
 
 $title_err = "";
 $content_err = "";
+$category_err = "";
 $date_published_err = "";
-$views_err = "";
+$view_count_err = "";
+$helpful_err = "";
 
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
         $title = trim($_POST["title"]);
 		$content = trim($_POST["content"]);
+		$category = trim($_POST["category"]);
 		$date_published = trim($_POST["date_published"]);
-		$views = trim($_POST["views"]);
+		$view_count = trim($_POST["view_count"]);
+		$helpful = trim($_POST["helpful"]);
 		
 
         $dsn = "mysql:host=$db_server;dbname=$db_name;charset=utf8mb4";
@@ -36,12 +42,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           exit('Something weird happened'); //something a user can understand
         }
 
-        $vars = parse_columns('documentations', $_POST);
-        $stmt = $pdo->prepare("INSERT INTO documentations (title,content,date_published,views) VALUES (?,?,?,?)");
+        $vars = parse_columns('articles', $_POST);
+        $stmt = $pdo->prepare("INSERT INTO articles (title,content,category,date_published,view_count,helpful) VALUES (?,?,?,?,?,?)");
 
-        if($stmt->execute([ $title,$content,$date_published,$views  ])) {
+        if($stmt->execute([ $title,$content,$category,$date_published,$view_count,$helpful  ])) {
                 $stmt = null;
-                header("location: documentations-index.php");
+                header("location: articles-index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -69,8 +75,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Title</label>
-                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
+                                <label>Article Title</label>
+                                <input type="text" name="title" maxlength="255"class="form-control" value="<?php echo $title; ?>">
                                 <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
@@ -79,18 +85,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="form-text"><?php echo $content_err; ?></span>
                             </div>
 						<div class="form-group">
+                                <label>Category</label>
+                                <input type="text" name="category" maxlength="100"class="form-control" value="<?php echo $category; ?>">
+                                <span class="form-text"><?php echo $category_err; ?></span>
+                            </div>
+						<div class="form-group">
                                 <label>Date Published</label>
                                 <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
                                 <span class="form-text"><?php echo $date_published_err; ?></span>
                             </div>
 						<div class="form-group">
                                 <label>Views</label>
-                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
-                                <span class="form-text"><?php echo $views_err; ?></span>
+                                <input type="number" name="view_count" class="form-control" value="<?php echo $view_count; ?>">
+                                <span class="form-text"><?php echo $view_count_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>Helpful?</label>
+                                <input type="number" name="helpful" class="form-control" value="<?php echo $helpful; ?>">
+                                <span class="form-text"><?php echo $helpful_err; ?></span>
                             </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="articles-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -63,12 +63,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>title</label>
+                                <label>Subsection Title</label>
                                 <input type="text" name="title" maxlength="255"class="form-control" value="<?php echo $title; ?>">
                                 <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>parent_id</label>
+                                <label>Parent ID</label>
                                     <select class="form-control" id="parent_id" name="parent_id">
                                     <?php
                                         $sql = "SELECT *,id FROM documentations";

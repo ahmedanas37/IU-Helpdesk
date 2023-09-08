@@ -11,23 +11,22 @@
           Select Page
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a href="attachments-index.php" class="dropdown-item">attachments</a> 
+        <a href="articles-index.php" class="dropdown-item">Articles</a> 
 	                                                                                                                                                                                                     
-        	<a class="dropdown-item" href="comments-index.php">comments</a>
-		<a class="dropdown-item" href="departments-index.php">departments</a>
-		<a class="dropdown-item" href="documentations-index.php">documentations</a>
-		<a class="dropdown-item" href="notifications-index.php">notifications</a>
-		<a class="dropdown-item" href="subsections-index.php">subsections</a>
-		<a class="dropdown-item" href="ticket-index.php">ticket</a>
-		<a class="dropdown-item" href="ticket_attachments-index.php">ticket_attachments</a>
-		<a class="dropdown-item" href="user-index.php">user</a>
+        	<a class="dropdown-item" href="attachments-index.php">Comment Attachments</a>
+		<a class="dropdown-item" href="chatbot-index.php">Chatbot Data</a>
+		<a class="dropdown-item" href="comments-index.php">Ticket Comments</a>
+		<a class="dropdown-item" href="departments-index.php">Departments</a>
+		<a class="dropdown-item" href="documentations-index.php">Documentations</a>
+		<a class="dropdown-item" href="messages-index.php">Messages</a>
+		<a class="dropdown-item" href="notifications-index.php">User Notifications</a>
+		<a class="dropdown-item" href="subsections-index.php">Article Subsections</a>
+		<a class="dropdown-item" href="ticket-index.php">Tickets</a>
+		<a class="dropdown-item" href="ticket_attachments-index.php">Ticket Attachments</a>
+		<a class="dropdown-item" href="user-index.php">Users</a>
 	<!-- TABLE_BUTTONS -->
         </div>
       </li>
-      <li class="nav-item">
-      </li>
-
-
     </ul>
   </div>
 </nav>

@@ -145,27 +145,27 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>title</label>
+                                <label>Ticket Title</label>
                                 <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
                                 <span class="form-text"><?php echo $title_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>ticket_description</label>
+                                <label>Description</label>
                                 <textarea name="ticket_description" class="form-control"><?php echo $ticket_description ; ?></textarea>
                                 <span class="form-text"><?php echo $ticket_description_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>date_added</label>
+                                <label>Date Added</label>
                                 <input type="text" name="date_added" maxlength="30"class="form-control" value="<?php echo $date_added; ?>">
                                 <span class="form-text"><?php echo $date_added_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>date_updated</label>
+                                <label>Date Updated</label>
                                 <input type="text" name="date_updated" maxlength="30"class="form-control" value="<?php echo $date_updated; ?>">
                                 <span class="form-text"><?php echo $date_updated_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>user_id</label>
+                                <label>User ID</label>
                                     <select class="form-control" id="user_id" name="user_id">
                                     <?php
                                         $sql = "SELECT *,id FROM user";
@@ -185,7 +185,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <span class="form-text"><?php echo $user_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>department_id</label>
+                                <label>Department ID</label>
                                     <select class="form-control" id="department_id" name="department_id">
                                     <?php
                                         $sql = "SELECT *,id FROM departments";
@@ -205,12 +205,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <span class="form-text"><?php echo $department_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>comments</label>
+                                <label>Comments</label>
                                 <input type="number" name="comments" class="form-control" value="<?php echo $comments; ?>">
                                 <span class="form-text"><?php echo $comments_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>ticket_status</label>
+                                <label>Ticket Status</label>
                                 <input type="text" name="ticket_status" maxlength="20"class="form-control" value="<?php echo $ticket_status; ?>">
                                 <span class="form-text"><?php echo $ticket_status_err; ?></span>
                             </div>

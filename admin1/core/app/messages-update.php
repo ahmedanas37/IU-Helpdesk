@@ -4,15 +4,15 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$title = "";
+$sender_id = "";
+$recipient_id = "";
 $content = "";
-$date_published = "";
-$views = "";
+$timestamp = "";
 
-$title_err = "";
+$sender_id_err = "";
+$recipient_id_err = "";
 $content_err = "";
-$date_published_err = "";
-$views_err = "";
+$timestamp_err = "";
 
 
 // Processing form data when form is submitted
@@ -20,10 +20,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
     $id = $_POST["id"];
 
-    $title = trim($_POST["title"]);
+    $sender_id = trim($_POST["sender_id"]);
+		$recipient_id = trim($_POST["recipient_id"]);
 		$content = trim($_POST["content"]);
-		$date_published = trim($_POST["date_published"]);
-		$views = trim($_POST["views"]);
+		$timestamp = trim($_POST["timestamp"]);
 		
 
     // Prepare an update statement
@@ -40,15 +40,15 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         exit('Something weird happened');
     }
 
-    $vars = parse_columns('documentations', $_POST);
-    $stmt = $pdo->prepare("UPDATE documentations SET title=?,content=?,date_published=?,views=? WHERE id=?");
+    $vars = parse_columns('messages', $_POST);
+    $stmt = $pdo->prepare("UPDATE messages SET sender_id=?,recipient_id=?,content=?,timestamp=? WHERE id=?");
 
-    if(!$stmt->execute([ $title,$content,$date_published,$views,$id  ])) {
+    if(!$stmt->execute([ $sender_id,$recipient_id,$content,$timestamp,$id  ])) {
         echo "Something went wrong. Please try again later.";
         header("location: error.php");
     } else {
         $stmt = null;
-        header("location: documentations-read.php?id=$id");
+        header("location: messages-read.php?id=$id");
     }
 } else {
     // Check existence of id parameter before processing further
@@ -58,7 +58,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $id =  trim($_GET["id"]);
 
         // Prepare a select statement
-        $sql = "SELECT * FROM documentations WHERE id = ?";
+        $sql = "SELECT * FROM messages WHERE id = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Set parameters
             $param_id = $id;
@@ -81,10 +81,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
                     // Retrieve individual field value
 
-                    $title = htmlspecialchars($row["title"]);
+                    $sender_id = htmlspecialchars($row["sender_id"]);
+					$recipient_id = htmlspecialchars($row["recipient_id"]);
 					$content = htmlspecialchars($row["content"]);
-					$date_published = htmlspecialchars($row["date_published"]);
-					$views = htmlspecialchars($row["views"]);
+					$timestamp = htmlspecialchars($row["timestamp"]);
 					
 
                 } else{
@@ -129,9 +129,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Title</label>
-                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
-                                <span class="form-text"><?php echo $title_err; ?></span>
+                                <label>Sender ID</label>
+                                <input type="number" name="sender_id" class="form-control" value="<?php echo $sender_id; ?>">
+                                <span class="form-text"><?php echo $sender_id_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>Recipient ID</label>
+                                <input type="number" name="recipient_id" class="form-control" value="<?php echo $recipient_id; ?>">
+                                <span class="form-text"><?php echo $recipient_id_err; ?></span>
                             </div>
 						<div class="form-group">
                                 <label>Content</label>
@@ -139,19 +144,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <span class="form-text"><?php echo $content_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Published</label>
-                                <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
-                                <span class="form-text"><?php echo $date_published_err; ?></span>
-                            </div>
-						<div class="form-group">
-                                <label>Views</label>
-                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
-                                <span class="form-text"><?php echo $views_err; ?></span>
+                                <label>Timestamp</label>
+                                <input type="text" name="timestamp" class="form-control" value="<?php echo $timestamp; ?>">
+                                <span class="form-text"><?php echo $timestamp_err; ?></span>
                             </div>
 
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="messages-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">ticket Details</h2>
+                        <h2 class="float-left">Tickets Details</h2>
                         <a href="ticket-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="ticket-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,15 +116,15 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
-										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>title</th>";
-										echo "<th><a href=?search=$search&sort=&order=ticket_description&sort=$sort>ticket_description</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>date_added</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_updated&sort=$sort>date_updated</th>";
-										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>user_id</th>";
-										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>department_id</th>";
-										echo "<th><a href=?search=$search&sort=&order=comments&sort=$sort>comments</th>";
-										echo "<th><a href=?search=$search&sort=&order=ticket_status&sort=$sort>ticket_status</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Ticket ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>Ticket Title</th>";
+										echo "<th><a href=?search=$search&sort=&order=ticket_description&sort=$sort>Description</th>";
+										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>Date Added</th>";
+										echo "<th><a href=?search=$search&sort=&order=date_updated&sort=$sort>Date Updated</th>";
+										echo "<th><a href=?search=$search&sort=&order=user_id&sort=$sort>User ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>Department ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=comments&sort=$sort>Comments</th>";
+										echo "<th><a href=?search=$search&sort=&order=ticket_status&sort=$sort>Ticket Status</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

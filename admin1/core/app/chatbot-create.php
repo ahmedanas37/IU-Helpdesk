@@ -4,23 +4,17 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$title = "";
-$content = "";
-$date_published = "";
-$views = "";
+$queries = "";
+$replies = "";
 
-$title_err = "";
-$content_err = "";
-$date_published_err = "";
-$views_err = "";
+$queries_err = "";
+$replies_err = "";
 
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $title = trim($_POST["title"]);
-		$content = trim($_POST["content"]);
-		$date_published = trim($_POST["date_published"]);
-		$views = trim($_POST["views"]);
+        $queries = trim($_POST["queries"]);
+		$replies = trim($_POST["replies"]);
 		
 
         $dsn = "mysql:host=$db_server;dbname=$db_name;charset=utf8mb4";
@@ -36,12 +30,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           exit('Something weird happened'); //something a user can understand
         }
 
-        $vars = parse_columns('documentations', $_POST);
-        $stmt = $pdo->prepare("INSERT INTO documentations (title,content,date_published,views) VALUES (?,?,?,?)");
+        $vars = parse_columns('chatbot', $_POST);
+        $stmt = $pdo->prepare("INSERT INTO chatbot (queries,replies) VALUES (?,?)");
 
-        if($stmt->execute([ $title,$content,$date_published,$views  ])) {
+        if($stmt->execute([ $queries,$replies  ])) {
                 $stmt = null;
-                header("location: documentations-index.php");
+                header("location: chatbot-index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -69,28 +63,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Title</label>
-                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
-                                <span class="form-text"><?php echo $title_err; ?></span>
+                                <label>Query</label>
+                                <input type="text" name="queries" maxlength="300"class="form-control" value="<?php echo $queries; ?>">
+                                <span class="form-text"><?php echo $queries_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Content</label>
-                                <textarea name="content" class="form-control"><?php echo $content ; ?></textarea>
-                                <span class="form-text"><?php echo $content_err; ?></span>
-                            </div>
-						<div class="form-group">
-                                <label>Date Published</label>
-                                <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
-                                <span class="form-text"><?php echo $date_published_err; ?></span>
-                            </div>
-						<div class="form-group">
-                                <label>Views</label>
-                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
-                                <span class="form-text"><?php echo $views_err; ?></span>
+                                <label>Reply</label>
+                                <input type="text" name="replies" maxlength="300"class="form-control" value="<?php echo $replies; ?>">
+                                <span class="form-text"><?php echo $replies_err; ?></span>
                             </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="chatbot-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -7,7 +7,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
     require_once "helpers.php";
 
     // Prepare a select statement
-    $sql = "SELECT * FROM user WHERE id = ?";
+    $sql = "SELECT * FROM chatbot WHERE id = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
         // Set parameters
@@ -68,32 +68,14 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>Name</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["name"]); ?></p>
+                            <h4>Query</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["queries"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Email</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["email"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Password</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["password"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Created At</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["created_at"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Profile Picture</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["profile_picture"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Phone Number</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["phone_number"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Department ID</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["department_id"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Role</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["role"]); ?></p>
+                            <h4>Reply</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["replies"]); ?></p>
                         </div>
 
-                    <p><a href="user-index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="chatbot-index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>
         </div>

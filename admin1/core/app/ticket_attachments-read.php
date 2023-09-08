@@ -68,16 +68,16 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>ticket_id</h4>
+                            <h4>Ticket ID</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["ticket_id"]); ?></p>
                         </div><div class="form-group">
-                            <h4>file_name</h4>
+                            <h4>File Name</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["file_name"]); ?></p>
                         </div><div class="form-group">
-                            <h4>file_path</h4>
+                            <h4>File Path</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["file_path"]); ?></p>
                         </div><div class="form-group">
-                            <h4>created_at</h4>
+                            <h4>Created At</h4>
                             <p class="form-control-static"><?php echo htmlspecialchars($row["created_at"]); ?></p>
                         </div>
 

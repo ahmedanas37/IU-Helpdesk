@@ -279,7 +279,6 @@ if (isset($_POST['submitComment'])) {
 
                 // Check if a file was selected for upload
                 if ($fileError === UPLOAD_ERR_NO_FILE) {
-                    echo 'Failed to upload file';
                 } else {
                     // Generate a unique file name or use the original file name
                     $uniqueFileName = uniqid() . '_' . $fileName;

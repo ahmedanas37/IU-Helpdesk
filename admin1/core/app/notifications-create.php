@@ -69,22 +69,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>user_id</label>
+                                <label>User ID</label>
                                 <input type="number" name="user_id" class="form-control" value="<?php echo $user_id; ?>">
                                 <span class="form-text"><?php echo $user_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>message</label>
+                                <label>Message</label>
                                 <input type="text" name="message" maxlength="255"class="form-control" value="<?php echo $message; ?>">
                                 <span class="form-text"><?php echo $message_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>is_read</label>
+                                <label>Read Status</label>
                                 <input type="number" name="is_read" class="form-control" value="<?php echo $is_read; ?>">
                                 <span class="form-text"><?php echo $is_read_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>created_at</label>
+                                <label>Created At</label>
                                 <input type="datetime-local" name="created_at" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($created_at)); ?>">
                                 <span class="form-text"><?php echo $created_at_err; ?></span>
                             </div>

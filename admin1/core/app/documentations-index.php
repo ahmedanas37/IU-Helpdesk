@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">documentations Details</h2>
+                        <h2 class="float-left">Documentations Details</h2>
                         <a href="documentations-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="documentations-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,11 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
-										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>title</th>";
-										echo "<th><a href=?search=$search&sort=&order=content&sort=$sort>content</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_published&sort=$sort>date_published</th>";
-										echo "<th><a href=?search=$search&sort=&order=views&sort=$sort>views</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Documentation ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>Title</th>";
+										echo "<th><a href=?search=$search&sort=&order=content&sort=$sort>Content</th>";
+										echo "<th><a href=?search=$search&sort=&order=date_published&sort=$sort>Date Published</th>";
+										echo "<th><a href=?search=$search&sort=&order=views&sort=$sort>Views</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

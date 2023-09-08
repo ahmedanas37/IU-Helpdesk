@@ -129,7 +129,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>ticket_id</label>
+                                <label>Ticket ID</label>
                                     <select class="form-control" id="ticket_id" name="ticket_id">
                                     <?php
                                         $sql = "SELECT *,id FROM ticket";
@@ -149,17 +149,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <span class="form-text"><?php echo $ticket_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>file_name</label>
+                                <label>File Name</label>
                                 <input type="text" name="file_name" maxlength="255"class="form-control" value="<?php echo $file_name; ?>">
                                 <span class="form-text"><?php echo $file_name_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>file_path</label>
+                                <label>File Path</label>
                                 <input type="text" name="file_path" maxlength="255"class="form-control" value="<?php echo $file_path; ?>">
                                 <span class="form-text"><?php echo $file_path_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>created_at</label>
+                                <label>Created At</label>
                                 <input type="datetime-local" name="created_at" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($created_at)); ?>">
                                 <span class="form-text"><?php echo $created_at_err; ?></span>
                             </div>

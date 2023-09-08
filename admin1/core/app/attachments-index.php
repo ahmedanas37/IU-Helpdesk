@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">attachments Details</h2>
+                        <h2 class="float-left">Comment Attachments Details</h2>
                         <a href="attachments-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="attachments-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,11 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
-										echo "<th><a href=?search=$search&sort=&order=comment_id&sort=$sort>comment_id</th>";
-										echo "<th><a href=?search=$search&sort=&order=file_name&sort=$sort>file_name</th>";
-										echo "<th><a href=?search=$search&sort=&order=file_path&sort=$sort>file_path</th>";
-										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>created_at</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Comment ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=comment_id&sort=$sort>Related Ticket</th>";
+										echo "<th><a href=?search=$search&sort=&order=file_name&sort=$sort>File Name</th>";
+										echo "<th><a href=?search=$search&sort=&order=file_path&sort=$sort>File Path</th>";
+										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>Date Created</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

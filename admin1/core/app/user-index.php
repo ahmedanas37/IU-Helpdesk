@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">user Details</h2>
+                        <h2 class="float-left">Users Details</h2>
                         <a href="user-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="user-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,15 +116,15 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
-										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>name</th>";
-										echo "<th><a href=?search=$search&sort=&order=email&sort=$sort>email</th>";
-										echo "<th><a href=?search=$search&sort=&order=password&sort=$sort>password</th>";
-										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>created_at</th>";
-										echo "<th><a href=?search=$search&sort=&order=profile_picture&sort=$sort>profile_picture</th>";
-										echo "<th><a href=?search=$search&sort=&order=phone_number&sort=$sort>phone_number</th>";
-										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>department_id</th>";
-										echo "<th><a href=?search=$search&sort=&order=role&sort=$sort>role</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>User ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>Name</th>";
+										echo "<th><a href=?search=$search&sort=&order=email&sort=$sort>Email</th>";
+										echo "<th><a href=?search=$search&sort=&order=password&sort=$sort>Password</th>";
+										echo "<th><a href=?search=$search&sort=&order=created_at&sort=$sort>Created At</th>";
+										echo "<th><a href=?search=$search&sort=&order=profile_picture&sort=$sort>Profile Picture</th>";
+										echo "<th><a href=?search=$search&sort=&order=phone_number&sort=$sort>Phone Number</th>";
+										echo "<th><a href=?search=$search&sort=&order=department_id&sort=$sort>Department ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=role&sort=$sort>Role</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

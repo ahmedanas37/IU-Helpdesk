@@ -145,37 +145,37 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
 
                         <div class="form-group">
-                                <label>name</label>
+                                <label>Name</label>
                                 <input type="text" name="name" maxlength="128"class="form-control" value="<?php echo $name; ?>">
                                 <span class="form-text"><?php echo $name_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>email</label>
+                                <label>Email</label>
                                 <input type="text" name="email" maxlength="128"class="form-control" value="<?php echo $email; ?>">
                                 <span class="form-text"><?php echo $email_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>password</label>
+                                <label>Password</label>
                                 <input type="text" name="password" maxlength="128"class="form-control" value="<?php echo $password; ?>">
                                 <span class="form-text"><?php echo $password_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>created_at</label>
+                                <label>Created At</label>
                                 <input type="text" name="created_at" maxlength="30"class="form-control" value="<?php echo $created_at; ?>">
                                 <span class="form-text"><?php echo $created_at_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>profile_picture</label>
+                                <label>Profile Picture</label>
                                 <input type="text" name="profile_picture" maxlength="256"class="form-control" value="<?php echo $profile_picture; ?>">
                                 <span class="form-text"><?php echo $profile_picture_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>phone_number</label>
+                                <label>Phone Number</label>
                                 <input type="text" name="phone_number" maxlength="20"class="form-control" value="<?php echo $phone_number; ?>">
                                 <span class="form-text"><?php echo $phone_number_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>department_id</label>
+                                <label>Department ID</label>
                                     <select class="form-control" id="department_id" name="department_id">
                                     <?php
                                         $sql = "SELECT *,id FROM departments";
@@ -195,7 +195,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <span class="form-text"><?php echo $department_id_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>role</label>
+                                <label>Role</label>
                                 <input type="text" name="role" maxlength="20"class="form-control" value="<?php echo $role; ?>">
                                 <span class="form-text"><?php echo $role_err; ?></span>
                             </div>

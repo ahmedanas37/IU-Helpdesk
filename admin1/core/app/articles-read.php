@@ -7,7 +7,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
     require_once "helpers.php";
 
     // Prepare a select statement
-    $sql = "SELECT * FROM user WHERE id = ?";
+    $sql = "SELECT * FROM articles WHERE id = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
         // Set parameters
@@ -68,32 +68,26 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
                     </div>
 
                      <div class="form-group">
-                            <h4>Name</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["name"]); ?></p>
+                            <h4>Article Title</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["title"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Email</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["email"]); ?></p>
+                            <h4>Content</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["content"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Password</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["password"]); ?></p>
+                            <h4>Category</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["category"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Created At</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["created_at"]); ?></p>
+                            <h4>Date Published</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["date_published"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Profile Picture</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["profile_picture"]); ?></p>
+                            <h4>Views</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["view_count"]); ?></p>
                         </div><div class="form-group">
-                            <h4>Phone Number</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["phone_number"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Department ID</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["department_id"]); ?></p>
-                        </div><div class="form-group">
-                            <h4>Role</h4>
-                            <p class="form-control-static"><?php echo htmlspecialchars($row["role"]); ?></p>
+                            <h4>Helpful?</h4>
+                            <p class="form-control-static"><?php echo htmlspecialchars($row["helpful"]); ?></p>
                         </div>
 
-                    <p><a href="user-index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="articles-index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>
         </div>

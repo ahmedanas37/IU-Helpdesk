@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">subsections Details</h2>
+                        <h2 class="float-left">Article Subsections Details</h2>
                         <a href="subsections-create.php" class="btn btn-success float-right">Add New Record</a>
                         <a href="subsections-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
@@ -116,9 +116,9 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>id</th>";
-										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>title</th>";
-										echo "<th><a href=?search=$search&sort=&order=parent_id&sort=$sort>parent_id</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Subsection ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=title&sort=$sort>Subsection Title</th>";
+										echo "<th><a href=?search=$search&sort=&order=parent_id&sort=$sort>Parent ID</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";

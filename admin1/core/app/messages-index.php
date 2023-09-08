@@ -24,14 +24,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="float-left">Departments Details</h2>
-                        <a href="departments-create.php" class="btn btn-success float-right">Add New Record</a>
-                        <a href="departments-index.php" class="btn btn-info float-right mr-2">Reset View</a>
+                        <h2 class="float-left">Messages Details</h2>
+                        <a href="messages-create.php" class="btn btn-success float-right">Add New Record</a>
+                        <a href="messages-index.php" class="btn btn-info float-right mr-2">Reset View</a>
                         <a href="index.php" class="btn btn-secondary float-right mr-2">Back</a>
                     </div>
 
                     <div class="form-row">
-                        <form action="departments-index.php" method="get">
+                        <form action="messages-index.php" method="get">
                         <div class="col">
                           <input type="text" class="form-control" placeholder="Search this table" name="search">
                         </div>
@@ -61,13 +61,13 @@
                     //$no_of_records_per_page is set on the index page. Default is 10.
                     $offset = ($pageno-1) * $no_of_records_per_page;
 
-                    $total_pages_sql = "SELECT COUNT(*) FROM departments";
+                    $total_pages_sql = "SELECT COUNT(*) FROM messages";
                     $result = mysqli_query($link,$total_pages_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
 
                     //Column sorting on column name
-                    $orderBy = array('id', 'name', 'description', 'date_added', 'admin_id');
+                    $orderBy = array('id', 'sender_id', 'recipient_id', 'content', 'timestamp');
                     $order = 'id';
                     if (isset($_GET['order']) && in_array($_GET['order'], $orderBy)) {
                             $order = $_GET['order'];
@@ -85,19 +85,19 @@
                     }
 
                     // Attempt select query execution
-                    $sql = "SELECT * FROM departments ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
-                    $count_pages = "SELECT * FROM departments";
+                    $sql = "SELECT * FROM messages ORDER BY $order $sort LIMIT $offset, $no_of_records_per_page";
+                    $count_pages = "SELECT * FROM messages";
 
 
                     if(!empty($_GET['search'])) {
                         $search = ($_GET['search']);
-                        $sql = "SELECT * FROM departments
-                            WHERE CONCAT_WS (id,name,description,date_added,admin_id)
+                        $sql = "SELECT * FROM messages
+                            WHERE CONCAT_WS (id,sender_id,recipient_id,content,timestamp)
                             LIKE '%$search%'
                             ORDER BY $order $sort
                             LIMIT $offset, $no_of_records_per_page";
-                        $count_pages = "SELECT * FROM departments
-                            WHERE CONCAT_WS (id,name,description,date_added,admin_id)
+                        $count_pages = "SELECT * FROM messages
+                            WHERE CONCAT_WS (id,sender_id,recipient_id,content,timestamp)
                             LIKE '%$search%'
                             ORDER BY $order $sort";
                     }
@@ -116,11 +116,11 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Department ID</th>";
-										echo "<th><a href=?search=$search&sort=&order=name&sort=$sort>Department Name</th>";
-										echo "<th><a href=?search=$search&sort=&order=description&sort=$sort>Description</th>";
-										echo "<th><a href=?search=$search&sort=&order=date_added&sort=$sort>Date Added</th>";
-										echo "<th><a href=?search=$search&sort=&order=admin_id&sort=$sort>Admin ID</th>";
+                                        echo "<th><a href=?search=$search&sort=&order=id&sort=$sort>Message ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=sender_id&sort=$sort>Sender ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=recipient_id&sort=$sort>Recipient ID</th>";
+										echo "<th><a href=?search=$search&sort=&order=content&sort=$sort>Content</th>";
+										echo "<th><a href=?search=$search&sort=&order=timestamp&sort=$sort>Timestamp</th>";
 										
                                         echo "<th>Action</th>";
                                     echo "</tr>";
@@ -128,11 +128,11 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['name']) . "</td>";echo "<td>" . htmlspecialchars($row['description']) . "</td>";echo "<td>" . htmlspecialchars($row['date_added']) . "</td>";echo "<td>" . htmlspecialchars($row['admin_id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";echo "<td>" . htmlspecialchars($row['sender_id']) . "</td>";echo "<td>" . htmlspecialchars($row['recipient_id']) . "</td>";echo "<td>" . htmlspecialchars($row['content']) . "</td>";echo "<td>" . htmlspecialchars($row['timestamp']) . "</td>";
                                         echo "<td>";
-                                            echo "<a href='departments-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
-                                            echo "<a href='departments-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
-                                            echo "<a href='departments-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
+                                            echo "<a href='messages-read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><i class='far fa-eye'></i></a>";
+                                            echo "<a href='messages-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='far fa-edit'></i></a>";
+                                            echo "<a href='messages-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='far fa-trash-alt'></i></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }

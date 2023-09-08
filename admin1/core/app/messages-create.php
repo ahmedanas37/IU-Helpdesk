@@ -4,23 +4,23 @@ require_once "config.php";
 require_once "helpers.php";
 
 // Define variables and initialize with empty values
-$title = "";
+$sender_id = "";
+$recipient_id = "";
 $content = "";
-$date_published = "";
-$views = "";
+$timestamp = "";
 
-$title_err = "";
+$sender_id_err = "";
+$recipient_id_err = "";
 $content_err = "";
-$date_published_err = "";
-$views_err = "";
+$timestamp_err = "";
 
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $title = trim($_POST["title"]);
+        $sender_id = trim($_POST["sender_id"]);
+		$recipient_id = trim($_POST["recipient_id"]);
 		$content = trim($_POST["content"]);
-		$date_published = trim($_POST["date_published"]);
-		$views = trim($_POST["views"]);
+		$timestamp = trim($_POST["timestamp"]);
 		
 
         $dsn = "mysql:host=$db_server;dbname=$db_name;charset=utf8mb4";
@@ -36,12 +36,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           exit('Something weird happened'); //something a user can understand
         }
 
-        $vars = parse_columns('documentations', $_POST);
-        $stmt = $pdo->prepare("INSERT INTO documentations (title,content,date_published,views) VALUES (?,?,?,?)");
+        $vars = parse_columns('messages', $_POST);
+        $stmt = $pdo->prepare("INSERT INTO messages (sender_id,recipient_id,content,timestamp) VALUES (?,?,?,?)");
 
-        if($stmt->execute([ $title,$content,$date_published,$views  ])) {
+        if($stmt->execute([ $sender_id,$recipient_id,$content,$timestamp  ])) {
                 $stmt = null;
-                header("location: documentations-index.php");
+                header("location: messages-index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -69,9 +69,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
                         <div class="form-group">
-                                <label>Title</label>
-                                <input type="text" name="title" maxlength="256"class="form-control" value="<?php echo $title; ?>">
-                                <span class="form-text"><?php echo $title_err; ?></span>
+                                <label>Sender ID</label>
+                                <input type="number" name="sender_id" class="form-control" value="<?php echo $sender_id; ?>">
+                                <span class="form-text"><?php echo $sender_id_err; ?></span>
+                            </div>
+						<div class="form-group">
+                                <label>Recipient ID</label>
+                                <input type="number" name="recipient_id" class="form-control" value="<?php echo $recipient_id; ?>">
+                                <span class="form-text"><?php echo $recipient_id_err; ?></span>
                             </div>
 						<div class="form-group">
                                 <label>Content</label>
@@ -79,18 +84,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="form-text"><?php echo $content_err; ?></span>
                             </div>
 						<div class="form-group">
-                                <label>Date Published</label>
-                                <input type="datetime-local" name="date_published" class="form-control" value="<?php echo date("Y-m-d\TH:i:s", strtotime($date_published)); ?>">
-                                <span class="form-text"><?php echo $date_published_err; ?></span>
-                            </div>
-						<div class="form-group">
-                                <label>Views</label>
-                                <input type="number" name="views" class="form-control" value="<?php echo $views; ?>">
-                                <span class="form-text"><?php echo $views_err; ?></span>
+                                <label>Timestamp</label>
+                                <input type="text" name="timestamp" class="form-control" value="<?php echo $timestamp; ?>">
+                                <span class="form-text"><?php echo $timestamp_err; ?></span>
                             </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="documentations-index.php" class="btn btn-secondary">Cancel</a>
+                        <a href="messages-index.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>
